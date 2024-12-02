@@ -278,6 +278,17 @@ project/
 ```
 
 ### MVC 流程示例
+```mermaid
+flowchart TB
+    A((User)) <-->|互動| B[View]
+    B -->|動作| C[Controller]
+    C -->|跟 model 要資料| D[Model]
+    D -->|從 DB 調資料| E[Database]
+    E -->|回傳資料| D
+    D -->|回傳資料| C
+    C -->|渲染資料| B
+```
+
 顧客下訂單的流程
 
 1. View:
@@ -285,6 +296,6 @@ project/
 2. Controller:
     - `customer_controller.py` 中的 `place_order()` 方法處理訂單資料。
 3. Model:
-    - `models/order.py` 將訂單保存至資料庫。
+    - `models/order.py` 將訂單更新至資料庫。
 4. Response:
     - 訂單生成後，返回確認頁面 `templates/customer/place_order.html`。
