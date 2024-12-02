@@ -1,0 +1,1 @@
+# 初始化 Flask 應用、配置檔案和 SQLAlchemy 資料庫。
