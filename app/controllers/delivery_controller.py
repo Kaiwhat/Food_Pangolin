@@ -1,11 +1,8 @@
-def uploadMenu()
-# 更新菜單
+def acceptOrder()
+# 接受訂單
 
-def confirmOrder()
-# 確認訂單
+def updateDeliveryStatus()
+# 更新狀態、尚未取餐、運送中、到達目的地
 
-def notifyPickup()
-# 通知外送員取餐
-
-def viewOrderHistory()
-# 查看訂單紀錄
+def viewDelieveryHistory()
+# 查看送單紀錄
