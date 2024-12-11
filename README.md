@@ -231,7 +231,11 @@ project/
 │   │   └── menu_item.py
 │   │
 │   ├── templates/
+│   │   ├── login_page.html
+│   │   ├── choose_identity.html
+│   │   ├── register_page.html
 │   │   ├── customer/
+│   │   │   ├── browse_merchant.html
 │   │   │   ├── browse_menu.html
 │   │   │   ├── place_order.html
 │   │   │   └── order_history.html
