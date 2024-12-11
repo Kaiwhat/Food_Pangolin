@@ -231,19 +231,22 @@ project/
 │   │   └── menu_item.py
 │   │
 │   ├── templates/
-│   │   ├── login_page.html
 │   │   ├── choose_identity.html
-│   │   ├── register_page.html
+│   │   ├── login_page.html
 │   │   ├── customer/
+│   │   │   ├── costomer_register.html
 │   │   │   ├── browse_merchant.html
 │   │   │   ├── browse_menu.html
 │   │   │   ├── place_order.html
+│   │   │   ├── order_status.html
+│   │   │   ├── grade_order.html
 │   │   │   └── order_history.html
 │   │   ├── merchant/
-│   │   │   ├── dashboard.html
+│   │   │   ├── merchant_register.html
 │   │   │   ├── manage_menu.html
 │   │   │   └── order_list.html
 │   │   ├── delivery_person/
+│   │   │   ├── delivery_person_register.html
 │   │   │   ├── assigned_orders.html
 │   │   │   ├── update_status.html
 │   │   │   └── delivery_history.html
