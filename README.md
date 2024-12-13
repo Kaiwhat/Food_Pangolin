@@ -240,22 +240,20 @@ project/
 │   │   │   ├── place_order.html
 │   │   │   ├── order_status.html
 │   │   │   ├── grade_order.html
-│   │   │   └── customer_order_history.html
+│   │   │   └── customer_history.html
 │   │   ├── merchant/
 │   │   │   ├── merchant_register.html
 │   │   │   ├── manage_menu.html
+│   │   │   ├── edit_item.html
 │   │   │   ├── add_item.html
 │   │   │   └── order_list.html
 │   │   ├── delivery_person/
 │   │   │   ├── delivery_person_register.html
 │   │   │   ├── assigned_order.html
 │   │   │   ├── accept_order.html
-│   │   │   ├── delivery_history.html
-│   │   │   ├── update_status.html
 │   │   │   └── delivery_history.html
 │   │   └── shared/
-│   │       ├── layout.html
-│   │       └── navbar.html
+│   │       └── layout.html
 │   │
 │   └── static/
 │       ├── css/
