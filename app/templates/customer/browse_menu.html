@@ -3,9 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
+    <title>Browse Menu</title>
 </head>
+
 <body>
-    
+<p><b>{{merchant.username}}</b></p>
+<hr>
+
+<table width="800" >
+<tr>
+    <td>內容</td>
+    <td>價格</td>
+</tr>
+{% for record in data %}
+<tr>
+    <td>
+        <form method="POST" action="/browse_menu">
+            <input type="hidden" name="menu">
+			<input type="hidden" name="price">
+        </form>
+    </td>
+	<td>
+	    <button type='botton'>加入購物車</button></a>
+	</td>
+</tr>
+
+{% endfor %}
+</form>
 </body>
 </html>
