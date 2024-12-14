@@ -232,9 +232,9 @@ project/
 │   │
 │   ├── templates/
 │   │   ├── choose_identity.html
-│   │   ├── login_page.html
 │   │   ├── customer/
 │   │   │   ├── costomer_register.html
+│   │   │   ├── costomer_login.html
 │   │   │   ├── browse_merchant.html
 │   │   │   ├── browse_menu.html
 │   │   │   ├── place_order.html
@@ -243,12 +243,14 @@ project/
 │   │   │   └── customer_history.html
 │   │   ├── merchant/
 │   │   │   ├── merchant_register.html
+│   │   │   ├── merchant_login.html
 │   │   │   ├── manage_menu.html
 │   │   │   ├── edit_item.html
 │   │   │   ├── add_item.html
 │   │   │   └── order_list.html
 │   │   ├── delivery_person/
 │   │   │   ├── delivery_person_register.html
+│   │   │   ├── delivery_person_login.html
 │   │   │   ├── assigned_order.html
 │   │   │   ├── accept_order.html
 │   │   │   └── delivery_history.html
