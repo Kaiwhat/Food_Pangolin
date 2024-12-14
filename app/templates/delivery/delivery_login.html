@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login_page</title>
+    <title>Delivery Login</title>
 </head>
 
 <body>
 <p><b>登入</b></p>
 <hr>
-<p><b>目前的登入身分為{}</b></p>
+<p><b>目前的登入身分為外送員</b></p>
 
-<form method="POST" action="/login">
+<form method="POST" action="/delivery_login">
 
-帳號: <input type="text" name="ID"> <br>
+帳號: <input type="text" name="username"> <br>
 密碼: <input type="password" name="password" ><br>
 
-<a href='/allitem'>
+<a href='/assigned_order'>
     <button type='botton'>登入</button></a>
 </form>
 
