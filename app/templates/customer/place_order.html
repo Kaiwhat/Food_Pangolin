@@ -4,8 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Place your holder</title>
+	<style>
+        table{
+            width:80%;
+            border-collapse:collapse;
+        }
+        th, td{
+            border:1px solid #ddd;
+            padding:8px;
+            text-align:left;
+        }
+        th {
+            background-color:#f4f4f4;
+        }
+        button{
+            padding:5px 10px;
+            background-color:#5599FF;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+        button:hover{
+            background-color:#0056b3;
+        }
+    </style>
 </head>
+
 <body>
-    
+<p><b>購物車</b></p>
+<hr>
+<table>
+        <thead>
+            <tr>
+                <th>內容</th>
+                <th>金額</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+			    <td>{{item.menu}}</td>
+                <td>{{item.price}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% for item in data %}
+    <div class="menu-row">
+        <div class="menu-info">
+            <span>{{item.menu}}</span>
+            <span>{{item.price}}</span>
+        </div>
+        <form method="POST" action="/delete">
+            <input type="hidden" name="menu" value="{{item.menu}}">
+            <input type="hidden" name="price" value="{{item.price}}">
+            <button type="submit">刪除</button>
+        </form>
+    </div>
+{% endfor %}
+
+<br>
+<a href="/place_order">
+    <button type="button">回上一頁</button></a>
+<a href="/place_order">
+    <button type="button">送出訂單</button></a>
 </body>
 </html>
