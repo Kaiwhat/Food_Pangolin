@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Your Order</title>
+	<style>
+        table{
+            width:60%;
+            border-collapse:collapse;
+        }
+        th, td{
+            border:1px solid #ddd;
+            padding:8px;
+            text-align:left;
+        }
+        th {
+            background-color:#f4f4f4;
+        }
+        button{
+            padding:5px 10px;
+            background-color:#5599FF;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+        button:hover{
+            background-color:#0056b3;
+        }
+		rating{
+            margin: 10px 0;
+        }
+        .rating label{
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+<p><b>訂單評分</b></p>
+<hr>
+<p><b>本次訂單</b></p>
+
+<table>
+    <thead>
+            <tr>
+                <th>內容</th>
+                <th>金額</th>
+            </tr>
+    </thead>
+	<td>
+        <form method="POST" action="/customer_history">
+            <input type="hidden" name="ITEM" value="{{{{item.menu}}}}">
+			<input type="hidden" name="ITEM" value="{{{{item.price}}}}">
+        </form>
+    </td>
+</table>
+<br>
+
+<form method="POST" action="/submit_rating">
+        <div class="rating">
+            <label for="merchant-rating">商家評分(1-5):</label>
+            <select id="merchant-rating" name="merchant_rating" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+        <div class="rating">
+            <label for="delivery-rating">外送員評分(1-5):</label>
+            <select id="delivery-rating" name="delivery_rating" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+<br>
+
+<a href="/browse_merchant">
+    <button type="button">送出評分</button></a>
+</body>
+</html>

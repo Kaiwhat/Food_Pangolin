@@ -63,8 +63,18 @@
         </form>
     </div>
 {% endfor %}
-
 <br>
+
+<div class="address">
+    <form method="POST" action="/submit_order">
+        <label for="address">配送地址：</label>
+        <input type="text" id="address" name="address" placeholder="輸入配送地址" required style="width: 100%; max-width: 400px;">
+    </form>
+</div>
+
+<p>總金額：<span id="total-price">{{ total_price }}</span>元</p>
+<br>
+
 <a href="/place_order">
     <button type="button">回上一頁</button></a>
 <a href="/place_order">
