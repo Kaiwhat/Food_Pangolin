@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Item</title>
+	<style>
+        button{
+            padding:5px 10px;
+            background-color:#5599FF;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+        button:hover{
+            background-color:#0056b3;
+        }
+    </style>
+</head>
+
+<body>
+<p><b>編輯品項</b></p>
+<hr>
+
+<form method="POST" action="/save_item" style="display: inline;">
+    內容: <input type="text" name="newcontent" value="{{merchant.content}}"><br>
+    金額: <input type="text" name="newprice" value="{{merchant.price}}"><br><br>
+    
+    <input type="hidden" name="oldcontent" value="{{merchant.content}}">
+    <input type="hidden" name="oldprice" value="{{merchant.price}}">
+    
+    <button type="submit">完成</button>
+</form>
+   
+<a href="/manage_menu">
+    <button type="button">取消</button></a>
+</body>
+</html>

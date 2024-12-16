@@ -3,9 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Current order</title>
+    <title>Order List</title>
+	<style>
+        table{
+            width:80%;
+            border-collapse:collapse;
+        }
+        th, td{
+            border:1px solid #ddd;
+            padding:8px;
+            text-align:left;
+        }
+        th {
+            background-color:#f4f4f4;
+        }
+        button{
+            padding:5px 10px;
+            background-color:#5599FF;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+        button:hover{
+            background-color:#0056b3;
+        }
+    </style>
 </head>
+
 <body>
-    
+<p><b>目前訂單</b></p>
+<hr>
+<p><b>{{merchant.id}}{{merchant.name}}</b></p>
+
+<table>
+    <thead>
+        <tr>
+            <th>內容</th>
+            <th>金額</th>
+			<th>顧客</th>
+        </tr>
+    </thead>
+	
+    <tbody>
+        {% for item in data %}
+        <tr>
+			<td>{{    }}</td>
+            <td>{{    }}</td>
+			<td>{{    }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% for order in orders %}
+        <form method="POST" action="/      ">
+            <input type="hidden" name="order_id" value="{{order.id}}">
+            <button type="submit" class="complete-btn">完成</button>
+        </form>
+    </div>
+{% endfor %}
+<br>
+
+<a href="/manage_menu">
+    <button type="button">回到首頁</button></a>
 </body>
 </html>
