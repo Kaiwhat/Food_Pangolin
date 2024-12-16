@@ -8,7 +8,7 @@ from app import db  # SQLAlchemy 資料庫實例
 customer_bp = Blueprint('customer', __name__, url_prefix='/customer')
 
 # 註冊功能
-@app.route('/register', methods=['GET', 'POST'])
+@customer_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
@@ -21,7 +21,7 @@ def register():
     return render_template('register.html')
 
 # 登入功能
-@app.route('/login', methods=['GET', 'POST'])
+@customer_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
