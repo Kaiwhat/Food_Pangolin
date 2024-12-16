@@ -30,6 +30,17 @@ def delete_customer(id):
 	cursor.execute(sql,(id,))
 	conn.commit()
 	return
+# 透過 email 查詢用戶
+def get_user_by_email(email):
+    conn = connect_db()
+    cursor = conn.cursor(dictionary=True)
+    sql = "SELECT * FROM users WHERE email = %s"
+    cursor.execute(sql, (email,))
+    user = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return user
+
 #更新顧客的資訊
 def update(id, name, contact_info, address):
 	sql="update Customer set name = %s, contact_info = %s, address = %s where id = %s;"
