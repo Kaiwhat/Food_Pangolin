@@ -3,9 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dilivery history</title>
+    <title>Delivery history</title>
+	<style>
+        table{
+            width:80%;
+            border-collapse:collapse;
+        }
+        th, td{
+            border:1px solid #ddd;
+            padding:8px;
+            text-align:left;
+        }
+        th {
+            background-color:#f4f4f4;
+        }
+        button{
+            padding:5px 10px;
+            background-color:#5599FF;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+        button:hover{
+            background-color:#0056b3;
+        }
+    </style>
 </head>
+
 <body>
-    
+<p><b>歷史紀錄</b></p>
+<hr>
+
+<table width="400">
+    <thead>
+        <td>日期</td>
+		<td>商家</td>
+		<td>內容</td>
+		<td>總金額</td>
+		<td>顧客地址</td>
+		<td>外送員評分</td>
+    </thead>
+    {% for record in records %}
+    <tr>
+        <td>{{ }}</td>
+		<td>{{ }}</td>
+		<td>{{ }}</td>
+		<td>{{ }}</td>
+		<td>{{ }}</td>
+		<td>{{ }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+
+<a href="/assigned_order">
+    <button type="button">回到目前訂單</button></a>
 </body>
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accept Order</title>
+	<style>
+        table{
+            width:80%;
+            border-collapse:collapse;
+        }
+        th, td{
+            border:1px solid #ddd;
+            padding:8px;
+            text-align:left;
+        }
+        th {
+            background-color:#f4f4f4;
+        }
+        button{
+            padding:5px 10px;
+            background-color:#5599FF;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+        button:hover{
+            background-color:#0056b3;
+        }
+    </style>
+</head>
+
+<body>
+<p><b>接單</b></p>
+<hr>
+
+<table>
+    <thead>
+        <tr>
+            <th>商家</th>
+            <th>內容</th>
+			<th>總金額</th>
+            <th>顧客地址</th>
+        </tr>
+    </thead>
+	
+    <tbody>
+        {% for item in data %}
+        <tr>
+			<td>{{    }}</td>
+            <td>{{    }}</td>
+			<td>{{    }}</td>
+            <td>{{    }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+
+{% for item in data %}
+    <div class="menu-row">
+		<form method="POST" action="/    " style="display: inline;">
+            <input type="hidden" name="menu" value="{{    }}">
+            <input type="hidden" name="price" value="{{    }}">
+			<input type="hidden" name="menu" value="{{    }}">
+            <input type="hidden" name="price" value="{{    }}">
+            <button type="submit">接受</button>
+        </form>
+		<form method="POST" action="/    " style="display: inline;">
+            <input type="hidden" name="menu" value="{{    }}">
+            <input type="hidden" name="price" value="{{    }}">
+			<input type="hidden" name="menu" value="{{    }}">
+            <input type="hidden" name="price" value="{{    }}">
+            <button type="submit">拒絕</button>
+        </form>
+    </div>
+{% endfor %}
+<br>
+
+<a href="/assigned_order">
+    <button type="button">查看目前訂單</button></a>
+</body>
+</html>
