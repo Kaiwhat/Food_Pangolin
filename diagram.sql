@@ -93,10 +93,10 @@ CREATE TABLE `merchant` (
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `orde`
+-- 資料表結構 `order`
 --
 
-CREATE TABLE `orde` (
+CREATE TABLE `order` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `merchant_id` int(100) NOT NULL,
