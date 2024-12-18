@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browse Merchant</title>
+    <title>Dashboard</title>
 	<style>
         table{
             width:80%;
@@ -29,21 +29,22 @@
         }
     </style>
 </head>
-
 <body>
-<p><b>瀏覽商家</b></p>
-<hr>
-<p><b>{{customer.id}} {{customer.name}}</b></p>
-
-{% for record in data %}
-<tr>
-    <td>{{merchant.name}}</td>
-         <td>
-		 <a href="/browse_menu?merchant_id={{merchant.id}}">
-             <button type="button">查看菜單</button>
-         </a>
-     </td>
-</tr>
-{% endfor %}
+    
 </body>
+<p><b>營運總覽及統計</b></p>
+<hr>
+
+<div class="dashboard">
+    <div class="stats">
+        <div>總訂單數：<span></span></div>
+        <div>總交易金額：<span>NT$</span></div>
+        <div>平台收入：<span>NT$</span></div>
+        <div>商家收入：<span>NT$</span></div>
+        <div>外送員收入：<span>NT$</span></div>
+    </div>
+</div>
+<br>
+<a href="/browse_menu?merchant_id={{merchant.id}}">
+         <button type="button">訂單結算</button>
 </html>
