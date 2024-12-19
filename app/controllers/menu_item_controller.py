@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models.customer import Customer
-from app.models.order import Order
-from app.models.menu_item import MenuItem
+import app.models.customer as Customer
+import app.models.order as Order
+import app.models.menu_item as MenuItem
 from app import db  # SQLAlchemy 資料庫實例

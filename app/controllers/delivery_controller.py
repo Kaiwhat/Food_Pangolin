@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify, render_template
-from app.models.delivery_person import DeliveryPerson
-from app.models.order import Order
+import app.models.delivery_person as DeliveryPerson
+import app.models.order as Order
+
+# FIXME
 from app.models import db
 
 delivery_person_bp = Blueprint('delivery_person', __name__, url_prefix='/delivery_person')
@@ -16,10 +18,13 @@ def register():
                 email=data.get('email'),
                 password=data.get('password')  # 假設已處理密碼加密
             )
+            # FIXME
             db.session.add(new_delivery_person)
+            # FIXME
             db.session.commit()
             return jsonify({'message': 'Delivery person registered successfully'}), 201
         except Exception as e:
+            # FIXME
             db.session.rollback()
             return jsonify({'error': str(e)}), 400
     return render_template('delivery_person/delivery_person_register.html')
@@ -29,7 +34,8 @@ def register():
 def view_assigned_orders():
     delivery_person_id = request.args.get('delivery_person_id')
     try:
-        orders = Order.query.filter_by(delivery_person_id=delivery_person_id, status='assigned').all()
+        # FIXME: Delievery person assignment
+        orders = Order.get_orders_by_delivery_person(delivery_person_id=delivery_person_id, status='assigned').all()
         return jsonify([order.to_dict() for order in orders]), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -38,14 +44,17 @@ def view_assigned_orders():
 @delivery_person_bp.route('/accept_order/<int:order_id>', methods=['POST'])
 def accept_order(order_id):
     try:
-        order = Order.query.get(order_id)
+        # FIXME: update_order_status(assigned)
+        order = Order.update_order_status(order_id)
         if not order or order.status != 'assigned':
             return jsonify({'error': 'Order not found or already accepted'}), 404
 
         order.status = 'in_progress'
+        # FIXME
         db.session.commit()
         return jsonify({'message': 'Order accepted successfully'}), 200
     except Exception as e:
+        # FIXME
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
@@ -54,7 +63,7 @@ def accept_order(order_id):
 def view_delivery_history():
     delivery_person_id = request.args.get('delivery_person_id')
     try:
-        orders = Order.query.filter_by(delivery_person_id=delivery_person_id, status='delivered').all()
+        orders = Order.get_orders_by_delivery_person(delivery_person_id=delivery_person_id, status='delivered').all()
         return jsonify([order.to_dict() for order in orders]), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -63,13 +72,16 @@ def view_delivery_history():
 @delivery_person_bp.route('/mark_delivered/<int:order_id>', methods=['POST'])
 def mark_order_delivered(order_id):
     try:
-        order = Order.query.get(order_id)
+        # FIXME: update_order_status(DONE)
+        order = Order.update_order_status(order_id)
         if not order or order.status != 'in_progress':
             return jsonify({'error': 'Order not found or not in progress'}), 404
 
         order.status = 'delivered'
+        # FIXME
         db.session.commit()
         return jsonify({'message': 'Order marked as delivered successfully'}), 200
     except Exception as e:
+        # FIXME
         db.session.rollback()
         return jsonify({'error': str(e)}), 400

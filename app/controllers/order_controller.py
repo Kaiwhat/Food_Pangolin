@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, render_template
-from app.models.order import Order
-from app.models.order_item import OrderItem
-from app.models.menu_item import MenuItem
+import app.models.order as Order
+import app.models.order_item as OrderItem
+import app.models.menu_item as MenuItem
 from app.models import db
 
 
@@ -21,12 +21,15 @@ def place_order():
             status='placed',
             total_price=0  # 初始為 0，稍後計算總價
         )
+        # FIXME
         db.session.add(new_order)
+        # FIXME
         db.session.flush()  # 獲取新訂單的 ID
 
         # 新建訂單項目(新增訂單內的項目)
         total_price = 0
         for item in data.get('items', []):
+            # FIXME
             menu_item = MenuItem.query.get(item['menu_item_id'])
             if not menu_item:
                 raise Exception(f"Menu item {item['menu_item_id']} not found")
@@ -38,13 +41,16 @@ def place_order():
                 price=menu_item.price * item['quantity']
             )
             total_price += order_item.price
+            # FIXME
             db.session.add(order_item)
 
         # 更新訂單總價
         new_order.total_price = total_price
+        # FIXME
         db.session.commit()
         return jsonify({'message': 'Order placed successfully', 'order_id': new_order.id}), 201
     except Exception as e:
+        # FIXME
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
@@ -55,14 +61,17 @@ def place_order():
 def update_order_status(order_id):
     data = request.json
     try:
+        # FIXME
         order = Order.query.get(order_id)
         if not order:
             return jsonify({'error': 'Order not found'}), 404
 
         order.status = data.get('status', order.status)
+        # FIXME
         db.session.commit()
         return jsonify({'message': 'Order status updated successfully'}), 200
     except Exception as e:
+        # FIXME
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
@@ -70,10 +79,11 @@ def update_order_status(order_id):
 @order_bp.route('/details/<int:order_id>', methods=['GET'])
 def view_order_details(order_id):
     try:
+        # FIXME
         order = Order.query.get(order_id)
         if not order:
             return jsonify({'error': 'Order not found'}), 404
-
+        # FIXME
         order_items = OrderItem.query.filter_by(order_id=order_id).all()
         return jsonify({
             'order': order.to_dict(),
