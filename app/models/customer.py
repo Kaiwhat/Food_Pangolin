@@ -18,6 +18,15 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 	print("Error connecting to DB")
 	exit(1)
 
+def connect_db():
+	return mysql.connector.connect(
+		user="root",
+		password="",
+		host="localhost",  # 或 "127.0.0.1"
+		port=3306,
+		database="test"  # 確保這裡是你的資料庫名稱
+	)
+
 #新增顧客
 def add_customer(id, name, contact_info, address):
 	sql="insert into Customer (id, name, contact_info, address) values (%s, %s, %s, %s);"
