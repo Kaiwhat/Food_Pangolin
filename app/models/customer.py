@@ -24,7 +24,7 @@ def connect_db():
         password="",
         host="localhost",  # 或 "127.0.0.1"
         port=3306,
-        database="test"  # 確保這裡是你的資料庫名稱
+        database="FoodPangolin"  # 確保這裡是你的資料庫名稱
     )
 
 #新增顧客
