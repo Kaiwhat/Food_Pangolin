@@ -26,7 +26,7 @@ def create_app():
     from app.controllers.merchant_controller import merchant_bp
     app.register_blueprint(merchant_bp)
 
-    from app.controllers.delivery_controller import delivery_bp
-    app.register_blueprint(delivery_bp)
+    from app.controllers.delivery_controller import delivery_person_bp
+    app.register_blueprint(delivery_person_bp)
 
     return app
