@@ -211,26 +211,26 @@ erDiagram
 ```
 project/
 ├── app/
-│   ├── __init__.py       # 初始化 Flask
+│   ├── __init__.py                         # 初始化 Flask
 │   ├── controllers/
-│   │   ├── customer_controller.py
-│   │   ├── merchant_controller.py
-│   │   ├── delivery_person_controller.py
+│   │   ├── customer_controller.py          # 顧客相關的控制器
+│   │   ├── merchant_controller.py          # 商家相關的控制器
+│   │   ├── delivery_person_controller.py   # 送貨員相關的控制器
 │   │   ├── order_controller.py
 │   │   ├── feedback_controller.py
 │   │   └── menu_item_controller.py
 │   │
-│   ├── models/
-│   │   ├── __init__.py   # 初始化 SQL 模組
-│   │   ├── customer.py
+│   ├── models/                             # 模型目錄
+│   │   ├── __init__.py                     # 初始化 SQL 模組
+│   │   ├── customer.py                     # 顧客模型
 │   │   ├── merchant.py
 │   │   ├── delivery_person.py
-│   │   ├── order.py
+│   │   ├── order.py                        # 訂單模型
 │   │   ├── order_item.py
 │   │   ├── feedback.py
-│   │   └── menu_item.py
+│   │   └── menu_item.py                    # 菜單項目模型
 │   │
-│   ├── templates/
+│   ├── templates/                          # 模板目錄
 │   │   ├── choose_identity.html
 │   │   ├── customer/
 │   │   │   ├── costomer_register.html
