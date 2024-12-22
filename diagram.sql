@@ -156,9 +156,9 @@ ALTER TABLE `merchant`
   ADD PRIMARY KEY (`id`);
 
 --
--- 資料表索引 `orde`
+-- 資料表索引 `order`
 --
-ALTER TABLE `orde`
+ALTER TABLE `order`
   ADD PRIMARY KEY (`id`);
 
 --
