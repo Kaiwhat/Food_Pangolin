@@ -4,6 +4,14 @@ import app.models.order as Order
 
 delivery_person_bp = Blueprint('delivery_person', __name__, url_prefix='/delivery_person')
 
+@delivery_person_bp.route('/')
+def index():
+    return render_template('delivery/delivery_login.html')
+
+@delivery_person_bp.route('/new')
+def new():
+    return render_template('delivery/delivery_register.html')
+
 # 配送員註冊
 @delivery_person_bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -20,7 +28,7 @@ def register():
             return jsonify({'message': 'Delivery person registered successfully'}), 201
         except Exception as e:
             return jsonify({'error': str(e)}), 400
-    return render_template('delivery_person/delivery_person_register.html')
+    return render_template('delivery/delivery_register.html')
 
 # 查看分配的訂單
 @delivery_person_bp.route('/assigned_orders', methods=['GET'])

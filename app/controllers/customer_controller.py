@@ -8,6 +8,14 @@ import app.models.feedback as Feedback
 
 customer_bp = Blueprint('customer', __name__, url_prefix='/customer')
 
+@customer_bp.route('/')
+def index():
+    return render_template('customer/customer_login.html')
+
+@customer_bp.route('/new')
+def new():
+    return render_template('customer/customer_register.html')
+
 @customer_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -20,7 +28,7 @@ def register():
         Customer.add_customer(name, email, address) 
         flash('註冊成功，請登入！')
         return redirect('/')  # 重定向到首頁
-    return render_template('register.html')
+    return render_template('customer/customer_register.html')
 
 # 登入功能
 @customer_bp.route('/login', methods=['GET', 'POST'])
@@ -33,6 +41,7 @@ def login():
     if user and password == user['password']:  # 直接比較明文密碼
         session['id'] = user['id']  # 將用戶 ID 保存到 session
         flash('登入成功！')
+        # FIXME
         return redirect('/final_board')  # 登入成功，重定向到 final_board.html
 
     flash('登入失敗，請檢查您的電子郵件和密碼。')
@@ -56,11 +65,12 @@ def place_order():
         # FIXME
         db.session.commit()  # 提交交易
         flash("訂單已成功提交！")
-        return redirect(url_for('customer.browse_menu'))
+        return redirect(url_for('customer/customer.browse_menu'))
     except Exception as e:
         flash("提交訂單時出錯，請稍後再試。")
-        return redirect(url_for('customer.browse_menu'))
+        return redirect(url_for('customer/customer.browse_menu'))
 
+# FIXME
 @customer_bp.route('/order_history/<int:customer_id>', methods=['GET'])
 def order_history(customer_id):
     """顧客查看訂單歷史"""
@@ -69,7 +79,7 @@ def order_history(customer_id):
         return render_template('customer/order_history.html', orders=orders)
     except Exception as e:
         flash("無法加載訂單歷史，請稍後再試。")
-        return render_template('customer/order_history.html', orders=[])
+        return render_template('customer/customer_history.html', orders=[])
 
 # 顯示顧客的訂單列表
 @customer_bp.route('/customer/<int:customer_id>', methods=['GET'])

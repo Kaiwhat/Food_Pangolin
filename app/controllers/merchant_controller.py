@@ -5,6 +5,14 @@ import app.models.order as Order
 
 merchant_bp = Blueprint('merchant', __name__, url_prefix='/merchant')
 
+@merchant_bp.route('/')
+def index():
+    return render_template('merchant/merchant_login.html')
+
+@merchant_bp.route('/new')
+def new():
+    return render_template('merchant/merchant_register.html')
+
 # 商家註冊
 @merchant_bp.route('/register', methods=['GET', 'POST'])
 def register():
