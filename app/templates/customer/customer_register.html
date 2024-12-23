@@ -6,11 +6,13 @@
     <title>Customer Register</title>
 	<style>
         button{
-            padding:5px 10px;
+            padding:6px 12px;
             background-color:#5599FF;
             color:white;
             border:none;
             cursor:pointer;
+			text-align: center;
+			border-radius: 4px;
         }
         button:hover{
             background-color:#0056b3;
@@ -19,17 +21,19 @@
 </head>
 
 <body>
-<p><b>顧客註冊</b></p>
+<h2 class="card-title large-title">顧客註冊</h3>
 <hr>
 
 <form method="POST" action="/customer_register">
 
 姓名: <input type="text" name="name"> <br>
 帳號: <input type="text" name="username"> <br>
-密碼: <input type="password" name="password" ><br>
+密碼: <input type="password" name="password" ><br><br>
 
 <a href='/customer_login'>
     <button type='botton'>註冊</button></a>
+<a href='/choose_identity'>
+    <button type='botton'>取消</button></a>
 </form>
 
 </body>
