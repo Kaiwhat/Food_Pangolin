@@ -2,9 +2,6 @@ from flask import Blueprint, request, jsonify, render_template
 import app.models.feedback as Feedback
 import app.models.order as Order
 
-# FIXME
-from app.models import db
-
 feedback_bp = Blueprint('feedback', __name__, url_prefix='/feedback')
 
 # 提交回饋
@@ -25,13 +22,9 @@ def submit_feedback():
             comment=data.get('comment', '')
         )
         # FIXME
-        db.session.add(new_feedback)
-        # FIXME
         db.session.commit()
         return jsonify({'message': 'Feedback submitted successfully'}), 201
     except Exception as e:
-        # FIXME
-        db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
 # 查看指定訂單的回饋
@@ -65,11 +58,7 @@ def delete_feedback(feedback_id):
         if not feedback:
             return jsonify({'error': 'Feedback not found'}), 404
         # FIXME
-        db.session.delete(feedback)
-        # FIXME
         db.session.commit()
         return jsonify({'message': 'Feedback deleted successfully'}), 200
     except Exception as e:
-        # FIXME
-        db.session.rollback()
         return jsonify({'error': str(e)}), 400

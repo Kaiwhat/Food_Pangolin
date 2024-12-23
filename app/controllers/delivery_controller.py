@@ -2,9 +2,6 @@ from flask import Blueprint, request, jsonify, render_template
 import app.models.delivery_person as DeliveryPerson
 import app.models.order as Order
 
-# FIXME
-from app.models import db
-
 delivery_person_bp = Blueprint('delivery_person', __name__, url_prefix='/delivery_person')
 
 # 配送員註冊
@@ -19,13 +16,9 @@ def register():
                 password=data.get('password')  # 假設已處理密碼加密
             )
             # FIXME
-            db.session.add(new_delivery_person)
-            # FIXME
             db.session.commit()
             return jsonify({'message': 'Delivery person registered successfully'}), 201
         except Exception as e:
-            # FIXME
-            db.session.rollback()
             return jsonify({'error': str(e)}), 400
     return render_template('delivery_person/delivery_person_register.html')
 
@@ -54,8 +47,6 @@ def accept_order(order_id):
         db.session.commit()
         return jsonify({'message': 'Order accepted successfully'}), 200
     except Exception as e:
-        # FIXME
-        db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
 # 查看配送歷史
@@ -82,6 +73,4 @@ def mark_order_delivered(order_id):
         db.session.commit()
         return jsonify({'message': 'Order marked as delivered successfully'}), 200
     except Exception as e:
-        # FIXME
-        db.session.rollback()
         return jsonify({'error': str(e)}), 400

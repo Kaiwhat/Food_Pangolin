@@ -2,7 +2,6 @@ from flask import Blueprint, request, jsonify, render_template
 import app.models.merchant as Merchant
 import app.models.menu_item as MenuItem
 import app.models.order as Order
-from app.models import db
 
 merchant_bp = Blueprint('merchant', __name__, url_prefix='/merchant')
 
@@ -18,13 +17,9 @@ def register():
                 password=data.get('password')  # 假設已處理密碼加密
             )
             # FIXME
-            db.session.add(new_merchant)
-            # FIXME
             db.session.commit()
             return jsonify({'message': 'Merchant registered successfully'}), 201
         except Exception as e:
-            # FIXME
-            db.session.rollback()
             return jsonify({'error': str(e)}), 400
     return render_template('merchant/merchant_register.html')
 
@@ -51,13 +46,9 @@ def add_menu_item():
             merchant_id=data.get('merchant_id')
         )
         # FIXME
-        db.session.add(new_item)
-        # FIXME
         db.session.commit()
         return jsonify({'message': 'Menu item added successfully'}), 201
     except Exception as e:
-        # FIXME
-        db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
 # 編輯菜單項目
@@ -77,8 +68,6 @@ def edit_menu_item(item_id):
         db.session.commit()
         return jsonify({'message': 'Menu item updated successfully'}), 200
     except Exception as e:
-        # FIXME
-        db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
 # 刪除菜單項目
@@ -89,13 +78,9 @@ def delete_menu_item(item_id):
         if not item:
             return jsonify({'error': 'Item not found'}), 404
         # FIXME
-        db.session.delete(item)
-        # FIXME
         db.session.commit()
         return jsonify({'message': 'Menu item deleted successfully'}), 200
     except Exception as e:
-        # FIXME
-        db.session.rollback()
         return jsonify({'error': str(e)}), 400
     
 # 商家查看訂單列表

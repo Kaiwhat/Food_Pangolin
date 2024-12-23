@@ -2,7 +2,6 @@ from flask import Blueprint, request, jsonify, render_template
 import app.models.order as Order
 import app.models.order_item as OrderItem
 import app.models.menu_item as MenuItem
-from app.models import db
 
 
 order_bp = Blueprint('order', __name__, url_prefix='/order')
@@ -21,10 +20,6 @@ def place_order():
             status='placed',
             total_price=0  # 初始為 0，稍後計算總價
         )
-        # FIXME
-        db.session.add(new_order)
-        # FIXME
-        db.session.flush()  # 獲取新訂單的 ID
 
         # 新建訂單項目(新增訂單內的項目)
         total_price = 0
@@ -41,8 +36,6 @@ def place_order():
                 price=menu_item.price * item['quantity']
             )
             total_price += order_item.price
-            # FIXME
-            db.session.add(order_item)
 
         # 更新訂單總價
         new_order.total_price = total_price
@@ -50,8 +43,6 @@ def place_order():
         db.session.commit()
         return jsonify({'message': 'Order placed successfully', 'order_id': new_order.id}), 201
     except Exception as e:
-        # FIXME
-        db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
 
@@ -71,8 +62,6 @@ def update_order_status(order_id):
         db.session.commit()
         return jsonify({'message': 'Order status updated successfully'}), 200
     except Exception as e:
-        # FIXME
-        db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
 # 查看訂單詳細資訊

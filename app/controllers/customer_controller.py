@@ -6,9 +6,6 @@ import app.models.merchant as Merchant
 import app.models.order_item as OrderItem
 import app.models.feedback as Feedback
 
-# FIXME: WTF is db
-from app import db  # SQLAlchemy 資料庫實例
-
 customer_bp = Blueprint('customer', __name__, url_prefix='/customer')
 
 @customer_bp.route('/register', methods=['GET', 'POST'])
@@ -60,24 +57,16 @@ def place_order():
         
         # FIXME: What...?
         order = Order(customer_id=customer_id, status="pending")
-        # FIXME
-        db.session.add(order)
-        # FIXME
-        db.session.flush()  # 暫存以獲取 order.id
 
         # 添加訂單項目
         for item_id, quantity in zip(item_ids, quantities):
             # FIXME
             order_item = Order.add_item(order_id=order.id, menu_item_id=item_id, quantity=quantity)
-            # FIXME
-            db.session.add(order_item)
         # FIXME
         db.session.commit()  # 提交交易
         flash("訂單已成功提交！")
         return redirect(url_for('customer.browse_menu'))
     except Exception as e:
-        # FIXME
-        db.session.rollback()
         flash("提交訂單時出錯，請稍後再試。")
         return redirect(url_for('customer.browse_menu'))
 
@@ -118,10 +107,6 @@ def browse_menu(merchant_id):
 def place_order():
     data = request.form
     order = Order(customer_id=data.get('customer_id'), merchant_id=data.get('merchant_id'))
-    # FIXME
-    db.session.add(order)
-    # FIXME
-    db.session.flush()  # Get the generated order ID
 
     for item_id, quantity in data.items():
         if item_id.startswith('item_'):
@@ -131,8 +116,6 @@ def place_order():
                 menu_item_id=menu_item_id,
                 quantity=int(quantity)
             )
-            # FIXME
-            db.session.add(order_item)
     # FIXME
     db.session.commit()
     return redirect(url_for('customer.order_status', order_id=order.id))
@@ -151,8 +134,6 @@ def grade_order(order_id):
             rating=data.get('rating'),
             comments=data.get('comments')
         )
-        # FIXME
-        db.session.add(feedback)
         # FIXME
         db.session.commit()
         return redirect(url_for('customer.browse_merchants'))
