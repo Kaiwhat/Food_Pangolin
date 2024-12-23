@@ -13,10 +13,11 @@ def register():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
-        password = request.form['password']
+        # password = request.form['password']
+        address = request.form['address']
         
         # FIXME: Change add_cistomer() parameter
-        Customer.add_customer(name, email, password) 
+        Customer.add_customer(name, email, address) 
         flash('註冊成功，請登入！')
         return redirect('/')  # 重定向到首頁
     return render_template('register.html')
@@ -36,16 +37,6 @@ def login():
 
     flash('登入失敗，請檢查您的電子郵件和密碼。')
     return redirect('/')  # 登入失敗，重定向到首頁
-
-@customer_bp.route('/browse_menu', methods=['GET'])
-def browse_menu():
-    """顧客瀏覽菜單"""
-    try:
-        menu_items = MenuItem.get_menu_items_by_merchant()  # 從資料庫取得所有菜單項目
-        return render_template('customer/browse_menu.html', menu_items=menu_items)
-    except Exception as e:
-        flash("無法加載菜單，請稍後再試。")
-        return render_template('customer/browse_menu.html', menu_items=[])
 
 @customer_bp.route('/place_order', methods=['POST'])
 def place_order():
@@ -103,22 +94,6 @@ def browse_menu(merchant_id):
     menu_items = MenuItem.query.filter_by(merchant_id=merchant_id).all()
     return render_template('customer/browse_menu.html', menu_items=menu_items, merchant_id=merchant_id)
 
-@customer_bp.route('/order', methods=['POST'])
-def place_order():
-    data = request.form
-    order = Order(customer_id=data.get('customer_id'), merchant_id=data.get('merchant_id'))
-
-    for item_id, quantity in data.items():
-        if item_id.startswith('item_'):
-            menu_item_id = int(item_id.split('_')[1])
-            order_item = OrderItem(
-                order_id=order.id,
-                menu_item_id=menu_item_id,
-                quantity=int(quantity)
-            )
-    # FIXME
-    db.session.commit()
-    return redirect(url_for('customer.order_status', order_id=order.id))
 
 @customer_bp.route('/order_status/<int:order_id>', methods=['GET'])
 def order_status(order_id):
