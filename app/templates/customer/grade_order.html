@@ -6,7 +6,7 @@
     <title>Grade Your Order</title>
 	<style>
         table{
-            width:60%;
+            width:70%;
             border-collapse:collapse;
         }
         th, td{
@@ -23,43 +23,52 @@
             color:white;
             border:none;
             cursor:pointer;
-			text-align: center;
-			border-radius: 4px;
+			text-align:center;
+			border-radius:4px;
         }
         button:hover{
             background-color:#0056b3;
         }
 		rating{
-            margin: 10px 0;
+            margin:10px 0;
         }
         .rating label{
-            margin-right: 5px;
+            margin-right:5px;
         }
     </style>
 </head>
 
 <body>
-<p><b>訂單評分</b></p>
+<h2 class="card-title large-title">訂單評分</h2>
 <hr>
 <p><b>本次訂單</b></p>
 
 <table>
     <thead>
-            <tr>
-                <th>內容</th>
-                <th>金額</th>
-            </tr>
+        <tr>
+            <th>商家</th>
+			<th>品項</th>
+			<th>內容</th>
+			<th>數量</th>
+            <th>金額</th>
+        </tr>
     </thead>
-	<td>
-        <form method="POST" action="/customer_history">
-            <input type="hidden" name="ITEM" value="{{{{item.menu}}}}">
-			<input type="hidden" name="ITEM" value="{{{{item.price}}}}">
-        </form>
-    </td>
+	
+    <tbody>
+        {% for menuitem in items %}
+        <tr>
+			<td style="width: 100px;">{{menitem.merchant_id}}</td>
+			<td style="width: 100px;">{{menuitem.name}}</td>
+            <td>{{menuitem.description}}</td>
+			<td style="width: 50px;">{{orderitem.quantity}}</td>
+			<td style="width: 100px;">{{menuitem.price}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 <br>
 
-<form method="POST" action="/submit_rating">
+<form method="POST" action="/customers/    ">
         <div class="rating">
             <label for="merchant-rating">商家評分(1-5):</label>
             <select id="merchant-rating" name="merchant_rating" required>

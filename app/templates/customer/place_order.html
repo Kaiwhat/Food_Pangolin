@@ -23,7 +23,7 @@
             color:white;
             border:none;
             cursor:pointer;
-			text-align: center;
+			text-align:center;
 			border-radius: 4px;
         }
         button:hover{
@@ -42,6 +42,7 @@
             <th>商家</th>
 			<th>品項</th>
 			<th>內容</th>
+			<th>數量</th>
             <th>金額</th>
 			<th>操作</th>
         </tr>
@@ -53,15 +54,16 @@
 			<td style="width: 100px;">{{merchant.name}}</td>
 			<td style="width: 100px;">{{menuitem.name}}</td>
             <td>{{menuitem.description}}</td>
+			<td style="width: 50px;">{{orderitem.quantity}}</td>
 			<td style="width: 100px;">{{menuitem.price}}</td>
 			<td>
 			    <form method="POST" action="/customers/delete">
                     <input type="hidden" name="name" value="{{menuitem.name}}">
-			        <input type="hidden" name="description" value="{{ menuitem.description }}">
+			        <input type="hidden" name="description" value="{{menuitem.description}}">
                     <input type="hidden" name="price" value="{{menuitem.price}}">
                     <button type="submit">刪除</button>
+				</form>
 			</td>
-        </form>
         </tr>
         {% endfor %}
     </tbody>
@@ -69,14 +71,14 @@
 <br>
 
 <div class="address">
-    <form method="POST" action="/customers/submit_order">
+    <form method="POST" action="/customers/    ">
         <label for="address">配送地址：</label>
         <input type="text" id="address" name="address" placeholder="輸入配送地址" required style="width: 100%; max-width: 400px;">
     </form>
 </div>
 
-<p>總金額：<span id="total-price">{{total_price}}</span>元</p>
-<a href="/customera/browse_menu">
+<p>總金額：<span id="total-price">{{order.total_price}}</span>元</p>
+<a href="/customers/browse_menu">
     <button type="button">回上一頁</button></a>
 <a href="/customers/place_order">
     <button type="button">送出訂單</button></a>

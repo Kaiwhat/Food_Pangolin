@@ -11,8 +11,8 @@
             color:white;
             border:none;
             cursor:pointer;
-			text-align: center;
-			border-radius: 4px;
+			text-align:center;
+			border-radius:4px;
         }
         button:hover{
             background-color:#0056b3;
@@ -21,16 +21,15 @@
 </head>
 
 <body>
-<p><b>訂單狀態</b></p>
+<h2 class="card-title large-title">訂單狀態</h2>
 <hr>
 
 <script>
     async function fetchOrderStatus() {
-        const response=await fetch('/get_order_status'); //從後端獲取最新狀態
+        const response=await fetch('/customers/order_status'); //從後端獲取最新狀態
         const data=await response.json();
         return data.status; //假設後端返回{"status":"配送中"}
     }
-
         //每5秒刷新一次
         setInterval(updateOrderStatus,5000);
         //初始化頁面時立即執行一次更新
@@ -38,7 +37,7 @@
 </script>
 <br>
 
-<a href="/grade_order">
+<a href="/customers/grade_order">
     <button type="button">前往評分</button></a>
 </body>
 </html>

@@ -23,7 +23,7 @@
             color:white;
             border:none;
             cursor:pointer;
-			text-align: center;
+			text-align:center;
 			border-radius: 4px;
         }
         button:hover{
@@ -33,32 +33,39 @@
 </head>
 
 <body>
-<p><b>訂單歷史紀錄</b></p>
+<h2 class="card-title large-title">訂單歷史紀錄</h2>
 <hr>
 
-<table width="400">
+<table>
     <thead>
-        <td>日期</td>
-		<td>商家</td>
-		<td>內容</td>
-		<td>總金額</td>
-		<td>商家評分</td>
-		<td>外送員評分</td>
+	    <tr>
+            <th>日期</th>
+	    	<th>商家</th>
+	    	<th>內容</th>
+			<th>數量</th>
+		    <th>總金額</th>
+	    	<th>商家評分</th>
+	    	<th>外送員評分</th>
+		</tr>
     </thead>
-    {% for record in records %}
-    <tr>
-        <td>{{ }}</td>
-		<td>{{ }}</td>
-		<td>{{ }}</td>
-		<td>{{ }}</td>
-		<td>{{ }}</td>
-		<td>{{ }}</td>
-    </tr>
-    {% endfor %}
+    
+	<tbody>
+	    {% for order in orders %}
+        <tr>
+            <td style="width: 50px;">{{order.date}}</td>
+	    	<td>{{merchant.name}}</td>
+			<td>{{merchant.description}}</td>
+	    	<td style="width: 50px;">{{orderitem.quantity}}</td>
+		    <td style="width: 50px;">{{order.total_price}}</td>
+	    	<td style="width: 50px;">{{商家評分}}</td>
+	    	<td style="width: 50px;">{{外送員評分}}</td>
+        </tr>
+		{% endfor %}
+	</tbody>
 </table>
 <br>
 
-<a href="/browse_merchant">
+<a href="/cuatomers/browse_merchant">
     <button type="button">回到首頁</button></a>
 </body>
 </html>
