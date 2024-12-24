@@ -41,17 +41,23 @@
 <p><b>{{customer.id}} {{customer.name}}</b></p>
 
 <table>
+    <thead>
+        <tr>
+            <th>商家id</th>
+            <th>店名</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+	
     <tbody>
         {% for merchant in merchants %}
-		<tbody>
             <tr>
 			    <td style="width: 100px;">{{merchant.id}}</td>
                 <td>{{merchant.name}}</td>
-				<td style="width: 100px;"><a href="/browse_menu?merchant_id={{merchant.id}}">
+				<td style="width: 100px;"><a href="/customers/browse_menu?merchant_id={{merchant.id}}">
 		            <button type="button">查看菜單</button></a>
 				</td>
             </tr>
-        </tbody>
         {% endfor %}
     </tbody>
 </table>

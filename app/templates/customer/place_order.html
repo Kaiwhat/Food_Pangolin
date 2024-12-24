@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Place your holder</title>
+    <title>Place Order</title>
 	<style>
         table{
             width:80%;
@@ -33,53 +33,52 @@
 </head>
 
 <body>
-<p><b>購物車</b></p>
+<h2 class="card-title large-title">購物車</h2>
 <hr>
-<table>
-        <thead>
-            <tr>
-                <th>內容</th>
-                <th>金額</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in data %}
-            <tr>
-			    <td>{{item.menu}}</td>
-                <td>{{item.price}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 
-{% for item in data %}
-    <div class="menu-row">
-        <div class="menu-info">
-            <span>{{item.menu}}</span>
-            <span>{{item.price}}</span>
-        </div>
-        <form method="POST" action="/delete">
-            <input type="hidden" name="menu" value="{{item.menu}}">
-            <input type="hidden" name="price" value="{{item.price}}">
-            <button type="submit">刪除</button>
+<table>
+    <thead>
+        <tr>
+            <th>商家</th>
+			<th>品項</th>
+			<th>內容</th>
+            <th>金額</th>
+			<th>操作</th>
+        </tr>
+    </thead>
+	
+    <tbody>
+        {% for menuitem in items %}
+        <tr>
+			<td style="width: 100px;">{{merchant.name}}</td>
+			<td style="width: 100px;">{{menuitem.name}}</td>
+            <td>{{menuitem.description}}</td>
+			<td style="width: 100px;">{{menuitem.price}}</td>
+			<td>
+			    <form method="POST" action="/customers/delete">
+                    <input type="hidden" name="name" value="{{menuitem.name}}">
+			        <input type="hidden" name="description" value="{{ menuitem.description }}">
+                    <input type="hidden" name="price" value="{{menuitem.price}}">
+                    <button type="submit">刪除</button>
+			</td>
         </form>
-    </div>
-{% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 <br>
 
 <div class="address">
-    <form method="POST" action="/submit_order">
+    <form method="POST" action="/customers/submit_order">
         <label for="address">配送地址：</label>
         <input type="text" id="address" name="address" placeholder="輸入配送地址" required style="width: 100%; max-width: 400px;">
     </form>
 </div>
 
-<p>總金額：<span id="total-price">{{ total_price }}</span>元</p>
-<br>
-
-<a href="/place_order">
+<p>總金額：<span id="total-price">{{total_price}}</span>元</p>
+<a href="/customera/browse_menu">
     <button type="button">回上一頁</button></a>
-<a href="/place_order">
+<a href="/customers/place_order">
     <button type="button">送出訂單</button></a>
 </body>
 </html>
