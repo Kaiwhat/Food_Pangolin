@@ -21,15 +21,16 @@
 </head>
 
 <body>
-<h2 class="card-title large-title">登入</h3>
+<h2 class="card-title large-title">登入</h2>
 <hr>
 <p><b>目前的登入身分為顧客</b></p>
 
-<form method="POST" action="/customer_login">
-
+<form method="POST" action="customers/index">
 帳號: <input type="text" name="username"> <br>
-密碼: <input type="password" name="password" ><br><br>
-<a href='/browse_merchant'>
+密碼: <input type="password" name="password" ><br>
+<br>
+
+<a href='customers/browse_merchants'>
     <button type='botton'>登入</button></a>
 <a href='/choose_identity'>
     <button type='botton'>取消</button></a>

@@ -6,7 +6,7 @@
     <title>Browse Menu</title>
     <style>
         table{
-            width:80%;
+            width:70%;
             border-collapse:collapse;
         }
         th, td{
@@ -33,36 +33,34 @@
 </head>
 
 <body>
-<p><b>{{merchant.name}}</b></p>
+<h2 class="card-title large-title">{{merchant.name}}</h2>
 <hr>
 
 <table>
     <thead>
         <tr>
+		    <th>品項</th>
             <th>內容</th>
             <th>金額</th>
+			<th>操作</th>
         </tr>
     </thead>
 	
     <tbody>
-        {% for item in data %}
+        {% for item in menuitem %}
         <tr>
-			<td>{{item.menu}}</td>
-            <td>{{item.price}}</td>
+			<td style="width: 100px;">{{menuitem.name}}</td>
+            <td>{{menuitem.description}}</td>
+			<td style="width: 100px;">{{menuitem.price}}</td>
+			<td style="width: 100px;"><form method="POST" action="/add_to_cart">
+                <input type="hidden" name="menu" value="{{menuitem.name}}">
+                <input type="hidden" name="price" value="{{menuitem.description}}">
+                <button type="submit">加入購物車</button></form>
+			</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-
-{% for item in data %}
-    <div class="menu-row">
-        <form method="POST" action="/add_to_cart">
-            <input type="hidden" name="menu" value="{{item.menu}}">
-            <input type="hidden" name="price" value="{{item.price}}">
-            <button type="submit">加入購物車</button>
-        </form>
-    </div>
-{% endfor %}
 <br>
 
 <a href="/place_order">

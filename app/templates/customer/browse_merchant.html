@@ -6,7 +6,7 @@
     <title>Browse Merchant</title>
 	<style>
         table{
-            width:80%;
+            width:70%;
             border-collapse:collapse;
         }
         th, td{
@@ -30,38 +30,28 @@
             background-color:#0056b3;
         }
 		.container {
-      display: flex; /* 設定為 Flexbox 佈局 */
-    }
-    .left-column {
-      flex: 0 0 200px; /* 左邊欄位寬度為200px */
-      background-color: lightgray; /* 左邊欄位背景顏色 */
-    }
-    .center-column {
-      flex: 1; /* 中間欄位佔用剩餘空間 */
-      background-color: lightblue; /* 中間欄位背景顏色 */
-    }
-    .right-column {
-      flex: 1; /* 右邊欄位佔用剩餘空間 */
-      background-color: lightgreen; /* 右邊欄位背景顏色 */
+      display: flex; /*設定為Flexbox佈局*/
     }
     </style>
 </head>
 
 <body>
-<h2 class="card-title large-title">瀏覽商家</h3>
+<h2 class="card-title large-title">瀏覽商家</h2>
 <hr>
 <p><b>{{customer.id}} {{customer.name}}</b></p>
 
 <table>
     <tbody>
         {% for merchant in merchants %}
-        <div class="left-column">{{merchant.id}}</div>
-        <div class="center-column">{{merchant.name}}</div>
-        <div class="right-column">
-        <div class="button-container"><a href="/browse_menu?merchant_id={{merchant.id}}">
-            <button type="button">查看菜單</button></a>
-        </div>
-    </div>
+		<tbody>
+            <tr>
+			    <td style="width: 100px;">{{merchant.id}}</td>
+                <td>{{merchant.name}}</td>
+				<td style="width: 100px;"><a href="/browse_menu?merchant_id={{merchant.id}}">
+		            <button type="button">查看菜單</button></a>
+				</td>
+            </tr>
+        </tbody>
         {% endfor %}
     </tbody>
 </table>
