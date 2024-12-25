@@ -6,7 +6,7 @@
     <title>Manage Menu</title>
 	<style>
         table{
-            width:70%;
+            width:80%;
             border-collapse:collapse;
         }
         th, td{
@@ -15,14 +15,16 @@
             text-align:left;
         }
         th {
-            background-color:#f4f4f4;
+            background-color:#CCEEFF;
         }
         button{
-            padding:5px 10px;
-            background-color:#5599FF;
+            padding:6px 12px;
+            background-color:#33CCFF;
             color:white;
             border:none;
             cursor:pointer;
+			text-align:center;
+			border-radius: 4px;
         }
         button:hover{
             background-color:#0056b3;
@@ -31,47 +33,51 @@
 </head>
 
 <body>
-<p><b>我的菜單</b></p>
+<h2 class="card-title large-title">我的菜單</h2>
 <hr>
 <p><b>{{merchant.id}}{{merchant.name}}</b></p>
 
 <table>
     <thead>
         <tr>
-            <th>內容</th>
-            <th>金額</th>
+            <th>品項</th>
+			<th>內容</th>
+			<th>數量</th>
+            <th>總金額</th>
+			<th>操作</th>
         </tr>
     </thead>
 	
     <tbody>
-        {% for item in data %}
+        {% for orderitem in items %}
         <tr>
-			<td>{{item.menu}}</td>
-            <td>{{item.price}}</td>
+			<td>{{orderitem.name}}</td>
+			<td>{{orderitem.description}}</td>
+			<td>{{orderitem.quantity}}</td>
+            <td style="width: 100px;">{{orderitem.price}}</td>
+			<td>
+			    <form method="POST" action="/merchants/edit_menu_item" style="display: inline;">
+                    <input type="hidden" name="menu" value="{{orderitem.name}}">
+					<input type="hidden" name="description" value="{{orderitem.description}}">
+                    <input type="hidden" name="price" value="{{orderitem.price}}">
+                    <button type="submit">編輯</button>
+	            </form>
+		        <form method="POST" action="/merchants/delete_menu_item" style="display: inline;">
+                    <input type="hidden" name="menu" value="{{orderitem.name}}">
+					<input type="hidden" name="description" value="{{orderitem.description}}">
+                    <input type="hidden" name="price" value="{{orderitem.price}}">
+                    <button type="submit">刪除</button>
+                </form>
+			</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-
-{% for item in data %}
-    <div class="menu-row">
-        <form method="POST" action="/edit_item" style="display: inline;">
-            <input type="hidden" name="menu" value="{{item.menu}}">
-            <input type="hidden" name="price" value="{{item.price}}">
-            <button type="submit">編輯</button>
-	    </form>
-		<form method="POST" action="/delete_item" style="display: inline;">
-            <input type="hidden" name="menu" value="{{item.menu}}">
-            <input type="hidden" name="price" value="{{item.price}}">
-            <button type="submit">刪除</button>
-        </form>
-    </div>
-{% endfor %}
 <br>
 
-<a href="/add_item">
-    <button type="button">新增品項</button></a>
-<a href="/order_list">
+<a href="/merchants/view_merchant_orders">
     <button type="button">查看目前訂單</button></a>
+	<a href="/merchants/add_menu_item">
+    <button type="button">新增品項</button></a>
 </body>
 </html>

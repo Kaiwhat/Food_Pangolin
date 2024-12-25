@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Merchant Register</title>
 	<style>
-        button{
-            padding:5px 10px;
-            background-color:#5599FF;
+         button{
+            padding:6px 12px;
+            background-color:#33CCFF;
             color:white;
             border:none;
             cursor:pointer;
+			text-align: center;
+			border-radius: 4px;
         }
         button:hover{
             background-color:#0056b3;
@@ -19,14 +21,15 @@
 </head>
 
 <body>
-<p><b>商家註冊</b></p>
+<h2 class="card-title large-title">商家註冊</h2>
 <hr>
 
 <form method="POST" action="/merchant_register">
 店名: <input type="text" name="name"> <br>
 帳號: <input type="text" name="username"> <br>
 密碼: <input type="password" name="password" ><br>
-<a href='/merchant_login'>
+<br>
+<a href='/merchants/register'>
     <button type='botton'>註冊</button></a>
 </form>
 

@@ -15,11 +15,11 @@
             text-align:left;
         }
         th {
-            background-color:#f4f4f4;
+            background-color:#CCEEFF;
         }
         button{
             padding:6px 12px;
-            background-color:#5599FF;
+            background-color:#33CCFF;
             color:white;
             border:none;
             cursor:pointer;
@@ -53,7 +53,7 @@
             <td>{{menuitem.description}}</td>
 			<td style="width: 100px;">{{menuitem.price}}</td>
 			<td style="width: 100px;">
-			    <form method="POST" action="/customers/      ">
+			    <form method="POST" action="customers/      ">
 				    {% csrf_token %}
                     <input type="hidden" name="name" value="{{menuitem.name}}">
 					<input type="hidden" name="description" value="{{menuitem.description}}">
@@ -67,9 +67,9 @@
 </table>
 <br>
 
-<a href="/place_order">
+<a href="/customers/    ">
     <button type="button">回上一頁</button></a>
-<a href="/place_order">
+<a href="/customers/    ">
     <button type="button">前往購物車</button></a>
 </body>
 </html>

@@ -15,14 +15,16 @@
             text-align:left;
         }
         th {
-            background-color:#f4f4f4;
+            background-color:#CCEEFF;
         }
         button{
-            padding:5px 10px;
-            background-color:#5599FF;
+            padding:6px 12px;
+            background-color:#33CCFF;
             color:white;
             border:none;
             cursor:pointer;
+			text-align:center;
+			border-radius: 4px;
         }
         button:hover{
             background-color:#0056b3;
@@ -31,16 +33,18 @@
 </head>
 
 <body>
-<p><b>目前訂單</b></p>
+<h2 class="card-title large-title">目前訂單</h2>
 <hr>
 <p><b>{{merchant.id}}{{merchant.name}}</b></p>
 
 <table>
     <thead>
         <tr>
-            <th>內容</th>
-            <th>金額</th>
+            <th>品項</th>
+		    <th>內容</th>
+            <th>總金額</th>
 			<th>顧客</th>
+			<th>操作</th>
         </tr>
     </thead>
 	
@@ -49,23 +53,21 @@
         <tr>
 			<td>{{    }}</td>
             <td>{{    }}</td>
-			<td>{{    }}</td>
+			<td style="width: 100px;">{{    }}</td>
+			<td style="width: 100px;">{{    }}</td>
+			<td>
+			    <form method="POST" action="/merchant/      ">
+                    <input type="hidden" name="order_id" value="{{order.id}}">
+                    <button type="submit" class="complete-btn">完成</button>
+        </form>
+			</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 <br>
 
-{% for order in orders %}
-        <form method="POST" action="/      ">
-            <input type="hidden" name="order_id" value="{{order.id}}">
-            <button type="submit" class="complete-btn">完成</button>
-        </form>
-    </div>
-{% endfor %}
-<br>
-
-<a href="/manage_menu">
-    <button type="button">回到首頁</button></a>
+<a href="/merchamts/manage_menu">
+    <button type="button">管理菜單</button></a>
 </body>
 </html>

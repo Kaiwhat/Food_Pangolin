@@ -6,11 +6,13 @@
     <title>Edit Item</title>
 	<style>
         button{
-            padding:5px 10px;
-            background-color:#5599FF;
+            padding:6px 12px;
+            background-color:#33CCFF;
             color:white;
             border:none;
             cursor:pointer;
+			text-align: center;
+			border-radius: 4px;
         }
         button:hover{
             background-color:#0056b3;
@@ -19,20 +21,34 @@
 </head>
 
 <body>
-<p><b>編輯品項</b></p>
+<h2 class="card-title large-title">編輯品項</h2>
 <hr>
 
-<form method="POST" action="/save_item" style="display: inline;">
-    內容: <input type="text" name="newcontent" value="{{merchant.content}}"><br>
-    金額: <input type="text" name="newprice" value="{{merchant.price}}"><br><br>
+<form method="POST" action="/merchants/edit_menu_item">
+    {% csrf_token %}
+	<div>
+        <label for="newname">品項:</label>
+        <input type="text" id="newname" name="newname" placeholder="請輸入新的品項" value="{{merchant.name}}" required>
+    </div>
+     <div>
+        <label for="newdescription">內容:</label>
+        <input type="text" id="newdescription" name="newdescription" placeholder="請輸入新的內容" value="{{merchant.description}}" required>
+    </div>
+    <div>
+        <label for="newprice">金額:</label>
+        <input type="number" name="newprice" placeholder="請輸入新的金額" value="{{merchant.price}}" min="0" required>
+    </div>
     
+	<input type="hidden" name="oldname" value="{{merchant.name}}">
     <input type="hidden" name="oldcontent" value="{{merchant.content}}">
     <input type="hidden" name="oldprice" value="{{merchant.price}}">
-    
-    <button type="submit">完成</button>
+
+    <div style="margin-top: 10px;">
+        <button type="submit" style="margin-right:10px;">編輯完成</button>
+        <a href="/merchants/manage_menu">
+            <button type="button">取消</button>
+        </a>
+    </div>
 </form>
-   
-<a href="/manage_menu">
-    <button type="button">取消</button></a>
 </body>
 </html>
