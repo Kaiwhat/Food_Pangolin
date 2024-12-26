@@ -18,6 +18,11 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 	print("Error connecting to DB")
 	exit(1)
 
+def login(name, password):
+	sql="SELECT name FROM Merchant WHERE name = %s AND password = %s"
+	cursor.execute(sql,(name, password))
+	return cursor.fetchone()
+
 #新增商家資料
 def add_merchant(id, name, location, contact_info):
     sql = "INSERT INTO Merchant (id, name, location, contact_info) VALUES (%s, %s, %s, %s)"
