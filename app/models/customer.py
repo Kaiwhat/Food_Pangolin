@@ -27,6 +27,10 @@ def connect_db():
         database="FoodPangolin"  # 確保這裡是你的資料庫名稱
     )
 
+def login(name, password):
+	sql="SELECT name FROM customer WHERE name = %s AND password = %s"
+	cursor.execute(sql,(name, password))
+	return cursor.fetchone()
 
 def login(name, password):
 	sql="SELECT name FROM customer WHERE name = %s AND password = %s"
