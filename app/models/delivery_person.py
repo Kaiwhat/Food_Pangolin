@@ -18,7 +18,7 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 	print("Error connecting to DB")
 	exit(1)
 
-def loginrq(name, password):
+def login(name, password):
 	sql="SELECT name FROM customer WHERE name = %s AND password = %s"
 	cursor.execute(sql,(name, password))
 	return cursor.fetchone()
