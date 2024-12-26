@@ -2,6 +2,8 @@
 # Connect to MariaDB Platform
 import mysql.connector #mariadb
 
+#test 
+
 try:
 	#連線DB
 	conn = mysql.connector.connect(
