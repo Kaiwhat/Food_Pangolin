@@ -18,6 +18,10 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 	print("Error connecting to DB")
 	exit(1)
 
+def loginrq(name, password):
+	sql="SELECT name FROM customer WHERE name = %s AND password = %s"
+	cursor.execute(sql,(name, password))
+	return cursor.fetchone()
 
 #新增送貨員資料
 def add_delivery_person(id, name, vehicle_info, contact_info):
