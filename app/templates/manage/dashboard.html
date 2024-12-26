@@ -4,35 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-	<style>
-        table{
-            width:80%;
-            border-collapse:collapse;
-        }
-        th, td{
-            border:1px solid #ddd;
-            padding:8px;
-            text-align:left;
-        }
-        th {
-            background-color:#f4f4f4;
-        }
-        button{
-            padding:5px 10px;
-            background-color:#5599FF;
-            color:white;
-            border:none;
-            cursor:pointer;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 <body>
     
 </body>
-<p><b>營運總覽及統計</b></p>
+<h2 class="card-title large-title">營運總覽及統計</h2>
 <hr>
 
 <div class="dashboard">
@@ -47,4 +24,10 @@
 <br>
 <a href="/browse_menu?merchant_id={{merchant.id}}">
          <button type="button">訂單結算</button>
+		 
+		 
+		 <div class="buttons">
+    <button type="submit" class="common-button">註冊</button>
+    <a href="/choose_identity" class="common-button">取消</a>
+</div>
 </html>

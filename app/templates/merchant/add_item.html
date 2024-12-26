@@ -3,20 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Item</title><style>
-         button{
-            padding:6px 12px;
-            background-color:#33CCFF;
-            color:white;
-            border:none;
-            cursor:pointer;
-			text-align: center;
-			border-radius: 4px;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+    <title>Add Item</title>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
@@ -43,10 +31,8 @@
     <input type="hidden" name="oldprice" value="{{merchant.price}}">
 
     <div style="margin-top: 10px;">
-        <button type="submit" style="margin-right:10px;">新增</button>
-        <a href="/merchants/manage_menu">
-            <button type="button">取消</button>
-        </a>
+        <button type="submit" class="common-button">新增</button>
+        <a href="/merchants/manage_menu" class="common-button">新增品項</a>
     </div>
 </form>
 </body>

@@ -4,43 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Choose identity</title>
-	<style>
-        button{
-            padding:6px 12px;
-            background-color:#33CCFF;
-            color:white;
-            border:none;
-            cursor:pointer;
-			text-align: center;
-			border-radius: 4px;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
 <h2 class="card-title large-title">Food Pangolin</h2>
 <hr>
 <p><b>選擇你的登入身分</b></p>
-<a href='customers'>
-    <button type='botton'>顧客</button></a>
-<a href='merchants'>
-    <button type='botton'>商家</button></a>
-<a href='deliveries'>
-    <button type='botton'>外送員</button></a>
-<a href='/admin_login'>
-    <button type='botton'>管理員</button></a><br>
-<br>
-	
-<b>還沒有帳號</b>
-<a href='customers/new'>
-    <button type='botton'>顧客註冊</button></a>
-<a href='merchants/new'>
-    <button type='botton'>商家註冊</button></a>
-<a href='deliveries/new'>
-    <button type='botton'>外送員註冊</button></a>
 
+<div class="buttons">
+    <a href="customers" class="common-button">顧客</a>
+    <a href="merchants" class="common-button">商家</a>
+    <a href="deliveries" class="common-button">外送員</a>
+    <a href="manage" class="common-button">管理員</a>
+</div>
+
+
+<b>還沒有帳號</b>
+<div class="buttons">
+    <a href="customers/new" class="common-button">顧客</a>
+    <a href="merchants/new" class="common-button">商家</a>
+    <a href="deliveries/new" class="common-button">外送員</a>
+</div>
 </body>
 </html>

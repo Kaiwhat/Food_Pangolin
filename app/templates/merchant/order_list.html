@@ -4,32 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order List</title>
-	<style>
-        table{
-            width:80%;
-            border-collapse:collapse;
-        }
-        th, td{
-            border:1px solid #ddd;
-            padding:8px;
-            text-align:left;
-        }
-        th {
-            background-color:#CCEEFF;
-        }
-        button{
-            padding:6px 12px;
-            background-color:#33CCFF;
-            color:white;
-            border:none;
-            cursor:pointer;
-			text-align:center;
-			border-radius: 4px;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
@@ -67,7 +42,8 @@
 </table>
 <br>
 
-<a href="/merchamts/manage_menu">
-    <button type="button">管理菜單</button></a>
+<div>
+    <a href="/merchamts/manage_menu" class="common-button">管理菜單</a>
+</div>
 </body>
 </html>

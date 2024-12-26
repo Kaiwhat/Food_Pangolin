@@ -4,20 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Status</title>
-	<style>
-        button{
-            padding:6px 12px;
-            background-color:#33CCFF;
-            color:white;
-            border:none;
-            cursor:pointer;
-			text-align:center;
-			border-radius:4px;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
@@ -36,8 +23,9 @@
         updateOrderStatus();
 </script>
 <br>
-
-<a href="/customers/grade_order">
-    <button type="button">前往評分</button></a>
+	
+<div class="buttons">
+    <a href="/customers/grade_order" class="common-button">前往評分</a>
+</div>
 </body>
 </html>

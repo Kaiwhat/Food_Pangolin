@@ -4,35 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse Merchant</title>
-	<style>
-        table{
-            width:70%;
-            border-collapse:collapse;
-        }
-        th, td{
-            border:1px solid #ddd;
-            padding:8px;
-            text-align:left;
-        }
-        th {
-            background-color:#CCEEFF;
-        }
-        button{
-            padding:5px 12px;
-            background-color:#33CCFF;
-            color:white;
-            border:none;
-            cursor:pointer;
-			text-align: center;
-			border-radius: 4px;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-		.container {
-      display: flex; /*設定為Flexbox佈局*/
-    }
-    </style>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
@@ -54,8 +26,10 @@
             <tr>
 			    <td style="width: 100px;">{{merchant.id}}</td>
                 <td>{{merchant.name}}</td>
-				<td style="width: 100px;"><a href="/customers/browse_menu?merchant_id={{merchant.id}}">
-		            <button type="button">查看菜單</button></a>
+				<td style="width: 100px;">
+					<div class="buttons">
+                        <a href="/customers/browse_menu?merchant_id={{merchant.id}}" class="common-button">查看菜單</a>
+                    </div>
 				</td>
             </tr>
         {% endfor %}

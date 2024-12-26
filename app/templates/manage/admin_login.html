@@ -4,22 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Login</title>
-	<style>
-        button{
-            padding:5px 10px;
-            background-color:#5599FF;
-            color:white;
-            border:none;
-            cursor:pointer;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
-<p><b>登入</b></p>
+<h2 class="card-title large-title">登入</h2>
 <hr>
 <p><b>目前的登入身分為管理員</b></p>
 
@@ -30,6 +19,12 @@
 <a href='/dashboard'>
     <button type='botton'>登入</button></a>
 </form>
+
+
+<div class="buttons">
+    <button type="submit" class="common-button">註冊</button>
+    <a href="/choose_identity" class="common-button">取消</a>
+</div>
 
 </body>
 </html>

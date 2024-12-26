@@ -4,34 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Merchant Register</title>
-	<style>
-         button{
-            padding:6px 12px;
-            background-color:#33CCFF;
-            color:white;
-            border:none;
-            cursor:pointer;
-			text-align: center;
-			border-radius: 4px;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
 <h2 class="card-title large-title">商家註冊</h2>
 <hr>
 
-<form method="POST" action="/merchant_register">
-店名: <input type="text" name="name"> <br>
-帳號: <input type="text" name="username"> <br>
+<form method="POST" action="/merchants/register">
+店名: <input type="text" name="name"><br>
+帳號: <input type="text" name="username"><br>
 密碼: <input type="password" name="password" ><br>
 <br>
-<a href='/merchants/register'>
-    <button type='botton'>註冊</button></a>
+<div class="buttons">
+    <button type="submit" class="common-button">註冊</button>
+    <a href="/choose_identity" class="common-button">取消</a>
+</div>
 </form>
-
 </body>
 </html>

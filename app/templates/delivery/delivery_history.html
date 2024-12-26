@@ -4,34 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delivery history</title>
-	<style>
-        table{
-            width:80%;
-            border-collapse:collapse;
-        }
-        th, td{
-            border:1px solid #ddd;
-            padding:8px;
-            text-align:left;
-        }
-        th {
-            background-color:#f4f4f4;
-        }
-        button{
-            padding:5px 10px;
-            background-color:#5599FF;
-            color:white;
-            border:none;
-            cursor:pointer;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
-<p><b>歷史紀錄</b></p>
+<h2 class="card-title large-title">歷史紀錄</h2>
 <hr>
 
 <table width="400">
@@ -58,5 +35,11 @@
 
 <a href="/assigned_order">
     <button type="button">回到目前訂單</button></a>
+	
+	
+	<div class="buttons">
+    <button type="submit" class="common-button">註冊</button>
+    <a href="/choose_identity" class="common-button">取消</a>
+</div>
 </body>
 </html>

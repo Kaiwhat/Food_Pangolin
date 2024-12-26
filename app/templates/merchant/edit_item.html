@@ -4,20 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Item</title>
-	<style>
-        button{
-            padding:6px 12px;
-            background-color:#33CCFF;
-            color:white;
-            border:none;
-            cursor:pointer;
-			text-align: center;
-			border-radius: 4px;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
@@ -44,10 +31,8 @@
     <input type="hidden" name="oldprice" value="{{merchant.price}}">
 
     <div style="margin-top: 10px;">
-        <button type="submit" style="margin-right:10px;">編輯完成</button>
-        <a href="/merchants/manage_menu">
-            <button type="button">取消</button>
-        </a>
+        <button type="submit" class="common-button">註冊</button>
+        <a href="/customers/manage_menu" class="common-button">取消</a>
     </div>
 </form>
 </body>

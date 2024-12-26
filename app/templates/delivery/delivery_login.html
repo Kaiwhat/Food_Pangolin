@@ -3,33 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delivery Login</title>
-	<style>
-        button{
-            padding:5px 10px;
-            background-color:#5599FF;
-            color:white;
-            border:none;
-            cursor:pointer;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+    <title>Delivery Person Login</title>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
-<p><b>登入</b></p>
+<h2 class="card-title large-title">登入</h2>
 <hr>
 <p><b>目前的登入身分為外送員</b></p>
 
-<form method="POST" action="/delivery_login">
-
+<form method="POST" action="/deliveries/index">
 帳號: <input type="text" name="username"> <br>
 密碼: <input type="password" name="password" ><br>
-
-<a href='/assigned_order'>
-    <button type='botton'>登入</button></a>
+<br>
+<div class="buttons">
+    <button type="submit" class="common-button">登入</button>
+    <a href="/choose_identity" class="common-button">取消</a>
+</div>
 </form>
 
 </body>

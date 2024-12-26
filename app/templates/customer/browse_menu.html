@@ -4,32 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse Menu</title>
-    <style>
-        table{
-            width:70%;
-            border-collapse:collapse;
-        }
-        th, td{
-            border:1px solid #ddd;
-            padding:8px;
-            text-align:left;
-        }
-        th {
-            background-color:#CCEEFF;
-        }
-        button{
-            padding:6px 12px;
-            background-color:#33CCFF;
-            color:white;
-            border:none;
-            cursor:pointer;
-			text-align: center;
-			border-radius: 4px;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
@@ -67,9 +42,9 @@
 </table>
 <br>
 
-<a href="/customers/    ">
-    <button type="button">回上一頁</button></a>
-<a href="/customers/    ">
-    <button type="button">前往購物車</button></a>
+<div class="buttons">
+    <a href="/customers/browse_merchant" class="common-button">取消</a>
+	<a href="/customers/    " class="common-button">前往購物車</a>
+</div>
 </body>
 </html>

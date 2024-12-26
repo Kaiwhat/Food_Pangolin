@@ -3,35 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assign order</title>
-	<style>
-        table{
-            width:80%;
-            border-collapse:collapse;
-        }
-        th, td{
-            border:1px solid #ddd;
-            padding:8px;
-            text-align:left;
-        }
-        th {
-            background-color:#f4f4f4;
-        }
-        button{
-            padding:5px 10px;
-            background-color:#5599FF;
-            color:white;
-            border:none;
-            cursor:pointer;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+    <title>Assigned Order</title>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
-<p><b>已接訂單</b></p>
+<h2 class="card-title large-title">已接訂單</h2>
 <hr>
 <p><b>{{delivery.id}}{{delivery.name}}</b></p>
 
@@ -70,10 +47,9 @@
 </div>
 {% endfor %}
 <br>
-
-<a href="/delivery_history">
-    <button type="button">查看歷史紀錄</button></a>
-	<a href="/accept_order">
-    <button type="button">前往接單</button></a>
+<div class="buttons">
+    <a href="/deliveries/view_delivery_history" class="common-button">查看歷史紀錄</a>
+    <a href="/deliveries/view_assigned_orders" class="common-button">前往接單</a>
+</div>
 </body>
 </html>

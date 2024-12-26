@@ -4,36 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Register</title>
-	<style>
-        button{
-            padding:6px 12px;
-            background-color:#33CCFF;
-            color:white;
-            border:none;
-            cursor:pointer;
-			text-align: center;
-			border-radius: 4px;
-        }
-        button:hover{
-            background-color:#0056b3;
-        }
-    </style>
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
 <h2 class="card-title large-title">顧客註冊</h2>
 <hr>
 
-<form method="POST" action="/customers/register">
-姓名: <input type="text" name="name"> <br>
-帳號: <input type="text" name="username"> <br>
-密碼: <input type="password" name="password" ><br>
-<br>
+<form method="POST" action="/customers">
+    <label for="name">姓名:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
 
-<a href='/customers/register'>
-    <button type='botton'>註冊</button></a>
-<a href='/choose_identity'>
-    <button type='botton'>取消</button></a>
+    <label for="username">帳號:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+
+    <label for="password">密碼:</label>
+    <input type="password" id="password" name="password" required>
+    <br>  
+</form>
+<br>
+<div class="buttons">
+    <button type="submit" class="common-button">註冊</button>
+    <a href="/choose_identity" class="common-button">取消</a>
+</div>
 </form>
 
 </body>
