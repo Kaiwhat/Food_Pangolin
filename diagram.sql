@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2024-12-15 07:07:42
+-- 產生時間： 2024-12-26 11:24:53
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -31,7 +31,8 @@ CREATE TABLE `customer` (
   `id` int(100) NOT NULL,
   `name` varchar(30) NOT NULL,
   `contact_info` varchar(30) NOT NULL,
-  `address` varchar(30) NOT NULL
+  `address` varchar(30) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -44,7 +45,8 @@ CREATE TABLE `deliveryperson` (
   `id` int(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `vehicle_info` varchar(100) NOT NULL,
-  `contact_info` varchar(100) NOT NULL
+  `contact_info` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -87,16 +89,17 @@ CREATE TABLE `merchant` (
   `id` int(30) NOT NULL,
   `name` varchar(100) NOT NULL,
   `location` varchar(100) NOT NULL,
-  `contact_info` varchar(100) NOT NULL
+  `contact_info` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `order`
+-- 資料表結構 `orde`
 --
 
-CREATE TABLE `order` (
+CREATE TABLE `orde` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `merchant_id` int(100) NOT NULL,
@@ -156,9 +159,9 @@ ALTER TABLE `merchant`
   ADD PRIMARY KEY (`id`);
 
 --
--- 資料表索引 `order`
+-- 資料表索引 `orde`
 --
-ALTER TABLE `order`
+ALTER TABLE `orde`
   ADD PRIMARY KEY (`id`);
 
 --
