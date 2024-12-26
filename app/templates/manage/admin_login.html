@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Login</title>
+    <title>Admin Login</title>
 	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
@@ -12,19 +12,18 @@
 <hr>
 <p><b>目前的登入身分為管理員</b></p>
 
-<form method="POST" action="/admin_login">
-
+<form method="POST" action="/admin/login">
 帳號: <input type="text" name="username"> <br>
-密碼: <input type="password" name="password" ><br><br>
-<a href='/dashboard'>
-    <button type='botton'>登入</button></a>
+密碼: <input type="password" name="password" ><br>
+<br>
+<div class="buttons">
+    <button type="submit" class="common-button">登入</button>
+    <a href="/" class="common-button">取消</a>
+</div>
 </form>
 
 
-<div class="buttons">
-    <button type="submit" class="common-button">註冊</button>
-    <a href="/" class="common-button">取消</a>
-</div>
+
 
 </body>
 </html>
