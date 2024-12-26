@@ -28,7 +28,7 @@ def connect_db():
     )
 
 
-def loginrq(name, password):
+def login(name, password):
 	sql="SELECT name FROM customer WHERE name = %s AND password = %s"
 	cursor.execute(sql,(name, password))
 	return cursor.fetchone()
