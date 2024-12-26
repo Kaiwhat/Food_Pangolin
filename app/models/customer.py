@@ -27,6 +27,12 @@ def connect_db():
         database="FoodPangolin"  # 確保這裡是你的資料庫名稱
     )
 
+
+def loginrq(name, password):
+	sql="SELECT name FROM customer WHERE name = %s AND password = %s"
+	cursor.execute(sql,(name, password))
+	return cursor.fetchone()
+
 #新增顧客
 def add_customer(id, name, contact_info, address):
 	sql="insert into Customer (id, name, contact_info, address) values (%s, %s, %s, %s);"
