@@ -24,7 +24,7 @@
     <tbody>
         {% for menuitem in items %}
         <tr>
-			<td style="width: 100px;">{{menuitem.name}}</td>
+            <td style="width: 100px;">{{menuitem.name}}</td>
             <td>{{menuitem.description}}</td>
 			<td style="width: 100px;">{{menuitem.price}}</td>
 			<td style="width: 100px;">
@@ -32,6 +32,7 @@
                     <input type="hidden" name="name" value="{{menuitem.name}}">
 					<input type="hidden" name="description" value="{{menuitem.description}}">
                     <input type="hidden" name="price" value="{{menuitem.price}}">
+                    <input type="hidden" name="id" value="{{menuitem.id}}">
                     <button type="submit">加入購物車</button>
 				</form>
 			</td>

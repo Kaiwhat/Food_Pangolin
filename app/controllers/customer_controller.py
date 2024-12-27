@@ -52,7 +52,8 @@ def place_order():
     try:
         customer_id = request.form.get('customer_id')  # 從前端表單接收顧客 ID
         item_ids = request.form.getlist('item_ids')    # 接收選中的菜單項目 ID 列表
-        quantities = request.form.getlist('quantities')  # 接收數量列表
+        #FIXME:加入購物車後選擇數量
+        #quantities = request.form.getlist('quantities')  # 接收數量列表
         
         # FIXME: What...?
         order = Order(customer_id=customer_id, status="pending")
