@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, redirect, session, flash
 import app.models.merchant as Merchant
 import app.models.menu_item as MenuItem
 import app.models.order as Order
@@ -31,14 +31,30 @@ def register():
             return jsonify({'error': str(e)}), 400
     return render_template('merchant/merchant_register.html')
 
+@merchant_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    name = request.form['username']
+    password = request.form['password']
+
+    # 透過 id 查詢用戶
+    result, id = Merchant.login(name, password)
+    if result:  # 直接比較明文密碼
+        session['id'] = id  # 將用戶 ID 保存到 session
+        flash('登入成功！')
+        return redirect('menu')  # 登入成功，重定向到 merchant
+
+    flash('登入失敗，請檢查您的帳號和密碼。')
+    return redirect('/merchants/')  # 登入失敗，重定向到登入頁
+
 # 查看菜單
 @merchant_bp.route('/menu', methods=['GET'])
 def view_menu():
-    merchant_id = request.args.get('merchant_id')
+    merchant_id = session['id']
     try:
         # FIXME
-        menu_items = MenuItem.get_menu_items_by_merchant(merchant_id=merchant_id).all()
-        return jsonify([item.to_dict() for item in menu_items]), 200
+        menu_items = MenuItem.get_menu_items_by_merchant(merchant_id=merchant_id)
+        print(menu_items)
+        return render_template('merchant/manage_menu.html', orderitem=menu_items, merchant_id=merchant_id)
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 

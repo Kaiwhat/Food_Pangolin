@@ -9,7 +9,7 @@ try:
 		password="",
 		host="localhost",
 		port=3306,
-		database="test"
+		database="FoodPangolin"
 	)
 	#建立執行SQL指令用之cursor, 設定傳回dictionary型態的查詢結果 [{'欄位名':值, ...}, ...]
 	cursor=conn.cursor(dictionary=True)
@@ -29,9 +29,14 @@ def connect_db():
 
 
 def login(name, password):
-	sql="SELECT name FROM customer WHERE name = %s AND password = %s"
+	sql="SELECT id FROM customer WHERE name = %s AND password = %s"
 	cursor.execute(sql,(name, password))
-	return cursor.fetchone()
+	record = cursor.fetchone()
+	try:
+		print(record['id'], " log in...")
+		return True, record['id']
+	except Exception as e:
+		return False, '0'
 
 #新增顧客
 #FIXME:add password

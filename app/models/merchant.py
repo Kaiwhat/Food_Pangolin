@@ -19,9 +19,14 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 	exit(1)
 
 def login(name, password):
-	sql="SELECT name FROM Merchant WHERE name = %s AND password = %s"
+	sql="SELECT id FROM merchant WHERE name = %s AND password = %s"
 	cursor.execute(sql,(name, password))
-	return cursor.fetchone()
+	record = cursor.fetchone()
+	try:
+		print(record['id'], " log in...")
+		return True, record['id']
+	except Exception as e:
+		return False, '0'
 
 #新增商家資料
 def add_merchant(id, name, location, contact_info):
@@ -71,6 +76,13 @@ def update_menu_item(name, price, description, availability_status, id):
     cursor.execute(sql, (name, price, description, availability_status, id))
     conn.commit()
     return
+
+def get_all_merchant():
+    sql = "SELECT id, name FROM merchant"
+    cursor.execute(sql)
+    products = cursor.fetchall()
+    cursor.close()
+    return products
 
 #查詢某商家的詳細資訊
 def get_merchant(merchant_id):

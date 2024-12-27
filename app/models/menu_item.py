@@ -50,14 +50,15 @@ def update_menu_item_availability(availability_status, id):
 # 查詢菜單項目資料
 def get_menu_item(menu_item_id):
     sql = "SELECT id, name, price, description, availability_status, merchant_id FROM MenuItem WHERE id = %s"
-    cursor.execute(sql, (menu_item_id,))
+    cursor.execute(sql, (menu_item_id))
     return cursor.fetchone()
 
 # 查詢商家的所有菜單項目
 def get_menu_items_by_merchant(merchant_id):
-    sql = "SELECT id, name, price, description, availability_status FROM MenuItem WHERE merchant_id = %s"
+    sql = "SELECT id, name, price, description, availability_status FROM menuitem WHERE merchant_id = %s"
     cursor.execute(sql, (merchant_id,))
-    return cursor.fetchall()
+    products = cursor.fetchall()
+    return products
 
 # 查詢訂單中的所有菜單項目
 def get_order_items(order_id):

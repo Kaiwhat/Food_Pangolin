@@ -27,24 +27,24 @@ def register():
         # FIXME: Change add_customer() parameter
         Customer.add_customer(name, id, address) 
         flash('註冊成功，請登入！')
-        return redirect('/login')  # 重定向到首頁
+        return redirect('/customers/')  # 重定向到首頁
     return render_template('customer/customer_register.html')
 
 # 登入功能
 @customer_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    id = request.form['id']
+    name = request.form['username']
     password = request.form['password']
 
     # 透過 id 查詢用戶
-    user = Customer.get_user_by_id(id)
-    if user and password == user['password']:  # 直接比較明文密碼
-        session['id'] = user['id']  # 將用戶 ID 保存到 session
+    result, id = Customer.login(name, password)
+    if result:  # 直接比較明文密碼
+        session['id'] = id  # 將用戶 ID 保存到 session
         flash('登入成功！')
-        return redirect('/browse_merchant')  # 登入成功，重定向到 browse_merchant.html
+        return redirect('merchants')  # 登入成功，重定向到 merchant
 
     flash('登入失敗，請檢查您的帳號和密碼。')
-    return redirect('/login')  # 登入失敗，重定向到登入頁
+    return redirect('/customers/')  # 登入失敗，重定向到登入頁
 
 @customer_bp.route('/place_order', methods=['POST'])
 def place_order():
@@ -94,8 +94,9 @@ def view_customer_orders(customer_id):
 #全部商家
 @customer_bp.route('/merchants', methods=['GET'])
 def browse_merchants():
-    merchants = Merchant.query.all()
-    return render_template('customer/browse_merchant.html', merchants=merchants)
+    merchants = Merchant.get_all_merchant()
+    customer_id = session['id']
+    return render_template('customer/browse_merchant.html', merchants=merchants, customer_id=customer_id)
 
 @customer_bp.route('/menu/<int:merchant_id>', methods=['GET'])
 def browse_menu(merchant_id):
