@@ -28,11 +28,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `customer` (
-  `id` int(100) NOT NULL,
+  `id` int(100) AUTO_INCREMENT NOT NULL,
   `name` varchar(30) NOT NULL,
   `contact_info` varchar(30) NOT NULL,
-  `address` varchar(30) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `address` varchar(30),
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -42,11 +43,12 @@ CREATE TABLE `customer` (
 --
 
 CREATE TABLE `deliveryperson` (
-  `id` int(100) NOT NULL,
+  `id` int(100) AUTO_INCREMENT NOT NULL,
   `name` varchar(100) NOT NULL,
   `vehicle_info` varchar(100) NOT NULL,
   `contact_info` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -56,12 +58,13 @@ CREATE TABLE `deliveryperson` (
 --
 
 CREATE TABLE `feedback` (
-  `id` int(100) NOT NULL,
+  `id` int(100) AUTO_INCREMENT NOT NULL,
   `customer_id` int(100) NOT NULL,
   `target_id` int(100) NOT NULL,
   `feedback_text` varchar(30) NOT NULL,
   `rating` int(100) NOT NULL,
-  `created_at` date NOT NULL
+  `created_at` date NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -71,12 +74,13 @@ CREATE TABLE `feedback` (
 --
 
 CREATE TABLE `menuitem` (
-  `id` int(30) NOT NULL,
+  `id` int(30) AUTO_INCREMENT NOT NULL,
   `name` varchar(100) NOT NULL,
   `price` float NOT NULL,
   `description` varchar(100) NOT NULL,
   `availability_status` varchar(100) NOT NULL,
-  `merchant_id` int(30) NOT NULL
+  `merchant_id` int(30) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -86,11 +90,12 @@ CREATE TABLE `menuitem` (
 --
 
 CREATE TABLE `merchant` (
-  `id` int(30) NOT NULL,
+  `id` int(30) AUTO_INCREMENT NOT NULL,
   `name` varchar(100) NOT NULL,
   `location` varchar(100) NOT NULL,
   `contact_info` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -100,14 +105,15 @@ CREATE TABLE `merchant` (
 --
 
 CREATE TABLE `orde` (
-  `id` int(11) NOT NULL,
+  `id` int(11) AUTO_INCREMENT NOT NULL,
   `customer_id` int(11) NOT NULL,
   `merchant_id` int(100) NOT NULL,
   `delivery_person_id` int(100) NOT NULL,
   `status` varchar(100) NOT NULL,
   `delivery_address` varchar(100) NOT NULL,
   `total_price` double NOT NULL,
-  `created_at` date NOT NULL
+  `created_at` date NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -117,59 +123,13 @@ CREATE TABLE `orde` (
 --
 
 CREATE TABLE `orderitem` (
-  `id` int(100) NOT NULL,
+  `id` int(100) AUTO_INCREMENT NOT NULL,
   `order_id` int(100) NOT NULL,
   `menu_item_id` int(100) NOT NULL,
   `quantity` int(100) NOT NULL,
-  `price` double NOT NULL
+  `price` double NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- 已傾印資料表的索引
---
-
---
--- 資料表索引 `customer`
---
-ALTER TABLE `customer`
-  ADD PRIMARY KEY (`id`);
-
---
--- 資料表索引 `deliveryperson`
---
-ALTER TABLE `deliveryperson`
-  ADD PRIMARY KEY (`id`);
-
---
--- 資料表索引 `feedback`
---
-ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`id`);
-
---
--- 資料表索引 `menuitem`
---
-ALTER TABLE `menuitem`
-  ADD PRIMARY KEY (`id`);
-
---
--- 資料表索引 `merchant`
---
-ALTER TABLE `merchant`
-  ADD PRIMARY KEY (`id`);
-
---
--- 資料表索引 `orde`
---
-ALTER TABLE `orde`
-  ADD PRIMARY KEY (`id`);
-
---
--- 資料表索引 `orderitem`
---
-ALTER TABLE `orderitem`
-  ADD PRIMARY KEY (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
