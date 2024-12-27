@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<h2 class="card-title large-title">{{merchant.name}}</h2>
+<h2 class="card-title large-title">{{merchant_di}}</h2>
 <hr>
 
 <table>
@@ -29,7 +29,6 @@
 			<td style="width: 100px;">{{menuitem.price}}</td>
 			<td style="width: 100px;">
 			    <form method="POST" action="customers/      ">
-				    {% csrf_token %}
                     <input type="hidden" name="name" value="{{menuitem.name}}">
 					<input type="hidden" name="description" value="{{menuitem.description}}">
                     <input type="hidden" name="price" value="{{menuitem.price}}">
@@ -43,7 +42,7 @@
 <br>
 
 <div class="buttons">
-    <a href="/customers/browse_merchant" class="common-button">取消</a>
+    <a href="/customers/merchants" class="common-button">取消</a>
 	<a href="/customers/    " class="common-button">前往購物車</a>
 </div>
 </body>

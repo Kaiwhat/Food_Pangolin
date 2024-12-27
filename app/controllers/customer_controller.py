@@ -102,7 +102,7 @@ def browse_merchants():
 def browse_menu():
     merchant_id = request.args.get('merchant_id', type=int)
     menu_items = Merchant.get_menu_items(merchant_id=merchant_id)
-    return render_template('customer/browse_menu.html', items=menu_items)
+    return render_template('customer/browse_menu.html', items=menu_items, merchant_id=merchant_id)
 
 
 @customer_bp.route('/order_status/<int:order_id>', methods=['GET'])
