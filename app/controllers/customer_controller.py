@@ -6,7 +6,7 @@ import app.models.merchant as Merchant
 import app.models.order_item as OrderItem
 import app.models.feedback as Feedback
 
-customer_bp = Blueprint('customer', __name__, url_prefix='/customer')
+customer_bp = Blueprint('customer', __name__, url_prefix='/custome')
 
 @customer_bp.route('/')
 def index():
