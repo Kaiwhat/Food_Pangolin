@@ -64,12 +64,17 @@ CREATE TABLE `deliveryperson` (
 -- 傾印資料表的資料 `deliveryperson`
 --
 
-INSERT INTO `deliveryperson` (`id`, `name`, `vehicle_info`, `contact_info`, `password`) VALUES
-(1, 'John Doe', 'Scooter - Yamaha', 'john.doe@example.com', 'password123'),
-(2, 'Emily Smith', 'Bicycle - Giant', 'emily.smith@example.com', 'securepass456'),
-(3, 'Michael Brown', 'Truck - Ford', 'michael.brown@example.com', 'michael789'),
-(4, 'Sarah Johnson', 'Motorbike - Honda', 'sarah.johnson@example.com', 'sarahpass321'),
-(5, 'David Lee', 'Van - Toyota', 'david.lee@example.com', 'vanpass654');
+INSERT INTO `deliveryperson` VALUES 
+(1,'Liam','scooter','liam@example.com','delivery123'),
+(2,'Noah','scooter','noah@example.com','delivery123'),
+(3,'Olivia','scooter','olivia@example.com','delivery123'),
+(4,'Emma','scooter','emma@example.com','delivery123'),
+(5,'Ava','scooter','ava@example.com','delivery123'),
+(6,'Sophia','scooter','sophia@example.com','delivery123'),
+(7,'Mason','scooter','mason@example.com','delivery123'),
+(8,'Lucas','scooter','lucas@example.com','delivery123'),
+(9,'Logan','scooter','logan@example.com','delivery123'),
+(10,'Mia','scooter','mia@example.com','delivery123');
 
 -- --------------------------------------------------------
 
@@ -147,9 +152,17 @@ CREATE TABLE `merchant` (
 -- 傾印資料表的資料 `merchant`
 --
 
-INSERT INTO `merchant` (`id`, `name`, `location`, `contact_info`, `password`) VALUES
-(1, 'Pizza Paradise', 'Taipei City, Taiwan', 'contact@pizzaparadise.tw', 'pizza1234'),
-(3, 'Sushi Supreme', 'Taichung City, Taiwan', 'support@sushisupreme.tw', 'sushi9876');
+INSERT INTO `merchant` VALUES 
+(1,'Nike','123 Sport Ave','nike@example.com','securepass123'),
+(2,'Adidas','456 Run St','adidas@example.com','securepass123'),
+(3,'Puma','789 Track Rd','puma@example.com','securepass123'),
+(4,'Reebok','321 Fitness Blvd','reebok@example.com','securepass123'),
+(5,'UnderArmour','654 Gym Lane','underarmour@example.com','securepass123'),
+(6,'NewBalance','987 Comfort Way','newbalance@example.com','securepass123'),
+(7,'Asics','147 Marathon Dr','asics@example.com','securepass123'),
+(8,'Skechers','258 Walk St','skechers@example.com','securepass123'),
+(9,'Columbia','369 Adventure Blvd','columbia@example.com','securepass123'),
+(10,'Patagonia','741 Outdoor Ave','patagonia@example.com','securepass123');
 
 -- --------------------------------------------------------
 
