@@ -39,12 +39,17 @@ CREATE TABLE `customer` (
 -- 傾印資料表的資料 `customer`
 --
 
-INSERT INTO `customer` (`id`, `name`, `contact_info`, `address`, `password`) VALUES
-(1, 'Alice Wang', 'alice.wang@example.com', '123 Main St, Taipei', 'securepass123'),
-(2, 'Bob Chen', 'bob.chen@example.com', '456 Park Ave, Taichung', 'mypassword456'),
-(3, 'Charlie Lin', 'charlie.lin@example.com', '789 Broadway, Kaohsiung', 'charlie789'),
-(4, 'Daisy Liu', 'daisy.liu@example.com', '101 Elm St, Tainan', 'daisysecure'),
-(5, 'Ethan Huang', 'ethan.huang@example.com', '202 Maple Rd, Hsinchu', 'ethan1234');
+INSERT INTO `customer` VALUES 
+(1,'Alice','alice@example.com','123 Maple St','password123'),
+(2,'Bob','bob@example.com','456 Oak St','password123'),
+(3,'Charlie','charlie@example.com','789 Pine St','password123'),
+(4,'Diana','diana@example.com','321 Birch St','password123'),
+(5,'Eve','eve@example.com','654 Cedar St','password123'),
+(6,'Frank','frank@example.com','987 Elm St','password123'),
+(7,'Grace','grace@example.com','147 Spruce St','password123'),
+(8,'Henry','henry@example.com','258 Willow St','password123'),
+(9,'Ivy','ivy@example.com','369 Redwood St','password123'),
+(10,'Jack','jack@example.com','741 Palm St','password123');
 
 -- --------------------------------------------------------
 
