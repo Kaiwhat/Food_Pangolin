@@ -96,13 +96,13 @@ def view_customer_orders(customer_id):
 def browse_merchants():
     merchants = Merchant.get_all_merchant()
     customer_id = session['id']
-    return render_template('customer/browse_merchant.html', merchants=merchants, customer_id=customer_id)
+    return render_template('customer/browse_merchant.html', items=merchants, customer_id=customer_id)
 
-@customer_bp.route('/menu/<int:merchant_id>', methods=['GET'])
-def browse_menu(merchant_id):
-    # FIXME: query.filter_by() ?
-    menu_items = MenuItem.query.filter_by(merchant_id=merchant_id).all()
-    return render_template('customer/browse_menu.html', menu_items=menu_items, merchant_id=merchant_id)
+@customer_bp.route('/menu', methods=['GET'])
+def browse_menu():
+    merchant_id = request.args.get('merchant_id', type=int)
+    menu_items = Merchant.get_menu_items(merchant_id=merchant_id)
+    return render_template('customer/browse_menu.html', items=menu_items)
 
 
 @customer_bp.route('/order_status/<int:order_id>', methods=['GET'])

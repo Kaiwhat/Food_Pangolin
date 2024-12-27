@@ -81,7 +81,6 @@ def get_all_merchant():
     sql = "SELECT id, name FROM merchant"
     cursor.execute(sql)
     products = cursor.fetchall()
-    cursor.close()
     return products
 
 #查詢某商家的詳細資訊
@@ -92,9 +91,11 @@ def get_merchant(merchant_id):
 
 #獲取某商家的所有菜單項目
 def get_menu_items(merchant_id):
-    sql = "SELECT id, name, price, description, availability_status FROM MenuItem WHERE merchant_id = %s"
+    sql = "SELECT id, name, price, description, availability_status FROM menuitem WHERE merchant_id = %s"
     cursor.execute(sql, (merchant_id,))
-    return cursor.fetchall()
+    products = cursor.fetchall()
+    print(products)
+    return products
 
 #查詢某商家相關的訂單
 def get_orders_by_merchant(merchant_id):

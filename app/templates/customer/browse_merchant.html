@@ -22,13 +22,13 @@
     </thead>
 	
     <tbody>
-        {% for merchant in merchants %}
+        {% for merchant in items %}
             <tr>
 			    <td style="width: 100px;">{{merchant.id}}</td>
                 <td>{{merchant.name}}</td>
 				<td style="width: 100px;">
 					<div class="buttons">
-                        <a href="/customers/browse_menu?merchant_id={{merchant.id}}" class="common-button">查看菜單</a>
+                        <a href="/customers/menu?merchant_id={{merchant.id}}" class="common-button">查看菜單</a>
                     </div>
 				</td>
             </tr>
