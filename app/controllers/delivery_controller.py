@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, session, redirect, flash
 import app.models.delivery_person as DeliveryPerson
 import app.models.order as Order
 
@@ -30,10 +30,26 @@ def register():
             return jsonify({'error': str(e)}), 400
     return render_template('delivery/delivery_register.html')
 
+# 登入功能
+@delivery_person_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    name = request.form['username']
+    password = request.form['password']
+
+    # 透過 id 查詢用戶
+    result, id = DeliveryPerson.login(name, password)
+    if result:  # 直接比較明文密碼
+        session['id'] = id  # 將用戶 ID 保存到 session
+        flash('登入成功！')
+        return redirect('assigned_orders')  # 登入成功，重定向到 merchant
+
+    flash('登入失敗，請檢查您的帳號和密碼。')
+    return redirect('/deliveries/')  # 登入失敗，重定向到登入頁
+
 # 查看分配的訂單
 @delivery_person_bp.route('/assigned_orders', methods=['GET'])
 def view_assigned_orders():
-    delivery_person_id = request.args.get('delivery_person_id')
+    delivery_person_id = session['id']
     try:
         # FIXME: Delievery person assignment
         orders = Order.get_orders_by_delivery_person(delivery_person_id=delivery_person_id, status='assigned').all()

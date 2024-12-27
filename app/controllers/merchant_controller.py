@@ -53,8 +53,7 @@ def view_menu():
     try:
         # FIXME
         menu_items = MenuItem.get_menu_items_by_merchant(merchant_id=merchant_id)
-        print(menu_items)
-        return render_template('merchant/manage_menu.html', orderitem=menu_items, merchant_id=merchant_id)
+        return render_template('merchant/manage_menu.html', menu_items=menu_items, merchant_id=merchant_id)
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 

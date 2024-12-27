@@ -19,9 +19,14 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 	exit(1)
 
 def login(name, password):
-	sql="SELECT name FROM customer WHERE name = %s AND password = %s"
+	sql="SELECT id FROM deliveryperson WHERE name = %s AND password = %s"
 	cursor.execute(sql,(name, password))
-	return cursor.fetchone()
+	record = cursor.fetchone()
+	try:
+		print(record['id'], " log in...")
+		return True, record['id']
+	except Exception as e:
+		return False, '0'
 
 #新增送貨員資料
 def add_delivery_person(id, name, vehicle_info, contact_info):
