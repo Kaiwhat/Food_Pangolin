@@ -20,7 +20,7 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 
 #更新顧客對商家或送貨員的評價內容
 def update(id, feedback_text, rating, customer_id):
-    sql = "UPDATE Feedback SET feedback_text = %s, rating = %s WHERE id = %s AND customer_id = %s;"
+    sql = "UPDATE feedback SET feedback_text = %s, rating = %s WHERE id = %s AND customer_id = %s;"
     param = (feedback_text, rating, id, customer_id)  
     cursor.execute(sql, param)
     conn.commit() 
@@ -28,7 +28,7 @@ def update(id, feedback_text, rating, customer_id):
 
 #顧客為商家或送貨員提交評價
 def addFeedback(customer_id, target_id, feedback_text, rating, created_at):
-    sql = "INSERT INTO Feedback (customer_id, target_id, feedback_text, rating, created_at) VALUES (%s, %s, %s, %s, %s);"
+    sql = "INSERT INTO feedback (customer_id, target_id, feedback_text, rating, created_at) VALUES (%s, %s, %s, %s, %s);"
     param = (customer_id, target_id, feedback_text, rating, created_at)
     cursor.execute(sql, param)
     conn.commit() 
@@ -43,8 +43,8 @@ def getList(target_id):
         f.rating, 
         f.created_at, 
         c.name AS customer_name 
-    FROM Feedback f
-    INNER JOIN Customer c ON f.customer_id = c.id
+    FROM feedback f
+    INNER JOIN customer c ON f.customer_id = c.id
     WHERE f.target_id = %s 
       AND f.target_id IN (SELECT id FROM Merchant);
     """
@@ -60,8 +60,8 @@ def getList(target_id):
         f.rating, 
         f.created_at, 
         c.name AS customer_name 
-    FROM Feedback f
-    INNER JOIN Customer c ON f.customer_id = c.id
+    FROM feedback f
+    INNER JOIN customer c ON f.customer_id = c.id
     WHERE f.target_id = %s 
       AND f.target_id IN (SELECT id FROM DeliveryPerson);
     """

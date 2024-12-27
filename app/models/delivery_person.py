@@ -30,21 +30,21 @@ def login(name, password):
 
 #新增送貨員資料
 def add_delivery_person(id, name, vehicle_info, contact_info):
-    sql = "INSERT INTO DeliveryPerson (id, name, vehicle_info, contact_info) VALUES (%s, %s, %s, %s)"
+    sql = "INSERT INTO deliveryperson (id, name, vehicle_info, contact_info) VALUES (%s, %s, %s, %s)"
     cursor.execute(sql,(id, name, vehicle_info, contact_info))
     conn.commit()
     return
 
 #為送貨員分配訂單
 def assign_order_to_delivery(delivery_person_id,order_id):
-    sql = "UPDATE Orde SET delivery_person_id = %s, status = 'assigned' WHERE id = %s"
+    sql = "UPDATE orde SET delivery_person_id = %s, status = 'assigned' WHERE id = %s"
     cursor.execute(sql, (delivery_person_id,order_id))
     conn.commit()
     return
 
 #刪除送貨員資料
 def delete_delivery_person(delivery_person_id):
-    sql = "DELETE FROM DeliveryPerson WHERE id = %s"
+    sql = "DELETE FROM deliveryperson WHERE id = %s"
     # param = (delivery_person_id,)
     cursor.execute(sql, (delivery_person_id,))
     conn.commit()
@@ -52,7 +52,7 @@ def delete_delivery_person(delivery_person_id):
 
 #修改送貨員的基本資料
 def update_delivery_person(name,vehicle_info,contact_info,id):
-    sql = "UPDATE DeliveryPerson SET name = %s, vehicle_info = %s, contact_info = %s WHERE id = %s"
+    sql = "UPDATE deliveryperson SET name = %s, vehicle_info = %s, contact_info = %s WHERE id = %s"
     cursor.execute(sql, (name,vehicle_info,contact_info,id))
     conn.commit()
     return
@@ -60,7 +60,7 @@ def update_delivery_person(name,vehicle_info,contact_info,id):
 
 #查詢某個送貨員的詳細資料
 def get_delivery_person(delivery_person_id):
-    sql = "SELECT id, name, vehicle_info, contact_info FROM DeliveryPerson WHERE id = %s"
+    sql = "SELECT id, name, vehicle_info, contact_info FROM deliveryperson WHERE id = %s"
     # param = (delivery_person_id,)
     cursor.execute(sql, (delivery_person_id,))
     return cursor.fetchone()
@@ -69,7 +69,7 @@ def get_delivery_person(delivery_person_id):
 def get_orders_by_delivery_person(delivery_person_id):
     sql = """
     SELECT o.id, o.customer_id, o.merchant_id, o.status, o.delivery_address, o.total_price, o.created_at 
-    FROM Orde o
+    FROM orde o
     WHERE o.delivery_person_id = %s
     """
     cursor.execute(sql, (delivery_person_id,))
@@ -79,7 +79,7 @@ def get_orders_by_delivery_person(delivery_person_id):
 def get_feedback_for_delivery_person(delivery_person_id):
     sql = """
     SELECT f.id, f.customer_id, f.feedback_text, f.rating, f.created_at 
-    FROM Feedback f
+    FROM feedback f
     WHERE f.target_id = %s
     """
     cursor.execute(sql, (delivery_person_id,))
