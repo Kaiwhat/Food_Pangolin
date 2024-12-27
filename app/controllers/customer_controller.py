@@ -20,32 +20,31 @@ def new():
 def register():
     if request.method == 'POST':
         name = request.form['name']
-        email = request.form['email']
-        # password = request.form['password']
+        id = request.form['id']
+        password = request.form['password']
         address = request.form['address']
         
-        # FIXME: Change add_cistomer() parameter
-        Customer.add_customer(name, email, address) 
+        # FIXME: Change add_customer() parameter
+        Customer.add_customer(name, id, address) 
         flash('註冊成功，請登入！')
-        return redirect('/')  # 重定向到首頁
+        return redirect('/login')  # 重定向到首頁
     return render_template('customer/customer_register.html')
 
 # 登入功能
 @customer_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    email = request.form['email']
+    id = request.form['id']
     password = request.form['password']
 
-    # 透過 email 查詢用戶
-    user = Customer.get_user_by_email(email)
+    # 透過 id 查詢用戶
+    user = Customer.get_user_by_id(id)
     if user and password == user['password']:  # 直接比較明文密碼
         session['id'] = user['id']  # 將用戶 ID 保存到 session
         flash('登入成功！')
-        # FIXME
-        return redirect('/final_board')  # 登入成功，重定向到 final_board.html
+        return redirect('/browse_merchant')  # 登入成功，重定向到 browse_merchant.html
 
-    flash('登入失敗，請檢查您的電子郵件和密碼。')
-    return redirect('/')  # 登入失敗，重定向到首頁
+    flash('登入失敗，請檢查您的帳號和密碼。')
+    return redirect('/login')  # 登入失敗，重定向到登入頁
 
 @customer_bp.route('/place_order', methods=['POST'])
 def place_order():

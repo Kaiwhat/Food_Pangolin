@@ -34,6 +34,7 @@ def login(name, password):
 	return cursor.fetchone()
 
 #新增顧客
+#FIXME:add password
 def add_customer(id, name, contact_info, address):
 	sql="insert into Customer (id, name, contact_info, address) values (%s, %s, %s, %s);"
 	cursor.execute(sql,(id, name, contact_info, address))
