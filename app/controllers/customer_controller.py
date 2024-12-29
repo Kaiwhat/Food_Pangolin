@@ -108,11 +108,12 @@ def grade_order(order_id):
         return redirect(url_for('customer.browse_merchants'))
     return render_template('customer/grade_order.html', order_id=order_id)
 
-# FIXME:
-@customer_bp.route('/history/<int:customer_id>', methods=['GET'])
-def customer_history(customer_id):
-    orders = Order.query.filter_by(customer_id=customer_id).all()
-    return render_template('customer/customer_history.html', orders=orders)
+# 查看配送歷史
+@customer_bp.route('/history', methods=['GET'])
+def view_customer_history():
+    customer_id = session['id']
+    history = Order.get_orders_by_customer(customer_id)
+    return render_template('customer/customer_history.html', orders=history, customer_id=customer_id)
 
 
 

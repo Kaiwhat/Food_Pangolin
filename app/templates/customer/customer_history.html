@@ -28,13 +28,13 @@
 	<tbody>
 	    {% for order in orders %}
         <tr>
-            <td style="width: 50px;">{{order.date}}</td>
-	    	<td>{{merchant.name}}</td>
-			<td>{{merchant.description}}</td>
-	    	<td style="width: 50px;">{{orderitem.quantity}}</td>
-		    <td style="width: 50px;">{{order.total_price}}</td>
-	    	<td style="width: 50px;">{{商家評分}}</td>
-	    	<td style="width: 50px;">{{外送員評分}}</td>
+            <td style="width: 50px;">{{order.created_at}}</td>
+	    	<td>{{order['merchant_id']}}</td>
+			<td>{{order.description}}</td>
+	    	<td style="width: 50px;">{{1}}</td>
+		    <td style="width: 50px;">{{order['total_price']}}</td>
+	    	<td style="width: 50px;">{{0}}</td>
+	    	<td style="width: 50px;">{{0}}</td>
         </tr>
 		{% endfor %}
 	</tbody>
