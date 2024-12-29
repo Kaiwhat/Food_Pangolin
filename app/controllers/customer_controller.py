@@ -53,15 +53,15 @@ def login():
 
 
 # FIXME
-@customer_bp.route('/order_history/<int:customer_id>', methods=['GET'])
+@customer_bp.route('/order_history', methods=['GET'])
 def order_history(customer_id):
     """顧客查看訂單歷史"""
     try:
         orders = Order.get_orders_by_customer(customer_id=customer_id)
-        return render_template('customer/order_history.html', orders=orders)
+        return render_template('/customers/order_history.html', orders=orders)
     except Exception as e:
         flash("無法加載訂單歷史，請稍後再試。")
-        return render_template('customer/customer_history.html', orders=[])
+        return render_template('/customers/customer_history.html', orders=[])
 
 # 顯示顧客的訂單列表
 @customer_bp.route('/customer/<int:customer_id>', methods=['GET'])
@@ -162,28 +162,22 @@ def place_order():
     total_price = sum(item['total_price'] for item in cart_items)
 
     # 插入訂單資料
-    order_id = random.randint(1, 10000)  # 自行實作或透過資料庫生成
-
-    Order.add_order(id='Null', customer_id=customer_id, delivery_person_id='Null', status=0, delivery_address=delivery_address, total_price=total_price, created_at=0)
+    order_id = Order.add_order(customer_id=customer_id, delivery_person_id='999', status=0, delivery_address=delivery_address, total_price=total_price, created_at=0)
 
     # 插入訂單項目
-    Order.add_order_item(id='Null', )
-    sql_insert_order_item = """
-        INSERT INTO order_items (order_id, product_id, quantity, price)
-        VALUES (%s, %s, %s, %s);
-    """
-    for item in cart_items:
-        cursor.execute(sql_insert_order_item, (
-            order_id,
-            item['menuitem_id'],
-            item['quantity'],
-            item['price']
-        ))
-
     # 清空購物車
-    sql_clear_cart = "DELETE FROM cart WHERE customer_id = %s;"
-    cursor.execute(sql_clear_cart, (customer_id,))
-    conn.commit()
+    for item in cart_items:
+
+        # 新增訂單項目
+        Order.add_order_item(
+            order_id=order_id,
+            menu_item_id=item['menuitem_id'],  # 傳遞單一值
+            quantity=item['quantity'],
+            price=int(item['total_price'])
+        )
+
+        # 從購物車中移除項目
+        Cart.remove_from_cart(customer_id=customer_id, menuitem_id=item['menuitem_id'])
 
     flash(f'訂單已成功提交，總金額：{total_price} 元')
-    return redirect(url_for('customer.view_orders'))
+    return redirect(url_for('/customers/cart'))

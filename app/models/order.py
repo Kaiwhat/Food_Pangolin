@@ -19,17 +19,32 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 	exit(1)
 
 #新增訂單
-def add_order(id, customer_id, delivery_person_id, status, delivery_address, total_price, created_at):
-    sql = """
-    INSERT INTO orde (id, customer_id, delivery_person_id, status, delivery_address, total_price, created_at)
-    VALUES (%s, %s, %s, %s, %s, %s, %s)
+def add_order(customer_id, delivery_person_id, status, delivery_address, total_price, created_at):
     """
-    conn.commit()
-    sql = """
-    SELECT id FROM orde ORDER BY id DESC LIMIT 1;
+    插入一筆訂單資料，並返回新插入的訂單 ID。
     """
-    cursor.execute(sql,)
-    return
+    try:
+        # 插入訂單
+        sql_insert = """
+        INSERT INTO orde (customer_id, merchant_id, delivery_person_id, status, delivery_address, total_price, created_at)
+        VALUES (%s, %s, 999, %s, %s, %s, %s)
+        """
+        cursor.execute(sql_insert, (customer_id, delivery_person_id, status, delivery_address, total_price, created_at))
+
+        # 提交事務
+        conn.commit()
+        sql = """
+        SELECT id FROM orde ORDER BY id DESC LIMIT 1;
+        """
+        cursor.execute(sql,)
+        record = cursor.fetchone()
+        return record['id']
+    except Exception as e:
+        # 發生錯誤時回滾事務
+        conn.rollback()
+        print("Error inserting order:", e)
+        return None
+
 
 def add_order_item(order_id, menu_item_id, quantity, price):
     sql = "INSERT INTO orderitem (order_id, menu_item_id, quantity, price) VALUES (%s, %s, %s, %s)"
