@@ -59,7 +59,7 @@ def view_menu():
 
 # 新增菜單項目
 @merchant_bp.route('/menu/add', methods=['POST'])
-def add_menu_item():
+def add_menu_items():
     try:
         
         name=request.form.get('name'),
@@ -67,7 +67,7 @@ def add_menu_item():
         description=request.form.get('description'),
         merchant_id=session['id']
         
-        new_item = MenuItem.add_menu_item(newname=name, newprice=price, newdescription=description, availability_status=1, merchant_id=merchant_id)
+        new_item = Merchant.add_menu_item(newname=name, newprice=price, newdescription=description, availability_status=1, merchant_id=merchant_id)
         return jsonify({'message': 'Menu item added successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
