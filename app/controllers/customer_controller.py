@@ -20,12 +20,14 @@ def new():
 def register():
     if request.method == 'POST':
         name = request.form['name']
-        id = request.form['id']
+        id = None
+        username = request.form['username']
         password = request.form['password']
-        address = request.form['address']
-        
+        address = None
+        contact_info = None
+
         # FIXME: Change add_customer() parameter
-        Customer.add_customer(name, id, address) 
+        Customer.add_customer(id, name, contact_info, address, password) 
         flash('註冊成功，請登入！')
         return redirect('/customers/')  # 重定向到首頁
     return render_template('customer/customer_register.html')
@@ -35,7 +37,6 @@ def register():
 def login():
     name = request.form['username']
     password = request.form['password']
-
     # 透過 id 查詢用戶
     result, id = Customer.login(name, password)
     if result:  # 直接比較明文密碼
@@ -69,6 +70,22 @@ def place_order():
     except Exception as e:
         flash("提交訂單時出錯，請稍後再試。")
         return redirect(url_for('customer/customer.browse_menu'))
+
+@customer_bp.route('/addcart', methods=['POST'])
+def addcart():
+    id = request.form['id']
+    customer_id = request.form.get('customer_id')
+    item_price = request.form.get('price')
+    order_item = Order.add_order_item(order_id=id, menu_item_id=id,quantity=1,price=item_price)
+
+
+
+
+@customer_bp.route('/gocart', methods=['POST'])
+def place_order():
+    customer_id = request.form.get('customer_id')
+
+
 
 # FIXME
 @customer_bp.route('/order_history/<int:customer_id>', methods=['GET'])
