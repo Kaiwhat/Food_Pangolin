@@ -16,8 +16,8 @@
         <tr>
             <th>商家</th>
 			<th>品項</th>
-			<th>內容</th>
 			<th>數量</th>
+            <th>Price</th>
             <th>金額</th>
 			<th>操作</th>
         </tr>
@@ -26,11 +26,11 @@
     <tbody>
         {% for menuitem in items %}
         <tr>
-			<td style="width: 100px;">{{merchant.name}}</td>
-			<td style="width: 100px;">{{menuitem.name}}</td>
-            <td>{{menuitem.description}}</td>
-			<td style="width: 50px;">{{orderitem.quantity}}</td>
+			<td style="width: 100px;">{{menuitem.merchant_name}}</td>
+			<td style="width: 100px;">{{menuitem.menuitem_name}}</td>
+			<td style="width: 50px;">{{menuitem.quantity}}</td>
 			<td style="width: 100px;">{{menuitem.price}}</td>
+			<td style="width: 100px;">{{menuitem.total_price}}</td>
 			<td>
 			    <form method="POST" action="/customers/delete">
                     <input type="hidden" name="name" value="{{menuitem.name}}">
@@ -53,18 +53,18 @@
     </form>
 </div>
 
-<p>總金額：<span id="total-price">{{order.total_price}}</span>元</p>
+<p>總金額：<span id="total-price">#</span>元</p>
 
 <div class="buttons">
-    <a href="/customers/menu" class="common-button">回上一頁</a>
-	
-	<form method="POST" action="/customers/place_order">>
-        <input type="hidden" name="name" value="{{menuitem.name}}">
-        <input type="hidden" name="description" value="{{menuitem.description}}">
-        <input type="hidden" name="quantity" value="{{menuitem.quantity}}">
-        <input type="hidden" name="price" value="{{menuitem.price}}">
-        <button type="submit" class="common-button">送出訂單</button>
-    </form>
+    <a href="/customers/merchants" class="common-button">回上一頁</a>
+	{% for menuitem in items %}
+        <form method="POST" action="/customers/place_order">>
+            <input type="hidden" name="name" value="{{menuitem.menuitem_name}}">
+            <input type="hidden" name="quantity" value="{{menuitem.quantity}}">
+            <input type="hidden" name="price" value="{{menuitem.price}}">
+            <button type="submit" class="common-button">送出訂單</button>
+        </form>
+    {% endfor %}
 </div>
 </body>
 </html>
