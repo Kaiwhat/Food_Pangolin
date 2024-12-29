@@ -45,9 +45,9 @@ def delete_order(order_id):
     return
 
 #更新訂單狀態
-def update_order_status(status,id):
-    sql = "UPDATE orde SET status = %s WHERE id = %s"
-    cursor.execute(sql, (status,id))
+def update_order_status(id):
+    sql = "UPDATE orde SET status = '已送達' WHERE id = %s"
+    cursor.execute(sql, (id,))
     conn.commit()
     return
 

@@ -16,26 +16,25 @@
     <thead>
         <td>日期</td>
 		<td>商家</td>
-		<td>內容</td>
+		<td>客戶</td>
 		<td>總金額</td>
 		<td>顧客地址</td>
 		<td>外送員評分</td>
     </thead>
-    {% for record in records %}
+    {% for item in data %}
     <tr>
-        <td>{{ }}</td>
-		<td>{{ }}</td>
-		<td>{{ }}</td>
-		<td>{{ }}</td>
-		<td>{{ }}</td>
-		<td>{{ }}</td>
+        <td>{{item.created_at}}</td>
+		<td>{{item.merchant_id}}</td>
+		<td>{{item.customer_id}}</td>
+		<td>{{item.total_price}}</td>
+		<td>{{item.delivery_address}}</td>
     </tr>
     {% endfor %}
 </table>
 <br>	
 	
 <div class="buttons">
-    <a href="/deliveries/view_assigned_orders" class="common-button">取消</a>
+    <a href="/deliveries/assigned_orders" class="common-button">返回</a>
 </div>
 </body>
 </html>

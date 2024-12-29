@@ -70,7 +70,7 @@ def get_orders_by_delivery_person(delivery_person_id):
     sql = """
     SELECT o.id, o.customer_id, o.merchant_id, o.status, o.delivery_address, o.total_price, o.created_at 
     FROM orde o
-    WHERE o.delivery_person_id = %s
+    WHERE o.delivery_person_id = %s AND o.status="正在配送"
     """
     cursor.execute(sql, (delivery_person_id,))
     return cursor.fetchall()
