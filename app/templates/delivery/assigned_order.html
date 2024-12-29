@@ -46,7 +46,7 @@
 <br>
 <div class="buttons">
     <a href="{{ url_for('delivery_person.view_delivery_history') }}" class="common-button">查看歷史紀錄</a>
-    <a href="/deliveries/view_assigned_orders" class="common-button">前往接單</a>
+    <a href="{{ url_for('delivery_person.view_pending_orders') }}" class="common-button">前往接單</a>
 </div>
 </body>
 </html>
