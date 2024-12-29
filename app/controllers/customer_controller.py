@@ -81,9 +81,9 @@ def addcart():
 
 
 
-@customer_bp.route('/gocart', methods=['POST'])
-def place_order():
-    customer_id = request.form.get('customer_id')
+# @customer_bp.route('/gocart', methods=['POST'])
+# def place_order():
+#     customer_id = request.form.get('customer_id')
 
 
 
