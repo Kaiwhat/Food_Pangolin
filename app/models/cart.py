@@ -75,7 +75,7 @@ def checkout(customer_id, order_id, delivery_address):
         return
 
     # 插入訂單
-    sql_order = "INSERT INTO orders (id, customer_id, delivery_address, status, total_price) VALUES (%s, %s, %s, %s, %s);"
+    sql_order = "INSERT INTO orde (id, customer_id, delivery_address, status, total_price) VALUES (%s, %s, %s, %s, %s);"
     total_price = sum(item['total_price'] for item in cart_items)
     cursor.execute(sql_order, (order_id, customer_id, delivery_address, 'Pending', total_price))
     

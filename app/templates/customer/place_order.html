@@ -32,11 +32,8 @@
 			<td style="width: 100px;">{{menuitem.price}}</td>
 			<td style="width: 100px;">{{menuitem.total_price}}</td>
 			<td>
-			    <form method="POST" action="/customers/delete">
-                    <input type="hidden" name="name" value="{{menuitem.name}}">
-			        <input type="hidden" name="description" value="{{menuitem.description}}">
-					<input type="hidden" name="quantity" value="{{menuitem.quantity}}">
-                    <input type="hidden" name="price" value="{{menuitem.price}}">
+			    <form method="POST" action="/customers/cart/remove">
+			        <input type="hidden" name="id" value="{{menuitem.menuitem_id}}">
                     <button type="submit">刪除</button>
 				</form>
 			</td>
@@ -50,6 +47,7 @@
     <form method="POST" action="/customers/    ">
         <label for="address">配送地址：</label>
         <input type="text" id="address" name="address" placeholder="輸入配送地址" required style="width: 100%; max-width: 400px;">
+        <button type="submit" class="common-button">送出訂單</button>
     </form>
 </div>
 
@@ -57,14 +55,6 @@
 
 <div class="buttons">
     <a href="/customers/merchants" class="common-button">回上一頁</a>
-	{% for menuitem in items %}
-        <form method="POST" action="/customers/place_order">>
-            <input type="hidden" name="name" value="{{menuitem.menuitem_name}}">
-            <input type="hidden" name="quantity" value="{{menuitem.quantity}}">
-            <input type="hidden" name="price" value="{{menuitem.price}}">
-            <button type="submit" class="common-button">送出訂單</button>
-        </form>
-    {% endfor %}
 </div>
 </body>
 </html>

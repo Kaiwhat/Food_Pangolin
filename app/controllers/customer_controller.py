@@ -49,44 +49,6 @@ def login():
     flash('登入失敗，請檢查您的帳號和密碼。')
     return redirect('/customers/')  # 登入失敗，重定向到登入頁
 
-@customer_bp.route('/place_order', methods=['POST'])
-def place_order():
-    """顧客下訂單"""
-    try:
-        customer_id = request.form.get('customer_id')  # 從前端表單接收顧客 ID
-        item_ids = request.form.getlist('item_ids')    # 接收選中的菜單項目 ID 列表
-        #FIXME:加入購物車後選擇數量
-        #quantities = request.form.getlist('quantities')  # 接收數量列表
-        
-        # FIXME: What...?
-        order = Order(customer_id=customer_id, status="pending")
-
-        # 添加訂單項目
-        for item_id, quantity in zip(item_ids, quantities):
-            # FIXME
-            order_item = Order.add_item(order_id=order.id, menu_item_id=item_id, quantity=quantity)
-        # FIXME
-        db.session.commit()  # 提交交易
-        flash("訂單已成功提交！")
-        return redirect(url_for('customer/customer.browse_menu'))
-    except Exception as e:
-        flash("提交訂單時出錯，請稍後再試。")
-        return redirect(url_for('customer/customer.browse_menu'))
-
-@customer_bp.route('/addcart', methods=['POST'])
-def addcart():
-    id = request.form['id']
-    customer_id = request.form.get('customer_id')
-    item_price = request.form.get('price')
-    order_item = Order.add_order_item(order_id=id, menu_item_id=id,quantity=1,price=item_price)
-
-
-
-
-# @customer_bp.route('/gocart', methods=['POST'])
-# def place_order():
-#     customer_id = request.form.get('customer_id')
-
 
 
 # FIXME
@@ -178,24 +140,24 @@ def add_to_cart():
 def remove_from_cart():
     """移除購物車中的商品"""
     customer_id = session['id']
-    menuitem_id = request.form('id')
+    menuitem_id = request.form['id']
 
     cart_item = Cart.remove_from_cart(customer_id=customer_id, menuitem_id=menuitem_id)
-    return redirect('cart')
+    return redirect('/customers/cart')
 
-# @customer_bp.route('/cart/place_order', methods=['POST'])
-# def place_order():
-#     """確定購買，轉換為訂單"""
-#     customer_id = session['id']
+@customer_bp.route('/cart/place_order', methods=['POST'])
+def place_order():
+    """確定購買，轉換為訂單"""
+    customer_id = session['id']
 
-#     # 模擬轉換購物車為訂單邏輯
-#     cart_items = Cart.query.filter_by(customer_id=customer_id).all()
-#     if not cart_items:
-#         flash('Cart is empty')
+    # 模擬轉換購物車為訂單邏輯
+    cart_items = Cart.view_cart(customer_id=customer_id)
+    if not cart_items:
+        flash('Cart is empty')
 
-#     # 清空購物車並生成訂單（詳細實現略）
-#     for item in cart_items:
-#         db.session.delete(item)
+    # 清空購物車並生成訂單（詳細實現略）
+    for item in cart_items:
+        db.session.delete(item)
 
-#     db.session.commit()
-#     return jsonify({"message": "Order placed successfully"})
+    db.session.commit()
+    return jsonify({"message": "Order placed successfully"})
