@@ -60,16 +60,14 @@ def view_menu():
 # 新增菜單項目
 @merchant_bp.route('/menu/add', methods=['POST'])
 def add_menu_item():
-    data = request.json
     try:
-        new_item = MenuItem(
-            name=data.get('name'),
-            price=data.get('price'),
-            description=data.get('description'),
-            merchant_id=data.get('merchant_id')
-        )
-        # FIXME
-        db.session.commit()
+        
+        name=request.form.get('name'),
+        price=request.form.get('price'),
+        description=request.form.get('description'),
+        merchant_id=session['id']
+        
+        new_item = MenuItem.add_menu_item(newname=name, newprice=price, newdescription=description, availability_status=1, merchant_id=merchant_id)
         return jsonify({'message': 'Menu item added successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -84,9 +82,9 @@ def edit_menu_item(item_id):
         if not item:
             return jsonify({'error': 'Item not found'}), 404
 
-        item.name = data.get('name', item.name)
-        item.price = data.get('price', item.price)
-        item.description = data.get('description', item.description)
+        item.name = request.form.get('name', item.name)
+        item.price = request.form.get('price', item.price)
+        item.description = request.form.get('description', item.description)
         # FIXME
         db.session.commit()
         return jsonify({'message': 'Menu item updated successfully'}), 200
