@@ -19,12 +19,16 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 	exit(1)
 
 #新增訂單
-def add_order(id, customer_id, merchant_id, delivery_person_id, status, delivery_address, total_price, created_at):
+def add_order(id, customer_id, delivery_person_id, status, delivery_address, total_price, created_at):
     sql = """
-    INSERT INTO orde (id, customer_id, merchant_id, delivery_person_id, status, delivery_address, total_price, created_at)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+    INSERT INTO orde (id, customer_id, delivery_person_id, status, delivery_address, total_price, created_at)
+    VALUES (%s, %s, %s, %s, %s, %s, %s)
     """
     conn.commit()
+    sql = """
+    SELECT id FROM orde ORDER BY id DESC LIMIT 1;
+    """
+    cursor.execute(sql,)
     return
 
 def add_order_item(order_id, menu_item_id, quantity, price):

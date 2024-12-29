@@ -6,6 +6,7 @@ import app.models.merchant as Merchant
 import app.models.order_item as OrderItem
 import app.models.feedback as Feedback
 import app.models.cart as Cart
+import random
 
 
 customer_bp = Blueprint('customer', __name__, url_prefix='/customer')
@@ -149,15 +150,40 @@ def remove_from_cart():
 def place_order():
     """確定購買，轉換為訂單"""
     customer_id = session['id']
+    delivery_address = request.form.get('address')
 
-    # 模擬轉換購物車為訂單邏輯
+    # 獲取購物車內容
     cart_items = Cart.view_cart(customer_id=customer_id)
     if not cart_items:
-        flash('Cart is empty')
+        flash('購物車為空，無法提交訂單')
+        return redirect(url_for('customer.view_cart'))
 
-    # 清空購物車並生成訂單（詳細實現略）
+    # 計算總金額
+    total_price = sum(item['total_price'] for item in cart_items)
+
+    # 插入訂單資料
+    order_id = random.randint(1, 10000)  # 自行實作或透過資料庫生成
+
+    Order.add_order(id='Null', customer_id=customer_id, delivery_person_id='Null', status=0, delivery_address=delivery_address, total_price=total_price, created_at=0)
+
+    # 插入訂單項目
+    Order.add_order_item(id='Null', )
+    sql_insert_order_item = """
+        INSERT INTO order_items (order_id, product_id, quantity, price)
+        VALUES (%s, %s, %s, %s);
+    """
     for item in cart_items:
-        db.session.delete(item)
+        cursor.execute(sql_insert_order_item, (
+            order_id,
+            item['menuitem_id'],
+            item['quantity'],
+            item['price']
+        ))
 
-    db.session.commit()
-    return jsonify({"message": "Order placed successfully"})
+    # 清空購物車
+    sql_clear_cart = "DELETE FROM cart WHERE customer_id = %s;"
+    cursor.execute(sql_clear_cart, (customer_id,))
+    conn.commit()
+
+    flash(f'訂單已成功提交，總金額：{total_price} 元')
+    return redirect(url_for('customer.view_orders'))
