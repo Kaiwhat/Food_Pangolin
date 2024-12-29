@@ -156,7 +156,7 @@ def place_order():
     cart_items = Cart.view_cart(customer_id=customer_id)
     if not cart_items:
         flash('購物車為空，無法提交訂單')
-        return redirect(url_for('customer.view_cart'))
+        return redirect(url_for('/customers/cart'))
 
     # 計算總金額
     total_price = sum(item['total_price'] for item in cart_items)
@@ -180,4 +180,4 @@ def place_order():
         Cart.remove_from_cart(customer_id=customer_id, menuitem_id=item['menuitem_id'])
 
     flash(f'訂單已成功提交，總金額：{total_price} 元')
-    return redirect(url_for('/customers/cart'))
+    return redirect('/customers/cart')
