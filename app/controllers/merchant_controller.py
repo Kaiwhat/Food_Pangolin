@@ -13,6 +13,11 @@ def index():
 def new():
     return render_template('merchant/merchant_register.html')
 
+@merchant_bp.route('/newadd')
+def newadd():
+    merchant_id = session['id']
+    return render_template('merchant/add_item.html', merchant_id=merchant_id)
+
 # 商家註冊
 @merchant_bp.route('/register', methods=['GET', 'POST'])
 def register():
