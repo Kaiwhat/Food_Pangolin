@@ -5,6 +5,8 @@ import app.models.menu_item as MenuItem
 import app.models.merchant as Merchant
 import app.models.order_item as OrderItem
 import app.models.feedback as Feedback
+import app.models.cart as Cart
+
 
 customer_bp = Blueprint('customer', __name__, url_prefix='/customer')
 
@@ -119,6 +121,7 @@ def browse_merchants():
 @customer_bp.route('/menu', methods=['GET'])
 def browse_menu():
     merchant_id = request.args.get('merchant_id', type=int)
+    session['merchant_id']=merchant_id
     menu_items = Merchant.get_menu_items(merchant_id=merchant_id)
     return render_template('customer/browse_menu.html', items=menu_items, merchant_id=merchant_id)
 
@@ -147,3 +150,52 @@ def grade_order(order_id):
 def customer_history(customer_id):
     orders = Order.query.filter_by(customer_id=customer_id).all()
     return render_template('customer/customer_history.html', orders=orders)
+
+
+
+@customer_bp.route('/cart', methods=['GET'])
+def view_cart():
+    """檢視購物車內容"""
+    customer_id = session['id']
+    cart_items = Cart.view_cart(customer_id=customer_id)
+    return render_template('customer/place_order.html', items=cart_items)
+
+@customer_bp.route('/cart/add', methods=['POST'])
+def add_to_cart():
+    """將商品加入購物車"""
+    customer_id = session['id']
+    merchant_id = session['merchant_id']
+    menuitem_id = request.form['id']
+    quantity = 1
+
+    cart_item = Cart.add_to_cart(customer_id=customer_id, menuitem_id=menuitem_id, quantity=quantity)
+    menu_items = Merchant.get_menu_items(merchant_id=merchant_id)
+    flash('商品新增成功！')
+    return render_template('customer/browse_menu.html', items=menu_items, merchant_id=merchant_id)
+   
+
+@customer_bp.route('/cart/remove', methods=['POST'])
+def remove_from_cart():
+    """移除購物車中的商品"""
+    customer_id = session['id']
+    menuitem_id = request.form('id')
+
+    cart_item = Cart.remove_from_cart(customer_id=customer_id, menuitem_id=menuitem_id)
+    return redirect('cart')
+
+# @customer_bp.route('/cart/place_order', methods=['POST'])
+# def place_order():
+#     """確定購買，轉換為訂單"""
+#     customer_id = session['id']
+
+#     # 模擬轉換購物車為訂單邏輯
+#     cart_items = Cart.query.filter_by(customer_id=customer_id).all()
+#     if not cart_items:
+#         flash('Cart is empty')
+
+#     # 清空購物車並生成訂單（詳細實現略）
+#     for item in cart_items:
+#         db.session.delete(item)
+
+#     db.session.commit()
+#     return jsonify({"message": "Order placed successfully"})

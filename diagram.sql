@@ -257,6 +257,16 @@ INSERT INTO `orderitem` (`id`, `order_id`, `menu_item_id`, `quantity`, `price`) 
 -- 已傾印資料表的索引
 --
 
+CREATE TABLE cart (
+    customer_id INT NOT NULL,
+    menuitem_id INT NOT NULL,
+    quantity INT NOT NULL,
+    PRIMARY KEY (customer_id, menuitem_id),
+    FOREIGN KEY (customer_id) REFERENCES customer(id),
+    FOREIGN KEY (menuitem_id) REFERENCES menuitem(id)
+);
+
+
 --
 -- 資料表索引 `customer`
 --
