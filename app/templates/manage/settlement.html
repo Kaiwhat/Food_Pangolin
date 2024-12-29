@@ -6,8 +6,9 @@
     <title>Settlement</title>
 	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
-
 <body>
+    
+</body>
 <h2 class="card-title large-title">訂單結算</h2>
 <hr>
 
@@ -37,7 +38,7 @@
             <td>NT${{}}</td>
             <td>待結算</td>
             <td>
-                <button onclick="markAsSettled()">結算完成</button>
+                <button onclick="markAsSettled()">標記為已結算</button>
             </td>
         </tr>
     </tbody>
@@ -45,7 +46,12 @@
 {% endfor %}
 <br>
 
-<a href="/    ?merchant_id={{merchant.id}}">
-         <button type="button">營運總覽及統計</button>	
-</body>
+<a href="/browse_menu?merchant_id={{merchant.id}}">
+         <button type="button">營運總覽及統計</button>
+		 
+		 
+		<div class="buttons">
+    <button type="submit" class="common-button">註冊</button>
+    <a href="/choose_identity" class="common-button">取消</a>
+</div>
 </html>

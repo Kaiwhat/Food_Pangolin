@@ -9,7 +9,6 @@
 
 <body>
 <h2 class="card-title large-title">接單</h2>
-<a href="/" class="common-button">Logout</a>
 <hr>
 
 <table>
@@ -55,8 +54,13 @@
 {% endfor %}
 <br>
 
-<div class="buttons">
-    <a href="/deliveries/view_assigned_orders" class="common-button">查看目前訂單</a>
+<a href="/assigned_order">
+    <button type="button">查看目前訂單</button></a>
+	
+	
+	<div class="buttons">
+    <button type="submit" class="common-button">註冊</button>
+    <a href="/choose_identity" class="common-button">取消</a>
 </div>
 </body>
 </html>

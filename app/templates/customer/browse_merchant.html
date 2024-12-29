@@ -9,9 +9,8 @@
 
 <body>
 <h2 class="card-title large-title">瀏覽商家</h2>
-<a href="/" class="common-button">Logout</a>
 <hr>
-<p><b>{{customer_id}}</b></p>
+<p><b>{{customer.id}} {{customer.name}}</b></p>
 
 <table>
     <thead>
@@ -23,22 +22,18 @@
     </thead>
 	
     <tbody>
-        {% for merchant in items %}
+        {% for merchant in merchants %}
             <tr>
 			    <td style="width: 100px;">{{merchant.id}}</td>
                 <td>{{merchant.name}}</td>
 				<td style="width: 100px;">
 					<div class="buttons">
-                        <a href="/customers/menu?merchant_id={{merchant.id}}" class="common-button">查看菜單</a>
+                        <a href="/customers/browse_menu?merchant_id={{merchant.id}}" class="common-button">查看菜單</a>
                     </div>
 				</td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
-<div class="buttons">
-    <a href="/customers/history" class="common-button">查看歷史紀錄</a>
-    <a href="/customers/cart" class="common-button">前往購物車</a>
-</div>
 </body>
 </html>

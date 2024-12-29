@@ -9,9 +9,8 @@
 
 <body>
 <h2 class="card-title large-title">我的菜單</h2>
-<a href="/" class="common-button">Logout</a>
 <hr>
-<p><b>{{merchant_id}}</b></p>
+<p><b>{{merchant.id}}{{merchant.name}}</b></p>
 
 <table>
     <thead>
@@ -25,7 +24,7 @@
     </thead>
 	
     <tbody>
-        {% for orderitem in menu_items %}
+        {% for orderitem in items %}
         <tr>
 			<td>{{orderitem.name}}</td>
 			<td>{{orderitem.description}}</td>
@@ -53,7 +52,7 @@
 
 <div>
     <a href="/merchants/view_merchant_orders" class="common-button">查看目前訂單</a>
-    <a href="/merchants/newadd" class="common-button">新增品項</a>
+    <a href="/merchamts/add_menu_item" class="common-button">新增品項</a>
 </div>
 </body>
 </html>

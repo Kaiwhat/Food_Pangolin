@@ -5,8 +5,6 @@ import app.models.menu_item as MenuItem
 import app.models.merchant as Merchant
 import app.models.order_item as OrderItem
 import app.models.feedback as Feedback
-import app.models.cart as Cart
-
 
 customer_bp = Blueprint('customer', __name__, url_prefix='/customer')
 
@@ -22,34 +20,55 @@ def new():
 def register():
     if request.method == 'POST':
         name = request.form['name']
-        id = None
-        username = request.form['username']
-        password = request.form['password']
-        address = None
-        contact_info = None
-
-        # FIXME: Change add_customer() parameter
-        Customer.add_customer(id, name, contact_info, address, password) 
+        email = request.form['email']
+        # password = request.form['password']
+        address = request.form['address']
+        
+        # FIXME: Change add_cistomer() parameter
+        Customer.add_customer(name, email, address) 
         flash('註冊成功，請登入！')
-        return redirect('/customers/')  # 重定向到首頁
+        return redirect('/')  # 重定向到首頁
     return render_template('customer/customer_register.html')
 
 # 登入功能
 @customer_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    name = request.form['username']
+    email = request.form['email']
     password = request.form['password']
-    # 透過 id 查詢用戶
-    result, id = Customer.login(name, password)
-    if result:  # 直接比較明文密碼
-        session['id'] = id  # 將用戶 ID 保存到 session
+
+    # 透過 email 查詢用戶
+    user = Customer.get_user_by_email(email)
+    if user and password == user['password']:  # 直接比較明文密碼
+        session['id'] = user['id']  # 將用戶 ID 保存到 session
         flash('登入成功！')
-        return redirect('merchants')  # 登入成功，重定向到 merchant
+        # FIXME
+        return redirect('/final_board')  # 登入成功，重定向到 final_board.html
 
-    flash('登入失敗，請檢查您的帳號和密碼。')
-    return redirect('/customers/')  # 登入失敗，重定向到登入頁
+    flash('登入失敗，請檢查您的電子郵件和密碼。')
+    return redirect('/')  # 登入失敗，重定向到首頁
 
+@customer_bp.route('/place_order', methods=['POST'])
+def place_order():
+    """顧客下訂單"""
+    try:
+        customer_id = request.form.get('customer_id')  # 從前端表單接收顧客 ID
+        item_ids = request.form.getlist('item_ids')    # 接收選中的菜單項目 ID 列表
+        quantities = request.form.getlist('quantities')  # 接收數量列表
+        
+        # FIXME: What...?
+        order = Order(customer_id=customer_id, status="pending")
 
+        # 添加訂單項目
+        for item_id, quantity in zip(item_ids, quantities):
+            # FIXME
+            order_item = Order.add_item(order_id=order.id, menu_item_id=item_id, quantity=quantity)
+        # FIXME
+        db.session.commit()  # 提交交易
+        flash("訂單已成功提交！")
+        return redirect(url_for('customer/customer.browse_menu'))
+    except Exception as e:
+        flash("提交訂單時出錯，請稍後再試。")
+        return redirect(url_for('customer/customer.browse_menu'))
 
 # FIXME
 @customer_bp.route('/order_history/<int:customer_id>', methods=['GET'])
@@ -76,16 +95,14 @@ def view_customer_orders(customer_id):
 #全部商家
 @customer_bp.route('/merchants', methods=['GET'])
 def browse_merchants():
-    merchants = Merchant.get_all_merchant()
-    customer_id = session['id']
-    return render_template('customer/browse_merchant.html', items=merchants, customer_id=customer_id)
+    merchants = Merchant.query.all()
+    return render_template('customer/browse_merchant.html', merchants=merchants)
 
-@customer_bp.route('/menu', methods=['GET'])
-def browse_menu():
-    merchant_id = request.args.get('merchant_id', type=int)
-    session['merchant_id']=merchant_id
-    menu_items = Merchant.get_menu_items(merchant_id=merchant_id)
-    return render_template('customer/browse_menu.html', items=menu_items, merchant_id=merchant_id)
+@customer_bp.route('/menu/<int:merchant_id>', methods=['GET'])
+def browse_menu(merchant_id):
+    # FIXME: query.filter_by() ?
+    menu_items = MenuItem.query.filter_by(merchant_id=merchant_id).all()
+    return render_template('customer/browse_menu.html', menu_items=menu_items, merchant_id=merchant_id)
 
 
 @customer_bp.route('/order_status/<int:order_id>', methods=['GET'])
@@ -112,52 +129,3 @@ def grade_order(order_id):
 def customer_history(customer_id):
     orders = Order.query.filter_by(customer_id=customer_id).all()
     return render_template('customer/customer_history.html', orders=orders)
-
-
-
-@customer_bp.route('/cart', methods=['GET'])
-def view_cart():
-    """檢視購物車內容"""
-    customer_id = session['id']
-    cart_items = Cart.view_cart(customer_id=customer_id)
-    return render_template('customer/place_order.html', items=cart_items)
-
-@customer_bp.route('/cart/add', methods=['POST'])
-def add_to_cart():
-    """將商品加入購物車"""
-    customer_id = session['id']
-    merchant_id = session['merchant_id']
-    menuitem_id = request.form['id']
-    quantity = 1
-
-    cart_item = Cart.add_to_cart(customer_id=customer_id, menuitem_id=menuitem_id, quantity=quantity)
-    menu_items = Merchant.get_menu_items(merchant_id=merchant_id)
-    flash('商品新增成功！')
-    return render_template('customer/browse_menu.html', items=menu_items, merchant_id=merchant_id)
-   
-
-@customer_bp.route('/cart/remove', methods=['POST'])
-def remove_from_cart():
-    """移除購物車中的商品"""
-    customer_id = session['id']
-    menuitem_id = request.form['id']
-
-    cart_item = Cart.remove_from_cart(customer_id=customer_id, menuitem_id=menuitem_id)
-    return redirect('/customers/cart')
-
-@customer_bp.route('/cart/place_order', methods=['POST'])
-def place_order():
-    """確定購買，轉換為訂單"""
-    customer_id = session['id']
-
-    # 模擬轉換購物車為訂單邏輯
-    cart_items = Cart.view_cart(customer_id=customer_id)
-    if not cart_items:
-        flash('Cart is empty')
-
-    # 清空購物車並生成訂單（詳細實現略）
-    for item in cart_items:
-        db.session.delete(item)
-
-    db.session.commit()
-    return jsonify({"message": "Order placed successfully"})

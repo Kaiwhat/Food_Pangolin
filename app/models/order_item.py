@@ -20,28 +20,28 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 
     # 將菜單項目添加到訂單
 def add_order_item(order_id, menu_item_id, quantity, price):
-    sql = "INSERT INTO orderitem (order_id, menu_item_id, quantity, price) VALUES (%s, %s, %s, %s)"
+    sql = "INSERT INTO OrderItem (order_id, menu_item_id, quantity, price) VALUES (%s, %s, %s, %s)"
     cursor.execute(sql, (order_id, menu_item_id, quantity, price))
     conn.commit()
     return
 
 # 刪除訂單中的菜單項目
 def delete_order_item(order_item_id):
-    sql = "DELETE FROM orderitem WHERE id = %s"
+    sql = "DELETE FROM OrderItem WHERE id = %s"
     cursor.execute(sql, (order_item_id,))
     conn.commit()
     return
 
 # 更新訂單項目的數量或價格
 def update_order_item(quantity,price,order_item_id):
-    sql = "UPDATE orderitem SET quantity = %s, price = %s WHERE id = %s"
+    sql = "UPDATE OrderItem SET quantity = %s, price = %s WHERE id = %s"
     cursor.execute(sql, (quantity,price,order_item_id))
     conn.commit()
     return
 
 # 更新訂單項目的價格
 def update_order_item_price(price,order_item_id):
-    sql = "UPDATE orderitem SET price = %s WHERE id = %s"
+    sql = "UPDATE OrderItem SET price = %s WHERE id = %s"
     cursor.execute(sql, (price,order_item_id))
     conn.commit()
     return
@@ -50,7 +50,7 @@ def update_order_item_price(price,order_item_id):
 def get_order_item(order_item_id):
     sql = """
     SELECT id, order_id, menu_item_id, quantity, price
-    FROM orderitem
+    FROM OrderItem
     WHERE id = %s
     """
     cursor.execute(sql, (order_item_id,))
@@ -60,8 +60,8 @@ def get_order_item(order_item_id):
 def get_order_items_by_order(order_id):
     sql = """
     SELECT oi.id, oi.menu_item_id, mi.name, oi.quantity, oi.price
-    FROM orderitem oi
-    INNER JOIN menuitem mi ON oi.menu_item_id = mi.id
+    FROM OrderItem oi
+    INNER JOIN MenuItem mi ON oi.menu_item_id = mi.id
     WHERE oi.order_id = %s
     """
     cursor.execute(sql, (order_id,))
