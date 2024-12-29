@@ -13,6 +13,11 @@ def index():
 def new():
     return render_template('merchant/merchant_register.html')
 
+@merchant_bp.route('/newadd')
+def newadd():
+    merchant_id = session['id']
+    return render_template('merchant/add_item.html', merchant_id=merchant_id)
+
 # 商家註冊
 @merchant_bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -59,7 +64,7 @@ def view_menu():
 
 # 新增菜單項目
 @merchant_bp.route('/menu/add', methods=['POST'])
-def add_menu_item():
+def add_menu_items():
     try:
         
         name=request.form.get('name'),
@@ -67,26 +72,28 @@ def add_menu_item():
         description=request.form.get('description'),
         merchant_id=session['id']
         
-        new_item = MenuItem.add_menu_item(newname=name, newprice=price, newdescription=description, availability_status=1, merchant_id=merchant_id)
+        new_item = Merchant.add_menu_item(newname=name, newprice=price, newdescription=description, availability_status=1, merchant_id=merchant_id)
         return jsonify({'message': 'Menu item added successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
 # 編輯菜單項目
-@merchant_bp.route('/menu/edit/<int:item_id>', methods=['PUT'])
+@merchant_bp.route('/menu/edit/<int:item_id>', methods=['POST','GET'])
 def edit_menu_item(item_id):
-    data = request.json
+    
     try:
         # FIXME
         item = MenuItem.update_menu_item(item_id)
         if not item:
             return jsonify({'error': 'Item not found'}), 404
-
-        item.name = request.form.get('name', item.name)
-        item.price = request.form.get('price', item.price)
-        item.description = request.form.get('description', item.description)
+        
+        name=request.form.get('name'),
+        price=request.form.get('price'),
+        description=request.form.get('description'),
+        merchant_id=session['id']
+        
         # FIXME
-        db.session.commit()
+        edit_item = Merchant.update_menu_item(newname=name, newprice=price, newdescription=description, availability_status=1, merchant_id=merchant_id)
         return jsonify({'message': 'Menu item updated successfully'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
