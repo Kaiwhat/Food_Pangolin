@@ -140,7 +140,6 @@ def get_orders_by_delivery_person(delivery_person_id):
     WHERE 
         orde.delivery_person_id = %s AND orde.status = '已送達';
 
-
     """
     cursor.execute(sql, (delivery_person_id,))
     return cursor.fetchall()
@@ -212,6 +211,19 @@ def add_total_pay(delivery_person_id,id):
     conn.commit()
     return
      
+
+#獲取某送貨員的所有分配訂單
+def get_orders_by_delivery(delivery_person_id):
+    sql = """
+    SELECT orde.id, orde.customer_id, customer.name AS customer_name, orde.delivery_address, 
+           orde.total_price, orde.status, merchant.name AS merchant_name, merchant.location AS merchant_location
+    FROM orde 
+    JOIN merchant ON orde.merchant_id = merchant.id
+    JOIN customer ON orde.customer_id = customer.id
+    WHERE orde.delivery_person_id = %s AND orde.status = '正在配送';
+    """
+    cursor.execute(sql, (delivery_person_id,))
+    return cursor.fetchall()
 
 
 
