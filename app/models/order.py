@@ -89,9 +89,26 @@ def get_orders_by_customer(customer_id):
 #查詢商家的所有訂單
 def get_orders_by_merchant(merchant_id):
     sql = """
-    SELECT id, customer_id, delivery_person_id, status, delivery_address, total_price, created_at
-    FROM orde
-    WHERE merchant_id = %s
+SELECT 
+    o.id AS order_id,
+    o.customer_id,
+    o.delivery_address,
+    o.total_price,
+    oi.menu_item_id,
+    mi.name AS menu_item_name,
+    oi.quantity,
+    oi.price AS item_price,
+    (oi.quantity * oi.price) AS item_total_price
+FROM 
+    orde o
+JOIN 
+    orderitem oi ON o.id = oi.order_id
+JOIN 
+    menuitem mi ON oi.menu_item_id = mi.id
+WHERE 
+    mi.merchant_id = %s 
+ORDER BY 
+    o.id;
     """
     cursor.execute(sql, (merchant_id,))
     return cursor.fetchall()

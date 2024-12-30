@@ -49,8 +49,9 @@ def update_menu_item_availability(availability_status, id):
 
 # 查詢菜單項目資料
 def get_menu_item(menu_item_id):
+    print(menu_item_id)
     sql = "SELECT id, name, price, description, availability_status, merchant_id FROM menuitem WHERE id = %s"
-    cursor.execute(sql, (menu_item_id))
+    cursor.execute(sql, (menu_item_id,))
     return cursor.fetchone()
 
 # 查詢商家的所有菜單項目

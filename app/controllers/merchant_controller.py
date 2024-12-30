@@ -55,41 +55,46 @@ def login():
 @merchant_bp.route('/menu', methods=['GET'])
 def view_menu():
     merchant_id = session['id']
-
     menu_items = MenuItem.get_menu_items_by_merchant(merchant_id=merchant_id)
     return render_template('merchant/manage_menu.html', menu_items=menu_items, merchant_id=merchant_id)
 
 # 新增菜單項目
-@merchant_bp.route('/menu/add', methods=['POST'])
+@merchant_bp.route('/menu/add', methods=['GET', 'POST'])
 def add_menu_items(): 
     name=request.form.get('name')
     price=request.form.get('price')
     description=request.form.get('description')
     merchant_id=session['id']
         
-    new_item = Merchant.add_menu_item(name=name, price=price, description=description, availability_status='1', merchant_id=merchant_id)
+    Merchant.add_menu_item(name=name, price=price, description=description, availability_status='1', merchant_id=merchant_id)
+    flash('商品更新成功！')
     return redirect('/merchants/menu')
 
+@merchant_bp.route('/menu/view', methods=['GET', 'POST'])
+def view_menu_by_id():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    # 獲取商品詳細資訊
+    menuitem_id=request.form['id']
+    product = MenuItem.get_menu_item(menu_item_id=menuitem_id)
+    return render_template('merchant/edit_item.html', item=product)
+
 # 編輯菜單項目
-@merchant_bp.route('/menu/edit/<int:item_id>', methods=['POST','GET'])
-def edit_menu_item(item_id):
+@merchant_bp.route('/menu/edit', methods=['GET', 'POST'])
+def edit_product():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    item_id = request.form.get('id')
+    newname = request.form.get('newname')
+    newdescription = request.form.get('newdescription')
+    newprice = request.form.get('newprice')
     
-    try:
-        # FIXME
-        item = MenuItem.update_menu_item(item_id)
-        if not item:
-            return jsonify({'error': 'Item not found'}), 404
-        
-        name=request.form.get('name'),
-        price=request.form.get('price'),
-        description=request.form.get('description'),
-        merchant_id=session['id']
-        
-        # FIXME
-        edit_item = Merchant.update_menu_item(newname=name, newprice=price, newdescription=description, availability_status=1, merchant_id=merchant_id)
-        return jsonify({'message': 'Menu item updated successfully'}), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
+    # 更新商品的資料
+    MenuItem.update_menu_item(name=newname, price=newprice, description=newdescription, availability_status=1, id=item_id)
+    flash('商品更新成功！')
+    return redirect('/merchants/menu')
 
 # 刪除菜單項目
 @merchant_bp.route('/menu/delete', methods=['GET', 'POST'])
@@ -99,10 +104,17 @@ def delete_menu_item():
     return redirect('/merchants/menu')
     
 # 商家查看訂單列表
-@merchant_bp.route('/merchant/<int:merchant_id>', methods=['GET'])
-def view_merchant_orders(merchant_id):
-    try:
-        orders = Order.get_orders_by_merchant(merchant_id=merchant_id).all()
-        return jsonify([order.to_dict() for order in orders]), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
+@merchant_bp.route('/orders', methods=['GET'])
+def view_merchant_orders():
+    merchant_id = session['id']
+    orders = Order.get_orders_by_merchant(merchant_id=merchant_id)
+    return render_template('merchant/order_list.html', data=orders, merchant_id=merchant_id)
+
+@merchant_bp.route('/orders/complete', methods=['GET'])
+def complete_orders():
+    merchant_id = session['id']
+    item_id = request.form.get('item_id')
+    order_id = request.form.get('order_id')
+    orders = Order.get_orders_by_merchant(merchant_id=merchant_id)
+    return render_template('merchant/order_list.html', data=orders, merchant_id=merchant_id)
+

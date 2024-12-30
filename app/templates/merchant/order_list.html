@@ -11,13 +11,13 @@
 <h2 class="card-title large-title">目前訂單</h2>
 <a href="/" class="common-button">Logout</a>
 <hr>
-<p><b>{{merchant.id}}{{merchant.name}}</b></p>
+<p><b>{{merchant_id}}</b></p>
 
 <table>
     <thead>
         <tr>
+            <th>ID:</th>
             <th>品項</th>
-		    <th>內容</th>
             <th>總金額</th>
 			<th>顧客</th>
 			<th>操作</th>
@@ -27,13 +27,15 @@
     <tbody>
         {% for item in data %}
         <tr>
-			<td>{{    }}</td>
-            <td>{{    }}</td>
-			<td style="width: 100px;">{{    }}</td>
-			<td style="width: 100px;">{{    }}</td>
+            
+            <td>{{item.order_id}}</td>
+			<td>{{item.menu_item_name}}</td>
+			<td style="width: 100px;">{{item.item_total_price}}</td>
+			<td style="width: 100px;">{{item.customer_id}}</td>
 			<td>
-			    <form method="POST" action="/merchant/      ">
-                    <input type="hidden" name="order_id" value="{{order.id}}">
+			    <form method="POST" action="/merchant/orders/complete">
+                    <input type="" name="order_id" value="{{item.order_id}}">
+                    <input type="" name="item_id" value="{{item.menu_item_id}}">
                     <button type="submit" class="complete-btn">完成</button>
                 </form>
 			</td>
@@ -44,7 +46,7 @@
 <br>
 
 <div>
-    <a href="/merchamts/manage_menu" class="common-button">管理菜單</a>
+    <a href="/merchants/menu" class="common-button">管理菜單</a>
 </div>
 </body>
 </html>
