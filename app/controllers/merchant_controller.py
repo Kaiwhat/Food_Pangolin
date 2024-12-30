@@ -51,6 +51,10 @@ def login():
 # 查看菜單
 @merchant_bp.route('/menu', methods=['GET'])
 def view_menu():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     merchant_id = session['id']
     menu_items = MenuItem.get_menu_items_by_merchant(merchant_id=merchant_id)
     return render_template('merchant/manage_menu.html', menu_items=menu_items, merchant_id=merchant_id)
@@ -58,6 +62,10 @@ def view_menu():
 # 新增菜單項目
 @merchant_bp.route('/menu/add', methods=['GET', 'POST'])
 def add_menu_items(): 
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     name=request.form.get('name')
     price=request.form.get('price')
     description=request.form.get('description')
@@ -83,6 +91,7 @@ def edit_product():
     if 'id' not in session:
         flash('請先登入！')
         return redirect('/')
+    
     item_id = request.form.get('id')
     newname = request.form.get('newname')
     newdescription = request.form.get('newdescription')
@@ -96,6 +105,10 @@ def edit_product():
 # 刪除菜單項目
 @merchant_bp.route('/menu/delete', methods=['GET', 'POST'])
 def delete_menu_item():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     item_id = request.form.get('id')
     Merchant.delete_menu_item(menu_item_id=item_id)
     return redirect('/merchants/menu')
@@ -103,12 +116,20 @@ def delete_menu_item():
 # 商家查看訂單列表
 @merchant_bp.route('/orders', methods=['GET'])
 def view_merchant_orders():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     merchant_id = session['id']
     orders = Order.get_orders_by_merchant(merchant_id=merchant_id)
     return render_template('merchant/order_list.html', data=orders, merchant_id=merchant_id)
 
 @merchant_bp.route('/orders/complete', methods=['GET'])
 def complete_orders():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     merchant_id = session['id']
     item_id = request.form.get('item_id')
     order_id = request.form.get('order_id')

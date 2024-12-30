@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, session, flash, redirect
 
 # 導入控制器
 from app.controllers.customer_controller import customer_bp
@@ -15,4 +15,8 @@ def register_routes(app):
     app.register_blueprint(merchant_bp, url_prefix='/merchants')
     app.register_blueprint(delivery_person_bp, url_prefix='/deliveries')
 
-
+    @app.route('/logout')
+    def logout():
+        session.pop('id', None)  # 刪除 session 中的用戶 ID
+        flash('您已成功登出！')
+        return redirect('/')  # 重定向到首頁

@@ -52,6 +52,10 @@ def login():
 # 顯示顧客的訂單列表
 @customer_bp.route('/customer/<int:customer_id>', methods=['GET'])
 def view_customer_orders(customer_id):
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     try:
         # FIXME: query.filter_by() ?
         orders = Order.query.filter_by(customer_id=customer_id).all()
@@ -63,12 +67,20 @@ def view_customer_orders(customer_id):
 #全部商家
 @customer_bp.route('/merchants', methods=['GET'])
 def browse_merchants():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     merchants = Merchant.get_all_merchant()
     customer_id = session['id']
     return render_template('customer/browse_merchant.html', items=merchants, customer_id=customer_id)
 
 @customer_bp.route('/menu', methods=['GET'])
 def browse_menu():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     merchant_id = request.args.get('merchant_id', type=int)
     session['merchant_id']=merchant_id
     menu_items = Merchant.get_menu_items(merchant_id=merchant_id)
@@ -77,11 +89,19 @@ def browse_menu():
 
 @customer_bp.route('/order_status/<int:order_id>', methods=['GET'])
 def order_status(order_id):
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     order = Order.get_order_items(order_id)
     return render_template('customer/order_status.html', order=order)
 
 @customer_bp.route('/feedback/<int:order_id>', methods=['GET', 'POST'])
 def grade_order(order_id):
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     if request.method == 'POST':
         data = request.form
         feedback = Feedback(
@@ -97,6 +117,10 @@ def grade_order(order_id):
 # 查看配送歷史
 @customer_bp.route('/history', methods=['GET'])
 def view_customer_history():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     customer_id = session['id']
     history = Order.get_orders_by_customer(customer_id)
     return render_template('customer/customer_history.html', orders=history, customer_id=customer_id)
@@ -105,6 +129,10 @@ def view_customer_history():
 
 @customer_bp.route('/cart', methods=['GET'])
 def view_cart():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     """檢視購物車內容"""
     customer_id = session['id']
     cart_items = Cart.view_cart(customer_id=customer_id)
@@ -112,6 +140,10 @@ def view_cart():
 
 @customer_bp.route('/cart/add', methods=['POST'])
 def add_to_cart():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     """將商品加入購物車"""
     customer_id = session['id']
     merchant_id = session['merchant_id']
@@ -126,6 +158,10 @@ def add_to_cart():
 
 @customer_bp.route('/cart/remove', methods=['POST'])
 def remove_from_cart():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     """移除購物車中的商品"""
     customer_id = session['id']
     menuitem_id = request.form['id']
@@ -135,6 +171,10 @@ def remove_from_cart():
 
 @customer_bp.route('/cart/place_order', methods=['POST'])
 def place_order():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    
     """確定購買，轉換為訂單"""
     customer_id = session['id']
     delivery_address = request.form.get('address')
