@@ -12,28 +12,24 @@
 <a href="/" class="common-button">Logout</a>
 <hr>
 
-<form method="POST" action="/merchants/edit_menu_item">
-    {% csrf_token %}
+<form method="POST" action="/merchants/menu/edit">
+    <input type="text" name="id" value="{{item.id}}">
 	<div>
         <label for="newname">品項:</label>
-        <input type="text" id="newname" name="newname" placeholder="請輸入新的品項" value="{{merchant.name}}" required>
+        <input type="text" id="newname" name="newname" placeholder="請輸入新的品項" value="{{item.name}}" required>
     </div>
      <div>
         <label for="newdescription">內容:</label>
-        <input type="text" id="newdescription" name="newdescription" placeholder="請輸入新的內容" value="{{merchant.description}}" required>
+        <input type="text" id="newdescription" name="newdescription" placeholder="請輸入新的內容" value="{{item.description}}" required>
     </div>
     <div>
         <label for="newprice">金額:</label>
-        <input type="number" name="newprice" placeholder="請輸入新的金額" value="{{merchant.price}}" min="0" required>
+        <input type="number" name="newprice" placeholder="請輸入新的金額" value="{{item.price}}" min="0" required>
     </div>
-    
-	<input type="hidden" name="oldname" value="{{merchant.name}}">
-    <input type="hidden" name="oldcontent" value="{{merchant.content}}">
-    <input type="hidden" name="oldprice" value="{{merchant.price}}">
 
     <div style="margin-top: 10px;">
         <button type="submit" class="common-button">確定</button>
-        <a href="/customers/manage_menu" class="common-button">取消</a>
+        <a href="/merchants/menu" class="common-button">取消</a>
     </div>
 </form>
 </body>
