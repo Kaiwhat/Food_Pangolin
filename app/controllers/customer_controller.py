@@ -49,21 +49,6 @@ def login():
     flash('登入失敗，請檢查您的帳號和密碼。')
     return redirect('/customers/')  # 登入失敗，重定向到登入頁
 
-# 顯示顧客的訂單列表
-@customer_bp.route('/customer/<int:customer_id>', methods=['GET'])
-def view_customer_orders(customer_id):
-    if 'id' not in session:
-        flash('請先登入！')
-        return redirect('/')
-    
-    try:
-        # FIXME: query.filter_by() ?
-        orders = Order.query.filter_by(customer_id=customer_id).all()
-        return jsonify([order.to_dict() for order in orders]), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
-    
-
 #全部商家
 @customer_bp.route('/merchants', methods=['GET'])
 def browse_merchants():
@@ -85,16 +70,6 @@ def browse_menu():
     session['merchant_id']=merchant_id
     menu_items = Merchant.get_menu_items(merchant_id=merchant_id)
     return render_template('customer/browse_menu.html', items=menu_items, merchant_id=merchant_id)
-
-
-@customer_bp.route('/order_status/<int:order_id>', methods=['GET'])
-def order_status(order_id):
-    if 'id' not in session:
-        flash('請先登入！')
-        return redirect('/')
-    
-    order = Order.get_order_items(order_id)
-    return render_template('customer/order_status.html', order=order)
 
 @customer_bp.route('/feedback/<int:order_id>', methods=['GET', 'POST'])
 def grade_order(order_id):
@@ -185,11 +160,12 @@ def place_order():
         flash('購物車為空，無法提交訂單')
         return redirect(url_for('/customers/cart'))
 
+    merchant_id = request.form.get('merchant_id')
     # 計算總金額
     total_price = sum(item['total_price'] for item in cart_items)
 
     # 插入訂單資料
-    order_id = Order.add_order(customer_id=customer_id, delivery_person_id='999', status=0, delivery_address=delivery_address, total_price=total_price, created_at=0)
+    order_id = Order.add_order(customer_id=customer_id, merchant_id=merchant_id, status='等待商家收單', delivery_address=delivery_address, total_price=total_price)
 
     # 插入訂單項目
     # 清空購物車
@@ -207,4 +183,33 @@ def place_order():
         Cart.remove_from_cart(customer_id=customer_id, menuitem_id=item['menuitem_id'])
 
     flash(f'訂單已成功提交，總金額：{total_price} 元')
-    return redirect('/customers/cart')
+    return redirect('/customers/history')
+
+
+@customer_bp.route('/order/<int:order_id>/view', methods=['GET'])
+def view_order(order_id):
+    """
+    顯示特定訂單的詳細資訊
+    """
+    try:
+        # 調用 viewFeedback 函數
+        items = Feedback.viewFeedback(order_id)
+
+        # 渲染結果到模板
+        return render_template('customer/grade_order.html', items=items)
+    except Exception as e:
+        # 錯誤處理
+        return f"Error retrieving order details: {str(e)}", 500
+
+@customer_bp.route('/order/<int:order_id>/review', methods=['GET', 'POST'])
+def review_order(order_id):
+    customer_id=session['id']
+    merchant_rating = request.form.get('merchant_rating')
+    delivery_rating = request.form.get('delivery_rating')
+    merchant_id = request.form.get('merchant_id')
+    delivery_id = request.form.get('delivery_person_id')
+    order_id = request.form.get('')
+    Feedback.addFeedback(order_id, customer_id, feedback_text='', rating_m=merchant_rating, rating_d=delivery_rating, deliveryperson_id=delivery_id, merchant_id=merchant_id)
+
+    flash('評價已提交！')
+    return redirect(url_for('/customers/history'))

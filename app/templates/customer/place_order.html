@@ -27,7 +27,7 @@
     <tbody>
         {% for menuitem in items %}
         <tr>
-			<td style="width: 100px;">{{menuitem.merchant_name}}</td>
+			<td style="width: 100px;">{{menuitem.merchant_id}}</td>
 			<td style="width: 100px;">{{menuitem.menuitem_name}}</td>
 			<td style="width: 50px;">{{menuitem.quantity}}</td>
 			<td style="width: 100px;">{{menuitem.price}}</td>
@@ -47,12 +47,11 @@
 <div class="address">
     <form method="POST" action="/customers/cart/place_order">
         <label for="address">配送地址：</label>
+        <input type="hidden" name="merchant_id" value="{{ items[0].merchant_id if items and items[0].merchant_id is not none else 0 }}">
         <input type="text" id="address" name="address" placeholder="輸入配送地址" required style="width: 100%; max-width: 400px;">
         <button type="submit" class="common-button">送出訂單</button>
     </form>
 </div>
-
-<p>總金額：<span id="total-price">#</span>元</p>
 
 <div class="buttons">
     <a href="/customers/merchants" class="common-button">回上一頁</a>

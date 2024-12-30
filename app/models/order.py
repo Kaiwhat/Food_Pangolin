@@ -19,17 +19,17 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 	exit(1)
 
 #新增訂單
-def add_order(customer_id, delivery_person_id, status, delivery_address, total_price, created_at):
+def add_order(customer_id, merchant_id, status, delivery_address, total_price):
     """
     插入一筆訂單資料，並返回新插入的訂單 ID。
     """
     try:
         # 插入訂單
         sql_insert = """
-        INSERT INTO orde (customer_id, merchant_id, delivery_person_id, status, delivery_address, total_price, created_at)
-        VALUES (%s, %s, 999, %s, %s, %s, %s)
+        INSERT INTO orde (customer_id, merchant_id, status, delivery_address, total_price, created_at)
+        VALUES (%s, %s, %s, %s, %s, NOW())
         """
-        cursor.execute(sql_insert, (customer_id, delivery_person_id, status, delivery_address, total_price, created_at))
+        cursor.execute(sql_insert, (customer_id, merchant_id, status, delivery_address, total_price))
 
         # 提交事務
         conn.commit()
@@ -79,9 +79,22 @@ def get_order(order_id):
 #查詢顧客的所有訂單
 def get_orders_by_customer(customer_id):
     sql = """
-    SELECT id, merchant_id, delivery_person_id, status, delivery_address, total_price, created_at
-    FROM orde
-    WHERE customer_id = %s
+SELECT 
+    o.id AS order_id,
+    o.merchant_id,
+    o.delivery_person_id,
+    o.status,
+    o.delivery_address,
+    o.total_price,
+    o.created_at,
+    f.rating_m AS merchant_rating,
+    f.rating_d AS delivery_rating
+FROM 
+    orde o
+LEFT JOIN 
+    feedback f ON o.id = f.order_id
+WHERE 
+    o.customer_id = %s;
     """
     cursor.execute(sql, (customer_id,))
     return cursor.fetchall()

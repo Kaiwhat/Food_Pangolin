@@ -12,13 +12,10 @@
 <a href="/logout" class="common-button">Logout</a>
 <hr>
 <p><b>本次訂單</b></p>
-
 <table>
     <thead>
         <tr>
-            <th>商家</th>
 			<th>品項</th>
-			<th>內容</th>
 			<th>數量</th>
             <th>金額</th>
         </tr>
@@ -27,11 +24,9 @@
     <tbody>
         {% for menuitem in items %}
         <tr>
-			<td style="width: 100px;">{{menitem.merchant_id}}</td>
-			<td style="width: 100px;">{{menuitem.name}}</td>
-            <td>{{menuitem.description}}</td>
-			<td style="width: 50px;">{{orderitem.quantity}}</td>
-			<td style="width: 100px;">{{menuitem.price}}</td>
+			<td style="width: 100px;">{{menuitem.menu_item_name}}</td>
+			<td style="width: 50px;">{{menuitem.quantity}}</td>
+			<td style="width: 100px;">{{menuitem.total_price_per_item}}</td>
         </tr>
         {% endfor %}
     </tbody>
@@ -39,29 +34,34 @@
 <br>
 
 <form method="POST" action="customers/    ">
-        <div class="rating">
-            <label for="merchant-rating">商家評分(1-5):</label>
-            <select id="merchant-rating" name="merchant_rating" required>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </div>
+    <input type="text" name="order_id" value="{{items.order_id}}">
+    <input type="text" name="merchant_id" value="{{items.merchant_id}}">
+    <input type="text" name="delivery_person_id" value="{{items.delivery_person_id}}">
+    <div class="rating">
+        <label for="merchant-rating">商家評分(1-5):</label>
+        <select id="merchant-rating" name="merchant_rating" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
 
-        <div class="rating">
-            <label for="delivery-rating">外送員評分(1-5):</label>
-            <select id="delivery-rating" name="delivery_rating" required>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </div>
+    <div class="rating">
+        <label for="delivery-rating">外送員評分(1-5):</label>
+        <select id="delivery-rating" name="delivery_rating" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
 <br>
-	
+<div class="buttons">
+    <a href="/customers/history" class="common-button">Back</a>
+</div>
 <div class="buttons">
     <a href="/customers/browse_merchant" class="common-button">送出評分</a>
 </div>

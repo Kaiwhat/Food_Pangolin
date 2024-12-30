@@ -18,7 +18,6 @@
             <th>日期</th>
 	    	<th>商家</th>
 	    	<th>內容</th>
-			<th>數量</th>
 		    <th>總金額</th>
 	    	<th>商家評分</th>
 	    	<th>外送員評分</th>
@@ -29,12 +28,19 @@
 	    {% for order in orders %}
         <tr>
             <td style="width: 50px;">{{order.created_at}}</td>
-	    	<td>{{order['merchant_id']}}</td>
-			<td>{{order.description}}</td>
-	    	<td style="width: 50px;">{{1}}</td>
-		    <td style="width: 50px;">{{order['total_price']}}</td>
-	    	<td style="width: 50px;">{{0}}</td>
-	    	<td style="width: 50px;">{{0}}</td>
+	    	<td>{{ order['merchant_id'] }}</td>
+			<td>{{ order['status'] }}</td>
+		    <td>{{ order['total_price'] }}</td>
+	    	<td>{{ order['merchant_rating'] if order and order['merchant_rating'] is not none else '尚未評價' }}</td>
+	    	<td>{{ order['delivery_rating'] if order and order['delivery_rating'] is not none else '尚未評價' }}</td>
+			<td>{{ order['order_id'] }}</td>
+			<td>
+				{% if (order['merchant_rating'] is none) or (order['delivery_rating'] is none) %}
+				<form method="GET" action="/customers/order/{{ order['order_id'] }}/view">
+					<button type="submit">評價</button>
+				</form>
+				{% endif %}
+			</td>
         </tr>
 		{% endfor %}
 	</tbody>

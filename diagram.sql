@@ -89,29 +89,35 @@ INSERT INTO `deliveryperson` VALUES
 
 CREATE TABLE `feedback` (
   `id` int(100) NOT NULL,
+  `order_id` int(100) NOT NULL,
   `customer_id` int(100) NOT NULL,
   `feedback_text` varchar(30) NOT NULL,
-  `rating` int(100) NOT NULL,
+  `rating_m` int(100) NOT NULL,
+  `rating_d` int(100) NOT NULL,
   `created_at` date NOT NULL,
   `deliveryperson_id` int(11) DEFAULT NULL,
-  `merchant_id` int(11) DEFAULT NULL
+  `merchant_id` int(11) DEFAULT NULL,
+  FOREIGN KEY (order_id) REFERENCES orde(id),
+  FOREIGN KEY (customer_id) REFERENCES customer(id),
+  FOREIGN KEY (merchant_id) REFERENCES merchant(id),
+  FOREIGN KEY (deliveryperson_id) REFERENCES deliveryperson(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `feedback`
 --
 
-INSERT INTO `feedback` (`id`, `customer_id`, `feedback_text`, `rating`, `created_at`, `deliveryperson_id`, `merchant_id`) VALUES
-(1, 1, '快速送達，非常滿意！', 5, '2024-12-26', 5, NULL),
-(2, 2, '送貨員態度友善，但有點遲到。', 4, '2024-12-26', 4, NULL),
-(3, 3, '服務很好，送貨員很專業！', 5, '2024-12-26', 3, NULL),
-(4, 4, '配送速度有點慢，還好物品完好無損。', 3, '2024-12-26', 2, NULL),
-(5, 5, '非常滿意，送貨員很有禮貌！', 5, '2024-12-26', 3, NULL),
-(6, 1, '商品質量很好，會再來購買！', 5, '2024-12-26', NULL, 4),
-(7, 2, '商店服務不錯，但價格有點高。', 4, '2024-12-26', NULL, 4),
-(8, 3, '商品包裝很好，滿意的購物體驗。', 5, '2024-12-26', NULL, 3),
-(9, 4, '配送時間太長，商店應該改進物流。', 3, '2024-12-26', NULL, 4),
-(10, 5, '商品選擇多樣，客服回應迅速。', 4, '2024-12-26', NULL, 1);
+INSERT INTO `feedback` (`order_id`, `customer_id`, `feedback_text`, `rating_m`, `rating_d`, `created_at`, `deliveryperson_id`, `merchant_id`) VALUES
+(1, 1, '快速送達，非常滿意！', 5, 5, '2024-12-26', 5, NULL),
+(2, 2, '送貨員態度友善，但有點遲到。', 4, 4, '2024-12-26', 4, NULL),
+(3, 3, '服務很好，送貨員很專業！', 5, 5, '2024-12-26', 3, NULL),
+(4, 4, '配送速度有點慢，還好物品完好無損。', 3,  3, '2024-12-26', 2, NULL),
+(5, 5, '非常滿意，送貨員很有禮貌！', 5, 5, '2024-12-26', 3, NULL),
+(6, 1, '商品質量很好，會再來購買！', 5, 5, '2024-12-26', NULL, 4),
+(7, 2, '商店服務不錯，但價格有點高。', 4, 5, '2024-12-26', NULL, 4),
+(8, 3, '商品包裝很好，滿意的購物體驗。', 5, 5, '2024-12-26', NULL, 3),
+(9, 4, '配送時間太長，商店應該改進物流。', 3, 1, '2024-12-26', NULL, 4),
+(10, 5, '商品選擇多樣，客服回應迅速。', 4, 4,'2024-12-26', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -150,7 +156,7 @@ CREATE TABLE `merchant` (
   `name` varchar(100) NOT NULL,
   `location` varchar(100) NOT NULL,
   `contact_info` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
