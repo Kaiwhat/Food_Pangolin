@@ -89,10 +89,11 @@ def mark_order_delivered():
     if 'id' not in session:
         flash('請先登入！')
         return redirect('/')
-    
+    DeliveryPerson_id = session['id']
     order_id = request.form.get('order_id')
     if order_id:
         Order.update_order_status(order_id)
+        Order.add_total_pay(DeliveryPerson_id,order_id)
     return redirect('assigned_orders')
 
 # 檢索所有 "等待配送" 的訂單

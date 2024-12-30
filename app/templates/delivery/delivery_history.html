@@ -12,6 +12,7 @@
 <a href="/logout" class="common-button">Logout</a>
 <hr>
 
+
 <table width="400">
     <thead>
         <th>訂單 ID</th>
@@ -20,6 +21,7 @@
         <th>商家名稱</th>
         <th>配送地址</th>
         <th>總金額</th>
+        <th>傭金</th>
         <th>外送員評分</th>
     </thead>
     {% for item in data %}
@@ -30,10 +32,18 @@
         <td>{{ item.merchant_name }}</td>
         <td>{{ item.delivery_address }}</td>
         <td>{{ item.total_price }}</td>
+        <td>{{ item.pay }}</td>
         <td>{{ item.delivery_rating if item.delivery_rating else '尚未評分' }}</td>
     </tr>
     {% endfor %}
+
+    {% if data %}
+    <a>總傭金：{{ data[0].total_pay if data[0].total_pay is not none and data[0].total_pay != 0.0 else 0 | round(1) }}</a>
+    {% endif %}
+    <br>
+    <a>總筆數：{{ data|length }}</a>
 </table>
+
 <br>	
 	
 <div class="buttons">
