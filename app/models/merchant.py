@@ -29,9 +29,9 @@ def login(name, password):
 		return False, '0'
 
 #新增商家資料
-def add_merchant(id, name, location, contact_info):
-    sql = "INSERT INTO merchant (id, name, location, contact_info) VALUES (%s, %s, %s, %s)"
-    cursor.execute(sql, (id, name, location, contact_info))
+def add_merchant( name, location, contact_info,password):
+    sql = "INSERT INTO merchant ( name, location, contact_info,password) VALUES (%s, %s, %s, %s)"
+    cursor.execute(sql, ( name, location, contact_info,password))
     conn.commit()
     return
 

@@ -19,22 +19,19 @@ def newadd():
     return render_template('merchant/add_item.html', merchant_id=merchant_id)
 
 # 商家註冊
-@merchant_bp.route('/register', methods=['GET', 'POST'])
+@merchant_bp.route('/register', methods=['POST'])
 def register():
-    if request.method == 'POST':
-        data = request.form
-        try:
-            new_merchant = Merchant(
-                name=data.get('name'),
-                email=data.get('email'),
-                password=data.get('password')  # 假設已處理密碼加密
-            )
-            # FIXME
-            db.session.commit()
-            return jsonify({'message': 'Merchant registered successfully'}), 201
-        except Exception as e:
-            return jsonify({'error': str(e)}), 400
-    return render_template('merchant/merchant_register.html')
+    # 假設我們獲取表單資料
+    name = request.form['name']
+    password = request.form['password']
+    location=request.form['location']
+    contact_info = request.form['contact_info']
+    # 進行用戶註冊邏輯，比如存儲用戶資料到資料庫
+    if name and password and contact_info:
+        Merchant.add_merchant( name,password,location, contact_info)
+        # 例如將資料存入資料庫
+        return redirect('/')
+    return '註冊失敗'
 
 @merchant_bp.route('/login', methods=['GET', 'POST'])
 def login():
