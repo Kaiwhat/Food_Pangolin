@@ -32,7 +32,9 @@ classDiagram
         +string contactInfo
         +string address
         +list<訂單> orderHistory
+        +Cart shoppingCart
         +void browseMenu(商家 merchant)
+        +void addToCart(菜單 item, int quantity)
         +void placeOrder(Order order)
         +void trackOrder(Order order)
         +void leaveFeedback(Order order, string feedback)
@@ -58,9 +60,25 @@ classDiagram
         +void updateStatus(string newStatus)
     }
 
+    class 購物車 {
+        +int id
+        +顧客 customer
+        +list<CartItem> items
+        +float calculateTotal()
+        +void clearCart()
+    }
+
+    class 購物車項目 {
+        +菜單 item
+        +int quantity
+        +float calculateSubtotal()
+    }
+
     商家 --|> 菜單 : 管理
     商家 <|-- 訂單 : 收
     顧客 --|> 訂單 : 發
+    顧客 --|> 購物車 : 擁有
+    購物車 --|> 購物車項目 : 包含
     送貨員 <|-- 訂單 : 送
     訂單 <--> 菜單 : 相關
 
