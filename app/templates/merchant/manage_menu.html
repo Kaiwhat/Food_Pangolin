@@ -33,11 +33,11 @@
             <td style="width: 100px;">{{orderitem.price}}</td>
 			<td>
 			    <form method="POST" action="/merchants/menu/view" style="display: inline;">
-                    <input type="" name="id" value="{{orderitem.id}}">
+                    <input type="hidden" name="id" value="{{orderitem.id}}">
                     <button type="submit">編輯</button>
 	            </form>
 		        <form method="POST" action="/merchants/menu/delete" style="display: inline;">
-                    <input type="" name="id" value="{{orderitem.id}}">
+                    <input type="hidden" name="id" value="{{orderitem.id}}">
                     <button type="submit">刪除</button>
                 </form>
 			</td>
@@ -48,7 +48,7 @@
 <br>
 
 <div>
-    <a href="/merchants/view_merchant_orders" class="common-button">查看目前訂單</a>
+    <a href="/merchants/orders" class="common-button">查看目前訂單</a>
     <a href="/merchants/newadd" class="common-button">新增品項</a>
 </div>
 </body>

@@ -55,21 +55,20 @@ def login():
 @merchant_bp.route('/menu', methods=['GET'])
 def view_menu():
     merchant_id = session['id']
-
     menu_items = MenuItem.get_menu_items_by_merchant(merchant_id=merchant_id)
     return render_template('merchant/manage_menu.html', menu_items=menu_items, merchant_id=merchant_id)
 
 # 新增菜單項目
-@merchant_bp.route('/menu/add', methods=['POST'])
+@merchant_bp.route('/menu/add', methods=['GET', 'POST'])
 def add_menu_items(): 
     name=request.form.get('name')
     price=request.form.get('price')
     description=request.form.get('description')
     merchant_id=session['id']
         
-    new_item = Merchant.add_menu_item(name=name, price=price, description=description, availability_status='1', merchant_id=merchant_id)
+    Merchant.add_menu_item(name=name, price=price, description=description, availability_status='1', merchant_id=merchant_id)
+    flash('商品更新成功！')
     return redirect('/merchants/menu')
-
 
 @merchant_bp.route('/menu/view', methods=['GET', 'POST'])
 def view_menu_by_id():
@@ -105,10 +104,9 @@ def delete_menu_item():
     return redirect('/merchants/menu')
     
 # 商家查看訂單列表
-@merchant_bp.route('/merchant/<int:merchant_id>', methods=['GET'])
-def view_merchant_orders(merchant_id):
-    try:
-        orders = Order.get_orders_by_merchant(merchant_id=merchant_id).all()
-        return jsonify([order.to_dict() for order in orders]), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
+@merchant_bp.route('/orders', methods=['GET'])
+def view_merchant_orders():
+    merchant_id = session['id']
+    orders = Order.get_orders_by_merchant(merchant_id=merchant_id)
+    return render_template('merchant/order_list.html', data=orders, merchant_id=merchant_id)
+
