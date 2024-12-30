@@ -139,6 +139,19 @@ def getList(customer_id):
 	return cursor.fetchall()
 
 
+def All_pending_orders():
+    sql = """
+    SELECT orde.id, orde.customer_id, customer.name AS customer_name, orde.delivery_address, 
+           orde.total_price, orde.status, merchant.name AS merchant_name, merchant.location AS merchant_location
+    FROM orde
+    JOIN merchant ON orde.merchant_id = merchant.id
+    JOIN customer ON orde.customer_id = customer.id
+    WHERE orde.status = '等待配送';
+    """
+    cursor.execute(sql)
+    return cursor.fetchall()
+
+
 
 
 

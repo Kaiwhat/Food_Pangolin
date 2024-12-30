@@ -85,3 +85,12 @@ def mark_order_delivered():
     if order_id:
         Order.update_order_status(order_id)
     return redirect('assigned_orders')
+
+# 檢索所有 "等待配送" 的訂單
+@delivery_person_bp.route('/pending_orders')
+def view_pending_orders():
+    # 假設有一個方法在 Order 模型中檢索等待配送的訂單
+    pending_orders = Order.All_pending_orders()
+    return render_template('delivery/select_All_null_take.html', pending_orders=pending_orders)
+
+
