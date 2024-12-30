@@ -137,6 +137,8 @@ def get_orders_by_delivery_person(delivery_person_id):
     orde.created_at, 
     orde.delivery_address, 
     orde.total_price, 
+    orde.pay, 
+    deliveryperson.total_pay,  
     orde.created_at
     FROM 
         orde
@@ -146,8 +148,10 @@ def get_orders_by_delivery_person(delivery_person_id):
         customer ON orde.customer_id = customer.id
     LEFT JOIN 
         feedback ON orde.delivery_person_id = feedback.deliveryperson_id
+    JOIN 
+        deliveryperson ON orde.delivery_person_id = deliveryperson.id  
     WHERE 
-        orde.delivery_person_id = %s;
+        orde.delivery_person_id = %s AND orde.status = '已送達';
 
     """
     cursor.execute(sql, (delivery_person_id,))
@@ -189,7 +193,7 @@ def getList(customer_id):
 def All_pending_orders():
     sql = """
     SELECT orde.id, orde.customer_id, customer.name AS customer_name, orde.delivery_address, 
-           orde.total_price, orde.status, merchant.name AS merchant_name, merchant.location AS merchant_location
+           orde.total_price,orde.pay, orde.status, merchant.name AS merchant_name, merchant.location AS merchant_location
     FROM orde
     JOIN merchant ON orde.merchant_id = merchant.id
     JOIN customer ON orde.customer_id = customer.id
@@ -205,6 +209,34 @@ def delivery_add_order(delivery_person_id,id):
     conn.commit()
     return
 
+#總傭金
+def add_total_pay(delivery_person_id,id):
+    sql="""
+    UPDATE deliveryperson
+    SET total_pay = total_pay + (
+        SELECT pay 
+        FROM orde 
+        WHERE delivery_person_id = %s AND id = %s
+    )
+    WHERE id = %s;
+    """
+    cursor.execute(sql, (delivery_person_id,id,delivery_person_id))
+    conn.commit()
+    return
+     
+
+#獲取某送貨員的所有分配訂單
+def get_orders_by_delivery(delivery_person_id):
+    sql = """
+    SELECT orde.id, orde.customer_id, customer.name AS customer_name, orde.delivery_address, 
+           orde.total_price, orde.status, merchant.name AS merchant_name, merchant.location AS merchant_location
+    FROM orde 
+    JOIN merchant ON orde.merchant_id = merchant.id
+    JOIN customer ON orde.customer_id = customer.id
+    WHERE orde.delivery_person_id = %s AND orde.status = '正在配送';
+    """
+    cursor.execute(sql, (delivery_person_id,))
+    return cursor.fetchall()
 
 
 

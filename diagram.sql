@@ -62,7 +62,8 @@ CREATE TABLE `deliveryperson` (
   `name` varchar(100) NOT NULL,
   `vehicle_info` varchar(100) NOT NULL,
   `contact_info` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `total_pay` decimal(10,1) DEFAULT 0.0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -189,7 +190,8 @@ CREATE TABLE `orde` (
   `status` varchar(100) NOT NULL,
   `delivery_address` varchar(100) NOT NULL,
   `total_price` double NOT NULL,
-  `created_at` date NOT NULL
+  `created_at` date NOT NULL,
+  `pay` decimal(10,1) DEFAULT 0.0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

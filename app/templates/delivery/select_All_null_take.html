@@ -9,6 +9,7 @@
 <body>
     <h2>Pending Orders</h2>
     <a href="/logout" class="common-button">Logout</a>
+    <hr>
     <table>
         <thead>
             <tr>
@@ -18,6 +19,7 @@
                 <th>顧客姓名</th>
                 <th>配送地址</th>
                 <th>總金額</th>
+                <th>傭金</th>
                 <th>狀態</th>
                 <th>接單</th>
             </tr>
@@ -31,6 +33,7 @@
                     <td>{{ order.customer_name }}</td>
                     <td>{{ order.delivery_address }}</td>
                     <td>{{ order.total_price }}</td>
+                    <td>{{ order.pay }}</td>
                     <td>{{ order.status }}</td>
                     <td>
                         <form action="/deliveries/accept_order" method="POST">

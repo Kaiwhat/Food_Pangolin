@@ -51,7 +51,8 @@ def view_assigned_orders():
         return redirect('/')
     
     DeliveryPerson_id = session['id']
-    order = DeliveryPerson.get_orders_by_delivery_person(DeliveryPerson_id)
+    order = Order.get_orders_by_delivery(DeliveryPerson_id)
+    print("Latest orders:", order)
     
     return render_template('delivery/assigned_order.html', data=order, DeliveryPerson_id=DeliveryPerson_id)
 
@@ -67,8 +68,6 @@ def accept_order():
     order_id = request.form.get('id')  # 使用 request.form.get() 來獲取 id
     Order.delivery_add_order(DeliveryPerson_id, order_id)  # 呼叫函數來處理接單
     return redirect('assigned_orders')
-
-
 
 
 # 查看配送歷史
@@ -89,10 +88,11 @@ def mark_order_delivered():
     if 'id' not in session:
         flash('請先登入！')
         return redirect('/')
-    
+    DeliveryPerson_id = session['id']
     order_id = request.form.get('order_id')
     if order_id:
         Order.update_order_status(order_id)
+        Order.add_total_pay(DeliveryPerson_id,order_id)
     return redirect('assigned_orders')
 
 # 檢索所有 "等待配送" 的訂單

@@ -22,6 +22,7 @@
             <th>配送地址</th>
             <th>總金額</th>
             <th>狀態</th>
+            <th>確認送達</th>
         </tr>
     </thead>
 	
@@ -35,20 +36,17 @@
             <td>{{ item.delivery_address }}</td>
             <td>{{ item.total_price }}</td>
             <td>{{ item.status }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('delivery_person.mark_order_delivered') }}">
+                    <input type="hidden" name="order_id" value="{{ item.id }}">
+                    <button type="submit">送達</button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<br>
 
-{% for item in data %}
-<div class="menu-row">
-		<form method="POST" action="{{ url_for('delivery_person.mark_order_delivered') }}">
-            <input type="hidden" name="order_id" value="{{ item.id }}">
-            <button type="submit">送達</button>
-        </form>
-</div>
-{% endfor %}
 <br>
 <div class="buttons">
     <a href="{{ url_for('delivery_person.view_delivery_history') }}" class="common-button">查看歷史紀錄</a>
