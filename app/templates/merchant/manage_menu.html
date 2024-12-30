@@ -32,16 +32,12 @@
 			<td>{{orderitem.quantity}}</td>
             <td style="width: 100px;">{{orderitem.price}}</td>
 			<td>
-			    <form method="POST" action="/merchants/edit_menu_item" style="display: inline;">
-                    <input type="hidden" name="menu" value="{{orderitem.name}}">
-					<input type="hidden" name="description" value="{{orderitem.description}}">
-                    <input type="hidden" name="price" value="{{orderitem.price}}">
+			    <form method="POST" action="/merchants/menu/edit" style="display: inline;">
+                    <input type="" name="id" value="{{orderitem.id}}">
                     <button type="submit">編輯</button>
 	            </form>
-		        <form method="POST" action="/merchants/delete_menu_item" style="display: inline;">
-                    <input type="hidden" name="menu" value="{{orderitem.name}}">
-					<input type="hidden" name="description" value="{{orderitem.description}}">
-                    <input type="hidden" name="price" value="{{orderitem.price}}">
+		        <form method="POST" action="/merchants/menu/delete" style="display: inline;">
+                    <input type="" name="id" value="{{orderitem.id}}">
                     <button type="submit">刪除</button>
                 </form>
 			</td>

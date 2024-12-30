@@ -55,7 +55,7 @@ def get_menu_item(menu_item_id):
 
 # 查詢商家的所有菜單項目
 def get_menu_items_by_merchant(merchant_id):
-    sql = "SELECT id, name, price, description, availability_status FROM menuitem WHERE merchant_id = %s"
+    sql = "SELECT * FROM menuitem WHERE merchant_id = %s"
     cursor.execute(sql, (merchant_id,))
     products = cursor.fetchall()
     return products

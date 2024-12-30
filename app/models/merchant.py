@@ -36,9 +36,9 @@ def add_merchant(id, name, location, contact_info):
     return
 
 #商家為其菜單新增項目
-def add_menu_item(id, name, price, description, availability_status, merchant_id):
-    sql = "INSERT INTO menuitem (id, name, price, description, availability_status, merchant_id) VALUES (%s, %s, %s, %s, %s, %s)"
-    cursor.execute(sql,(id, name, price, description, availability_status, merchant_id))
+def add_menu_item(name, price, description, availability_status, merchant_id):
+    sql = "INSERT INTO menuitem (name, price, description, availability_status, merchant_id) VALUES (%s, %s, %s, %s, %s)"
+    cursor.execute(sql,(name, price, description, availability_status, merchant_id))
     conn.commit()
     return
 
@@ -94,7 +94,6 @@ def get_menu_items(merchant_id):
     sql = "SELECT id, name, price, description, availability_status FROM menuitem WHERE merchant_id = %s"
     cursor.execute(sql, (merchant_id,))
     products = cursor.fetchall()
-    print(products)
     return products
 
 #查詢某商家相關的訂單
