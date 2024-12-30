@@ -110,3 +110,11 @@ def view_merchant_orders():
     orders = Order.get_orders_by_merchant(merchant_id=merchant_id)
     return render_template('merchant/order_list.html', data=orders, merchant_id=merchant_id)
 
+@merchant_bp.route('/orders/complete', methods=['GET'])
+def complete_orders():
+    merchant_id = session['id']
+    item_id = request.form.get('item_id')
+    order_id = request.form.get('order_id')
+    orders = Order.get_orders_by_merchant(merchant_id=merchant_id)
+    return render_template('merchant/order_list.html', data=orders, merchant_id=merchant_id)
+

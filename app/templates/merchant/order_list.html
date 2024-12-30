@@ -33,8 +33,9 @@
 			<td style="width: 100px;">{{item.item_total_price}}</td>
 			<td style="width: 100px;">{{item.customer_id}}</td>
 			<td>
-			    <form method="POST" action="/merchant/      ">
-                    <input type="hidden" name="order_id" value="{{item.order_id}}">
+			    <form method="POST" action="/merchant/orders/complete">
+                    <input type="" name="order_id" value="{{item.order_id}}">
+                    <input type="" name="item_id" value="{{item.menu_item_id}}">
                     <button type="submit" class="complete-btn">完成</button>
                 </form>
 			</td>
