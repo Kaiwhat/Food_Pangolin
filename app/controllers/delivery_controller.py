@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template, session, redirect, flash
+from flask import Blueprint, request, jsonify, render_template, session, redirect, flash,url_for
 import app.models.delivery_person as DeliveryPerson
 import app.models.order as Order
 
@@ -13,22 +13,19 @@ def new():
     return render_template('delivery/delivery_register.html')
 
 # 配送員註冊
-@delivery_person_bp.route('/register', methods=['GET', 'POST'])
+@delivery_person_bp.route('/register', methods=['POST'])
 def register():
-    if request.method == 'POST':
-        data = request.form
-        try:
-            new_delivery_person = DeliveryPerson(
-                name=data.get('name'),
-                email=data.get('email'),
-                password=data.get('password')  # 假設已處理密碼加密
-            )
-            # FIXME
-            db.session.commit()
-            return jsonify({'message': 'Delivery person registered successfully'}), 201
-        except Exception as e:
-            return jsonify({'error': str(e)}), 400
-    return render_template('delivery/delivery_register.html')
+    # 假設我們獲取表單資料
+    name = request.form['name']
+    password = request.form['password']
+    vehicle=request.form['vehicle_info']
+    contact_info = request.form['contact_info']
+    # 進行用戶註冊邏輯，比如存儲用戶資料到資料庫
+    if name and password and contact_info:
+        DeliveryPerson.add_delivery_person( name,password,vehicle, contact_info)
+        # 例如將資料存入資料庫
+        return redirect('/')
+    return '註冊失敗'
 
 # 登入功能
 @delivery_person_bp.route('/login', methods=['GET', 'POST'])
@@ -55,20 +52,16 @@ def view_assigned_orders():
     return render_template('delivery/assigned_order.html', data=order, DeliveryPerson_id=DeliveryPerson_id)
 
 # 接受訂單
-@delivery_person_bp.route('/accept_order/<int:order_id>', methods=['POST'])
-def accept_order(order_id):
-    try:
-        # FIXME: update_order_status(assigned)
-        order = Order.update_order_status(order_id)
-        if not order or order.status != 'assigned':
-            return jsonify({'error': 'Order not found or already accepted'}), 404
+@delivery_person_bp.route('/accept_order', methods=['POST'])
+def accept_order():
+    # 從表單獲取 delivery_person_id 和 order_id
+    DeliveryPerson_id = session['id']
+    order_id = request.form.get('id')  # 使用 request.form.get() 來獲取 id
+    Order.delivery_add_order(DeliveryPerson_id, order_id)  # 呼叫函數來處理接單
+    return redirect('assigned_orders')
 
-        order.status = 'in_progress'
-        # FIXME
-        db.session.commit()
-        return jsonify({'message': 'Order accepted successfully'}), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
+
+
 
 # 查看配送歷史
 @delivery_person_bp.route('/history', methods=['GET'])

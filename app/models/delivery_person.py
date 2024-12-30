@@ -29,9 +29,9 @@ def login(name, password):
 		return False, '0'
 
 #新增送貨員資料
-def add_delivery_person(id, name, vehicle_info, contact_info):
-    sql = "INSERT INTO deliveryperson (id, name, vehicle_info, contact_info) VALUES (%s, %s, %s, %s)"
-    cursor.execute(sql,(id, name, vehicle_info, contact_info))
+def add_delivery_person( name,password,vehicle_info, contact_info):
+    sql = "INSERT INTO deliveryperson ( name,password, vehicle_info, contact_info) VALUES (%s, %s, %s, %s)"
+    cursor.execute(sql,( name,password,vehicle_info, contact_info,))
     conn.commit()
     return
 
@@ -68,9 +68,12 @@ def get_delivery_person(delivery_person_id):
 #獲取某送貨員的所有分配訂單
 def get_orders_by_delivery_person(delivery_person_id):
     sql = """
-    SELECT o.id, o.customer_id, o.merchant_id, o.status, o.delivery_address, o.total_price, o.created_at 
-    FROM orde o
-    WHERE o.delivery_person_id = %s AND o.status="正在配送"
+    SELECT orde.id, orde.customer_id, customer.name AS customer_name, orde.delivery_address, 
+           orde.total_price, orde.status, merchant.name AS merchant_name, merchant.location AS merchant_location
+    FROM orde 
+    JOIN merchant ON orde.merchant_id = merchant.id
+    JOIN customer ON orde.customer_id = customer.id
+    WHERE orde.delivery_person_id = %s AND orde.status = '正在配送';
     """
     cursor.execute(sql, (delivery_person_id,))
     return cursor.fetchall()
