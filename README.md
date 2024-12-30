@@ -75,6 +75,7 @@ sequenceDiagram
 
     Customer->>Merchant: 瀏覽菜單
     Merchant-->>Customer: 返回菜單列表
+    Customer->>Customer: 放進購物車
     Customer->>Merchant: 下訂單
     Merchant-->>Customer: 確認訂單
 
