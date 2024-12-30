@@ -8,7 +8,7 @@ import app.models.feedback as Feedback
 import app.models.cart as Cart
 import random
 
-
+#
 customer_bp = Blueprint('customer', __name__, url_prefix='/customer')
 
 @customer_bp.route('/')
@@ -19,21 +19,20 @@ def index():
 def new():
     return render_template('customer/customer_register.html')
 
-@customer_bp.route('/register', methods=['GET', 'POST'])
+# 顧客註冊
+@customer_bp.route('/register', methods=['POST'])
 def register():
-    if request.method == 'POST':
-        name = request.form['name']
-        id = None
-        username = request.form['username']
-        password = request.form['password']
-        address = None
-        contact_info = None
-
-        # FIXME: Change add_customer() parameter
-        Customer.add_customer(id, name, contact_info, address, password) 
-        flash('註冊成功，請登入！')
-        return redirect('/customers/')  # 重定向到首頁
-    return render_template('customer/customer_register.html')
+    # 假設我們獲取表單資料
+    name = request.form['name']
+    password = request.form['password']
+    address=request.form['address']
+    contact_info = request.form['contact_info']
+    # 進行用戶註冊邏輯，比如存儲用戶資料到資料庫
+    if name and password and contact_info:
+        Customer.add_customer( name,password,address, contact_info)
+        # 例如將資料存入資料庫
+        return redirect('/')
+    return '註冊失敗'
 
 # 登入功能
 @customer_bp.route('/login', methods=['GET', 'POST'])

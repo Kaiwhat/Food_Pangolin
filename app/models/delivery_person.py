@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/local/bin/python2
 # Connect to MariaDB Platform
 import mysql.connector #mariadb
 

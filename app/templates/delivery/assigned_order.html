@@ -15,20 +15,26 @@
 <table>
     <thead>
         <tr>
+            <th>訂單ID</th>
             <th>商家</th>
-            <th>內容</th>
-			<th>總金額</th>
-            <th>顧客地址</th>
+            <th>商家地址</th>
+            <th>顧客姓名</th>
+            <th>配送地址</th>
+            <th>總金額</th>
+            <th>狀態</th>
         </tr>
     </thead>
 	
     <tbody>
         {% for item in data %}
         <tr>
-            <td>{{ item.merchant_id }}</td>
-            <td>{{ item.customer_id }}</td>
-            <td>{{ item.total_price }}</td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.merchant_name }}</td>
+            <td>{{ item.merchant_location }}</td>
+            <td>{{ item.customer_name }}</td>
             <td>{{ item.delivery_address }}</td>
+            <td>{{ item.total_price }}</td>
+            <td>{{ item.status }}</td>
         </tr>
         {% endfor %}
     </tbody>

@@ -96,12 +96,29 @@ def get_orders_by_merchant(merchant_id):
     cursor.execute(sql, (merchant_id,))
     return cursor.fetchall()
 
-# 查詢送貨員負責的所有訂單
+# 查詢送貨員負責的歷史訂單
 def get_orders_by_delivery_person(delivery_person_id):
     sql = """
-    SELECT id, customer_id, merchant_id, status, delivery_address, total_price, created_at
-    FROM orde
-    WHERE delivery_person_id = %s
+    SELECT 
+    orde.id, 
+    customer.name AS customer_name, 
+    merchant.name AS merchant_name, 
+    feedback.rating AS delivery_rating, 
+    orde.created_at, 
+    orde.delivery_address, 
+    orde.total_price, 
+    orde.created_at
+    FROM 
+        orde
+    JOIN 
+        merchant ON orde.merchant_id = merchant.id
+    JOIN 
+        customer ON orde.customer_id = customer.id
+    LEFT JOIN 
+        feedback ON orde.delivery_person_id = feedback.deliveryperson_id
+    WHERE 
+        orde.delivery_person_id = %s;
+
     """
     cursor.execute(sql, (delivery_person_id,))
     return cursor.fetchall()
@@ -150,6 +167,13 @@ def All_pending_orders():
     """
     cursor.execute(sql)
     return cursor.fetchall()
+
+#配送員接單後將訂單delivery_person_id改變狀態改為"正在配送"
+def delivery_add_order(delivery_person_id,id):
+    sql = "UPDATE orde SET status = '正在配送',delivery_person_id= %s WHERE id = %s"
+    cursor.execute(sql, (delivery_person_id,id,))
+    conn.commit()
+    return
 
 
 

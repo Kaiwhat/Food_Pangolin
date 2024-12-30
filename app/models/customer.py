@@ -39,9 +39,9 @@ def login(name, password):
 		return False, '0'
 
 #新增顧客
-def add_customer(id, name, contact_info, address, password):
-	sql="insert into customer (id, name, contact_info, address, password) values (%s, %s, %s, %s, %s);"
-	cursor.execute(sql,(id, name, contact_info, address, password))
+def add_customer(name,password,address, contact_info):
+	sql="insert into customer ( name,password,address, contact_info) values (%s, %s, %s, %s);"
+	cursor.execute(sql,( name,password,address, contact_info))
 	conn.commit()
 	return
 #刪除顧客

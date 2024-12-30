@@ -18,6 +18,7 @@
                 <th>配送地址</th>
                 <th>總金額</th>
                 <th>狀態</th>
+                <th>接單</th>
             </tr>
         </thead>
         <tbody>
@@ -30,9 +31,20 @@
                     <td>{{ order.delivery_address }}</td>
                     <td>{{ order.total_price }}</td>
                     <td>{{ order.status }}</td>
+                    <td>
+                        <form action="/deliveries/accept_order" method="POST">
+                            <input type="hidden" name="id" value="{{ order.id }}">
+                            <input type="submit" value="接單" />
+                        </form>                           
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <br/>
+    <div class="buttons">
+        <a href="/deliveries/assigned_orders" class="common-button">返回</a>
+    </div>
 </body>
 </html>
