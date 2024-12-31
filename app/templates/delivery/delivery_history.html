@@ -38,8 +38,12 @@
     {% endfor %}
 
     {% if data %}
-    <a>總傭金：{{ data[0].total_pay if data[0].total_pay is not none and data[0].total_pay != 0.0 else 0 | round(1) }}</a>
+        <a>總傭金：{{ data|map(attribute='pay')|sum if data is not none else 0 | round(1) }}</a>
+    {% else %}
+        <a>總傭金：0</a>
     {% endif %}
+
+
     <br>
     <a>總筆數：{{ data|length }}</a>
 </table>
