@@ -165,7 +165,7 @@ def get_orders_by_delivery_person(delivery_person_id):
     JOIN 
         customer ON orde.customer_id = customer.id
     LEFT JOIN 
-        feedback ON orde.delivery_person_id = feedback.deliveryperson_id
+        feedback ON orde.id = feedback.order_id
     JOIN 
         deliveryperson ON orde.delivery_person_id = deliveryperson.id  
     WHERE 
