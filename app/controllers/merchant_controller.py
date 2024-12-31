@@ -71,7 +71,7 @@ def add_menu_items():
     description=request.form.get('description')
     merchant_id=session['id']
         
-    Merchant.add_menu_item(name=name, price=price, description=description, availability_status='1', merchant_id=merchant_id)
+    MenuItem.add_menu_item(name=name, price=price, description=description, availability_status='1', merchant_id=merchant_id)
     flash('商品更新成功！')
     return redirect('/merchants/menu')
 
@@ -110,7 +110,7 @@ def delete_menu_item():
         return redirect('/')
     
     item_id = request.form.get('id')
-    Merchant.delete_menu_item(menu_item_id=item_id)
+    MenuItem.delete_menu_item(menu_item_id=item_id)
     return redirect('/merchants/menu')
     
 # 商家查看訂單列表
@@ -124,15 +124,14 @@ def view_merchant_orders():
     orders = Order.get_orders_by_merchant(merchant_id=merchant_id)
     return render_template('merchant/order_list.html', data=orders, merchant_id=merchant_id)
 
-@merchant_bp.route('/orders/complete', methods=['GET'])
-def complete_orders():
+@merchant_bp.route('/orders/accept', methods=['GET', 'POST'])
+def accept_orders():
     if 'id' not in session:
         flash('請先登入！')
         return redirect('/')
     
     merchant_id = session['id']
-    item_id = request.form.get('item_id')
     order_id = request.form.get('order_id')
+    Order.update_order_status(status='等待配送', id=order_id)
     orders = Order.get_orders_by_merchant(merchant_id=merchant_id)
     return render_template('merchant/order_list.html', data=orders, merchant_id=merchant_id)
-
