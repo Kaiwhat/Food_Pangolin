@@ -26,10 +26,10 @@ def add_order(customer_id, merchant_id, status, delivery_address, total_price):
     try:
         # 插入訂單
         sql_insert = """
-        INSERT INTO orde (customer_id, merchant_id, status, delivery_address, total_price, created_at)
-        VALUES (%s, %s, %s, %s, %s, NOW())
+        INSERT INTO orde (customer_id, merchant_id, status, delivery_address, total_price, created_at, pay)
+        VALUES (%s, %s, %s, %s, %s, NOW(), %s)
         """
-        cursor.execute(sql_insert, (customer_id, merchant_id, status, delivery_address, total_price))
+        cursor.execute(sql_insert, (customer_id, merchant_id, status, delivery_address, total_price, total_price*0.15))
 
         # 提交事務
         conn.commit()
