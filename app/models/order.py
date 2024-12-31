@@ -169,7 +169,7 @@ def get_orders_by_delivery_person(delivery_person_id):
     JOIN 
         deliveryperson ON orde.delivery_person_id = deliveryperson.id  
     WHERE 
-        orde.delivery_person_id = %s AND orde.status = '已送達';
+        orde.delivery_person_id = %s AND orde.status = '已取餐';
 
     """
     cursor.execute(sql, (delivery_person_id,))
