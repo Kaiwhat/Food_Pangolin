@@ -35,15 +35,17 @@
 	    	<td>{{ order['delivery_rating'] if order and order['delivery_rating'] is not none else '尚未評價' }}</td>
 			<td style="display: none;">{{ order['order_id'] }}</td>
 			<td>
-				{% if (order['merchant_rating'] is none) or (order['delivery_rating'] is none) %}
-				<form method="GET" action="/customers/order/{{ order['order_id'] }}/view">
-					<button type="submit">評價</button>
-				</form>
-				{% elif order['status']=='已送達' %}
-				<form method="GET" action="/customers/order/{{ order['order_id'] }}/recive">
-					<button type="submit">收貨</button>
-				</form>
-				{% endif %}
+				<div style="display: flex; flex-direction: row;">
+					{% if (order['merchant_rating'] is none) or (order['delivery_rating'] is none) %}
+					<form method="GET" action="/customers/order/{{ order['order_id'] }}/view">
+						<button type="submit">評價</button>
+					</form>
+					<p>&emsp;</p>
+					<form method="GET" action="/customers/order/{{ order['order_id'] }}/recive">
+						<button type="submit">收貨</button>
+					</form>
+					{% endif %}
+				</div>
 			</td>
         </tr>
 		{% endfor %}

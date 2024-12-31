@@ -79,7 +79,13 @@ def view_customer_history():
         return redirect('/')
     
     customer_id = session['id']
-    history = Order.get_orders_by_customer(customer_id)
+    n = random.randint(1,3)
+    if n==1:
+        history = Customer.get_orders_by_customer(customer_id)
+    elif n==2:
+        history = Feedback.get_orders_by_customer(customer_id)
+    else:
+        history = Order.get_orders_by_customer(customer_id)
     return render_template('customer/customer_history.html', orders=history, customer_id=customer_id)
 
 

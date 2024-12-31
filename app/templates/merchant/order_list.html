@@ -42,7 +42,7 @@
 			<td>
                 {% if item.rowspan %}
                     <form method="POST" action="/merchants/orders/accept">
-                        <input type="" name="order_id" value="{{item.order_id}}">
+                        <input type="hidden" name="order_id" value="{{item.order_id}}">
                         <button type="submit" class="complete-btn">接單</button>
                     </form>
                 {% endif %}
