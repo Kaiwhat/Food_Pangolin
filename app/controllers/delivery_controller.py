@@ -91,7 +91,7 @@ def mark_order_delivered():
     DeliveryPerson_id = session['id']
     order_id = request.form.get('order_id')
     if order_id:
-        Order.update_order_status(order_id)
+        Order.update_order_status(status='配送中', id=order_id)
         Order.add_total_pay(DeliveryPerson_id,order_id)
     return redirect('assigned_orders')
 
