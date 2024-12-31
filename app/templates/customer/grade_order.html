@@ -34,7 +34,7 @@
 <br>
 
 <form method="POST" action="/customers/order/{{ order_id }}/review">
-    <input type="text" name="order_id" value="{{order_id}}">
+    <input type="hidden" name="order_id" value="{{order_id}}">
     <div class="rating">
         <label for="merchant-rating">商家評分(1-5):</label>
         <select id="merchant-rating" name="merchant_rating" required>

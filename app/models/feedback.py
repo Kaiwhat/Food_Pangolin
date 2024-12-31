@@ -97,3 +97,26 @@ def getList(target_id):
     """
     cursor.execute(sql, (target_id,))  
     return cursor.fetchall() 
+
+#查詢顧客的所有訂單
+def get_orders_by_customer(customer_id):
+    sql = """
+SELECT 
+    o.id AS order_id,
+    o.merchant_id,
+    o.delivery_person_id,
+    o.status,
+    o.delivery_address,
+    o.total_price,
+    o.created_at,
+    f.rating_m AS merchant_rating,
+    f.rating_d AS delivery_rating
+FROM 
+    orde o
+LEFT JOIN 
+    feedback f ON o.id = f.order_id
+WHERE 
+    o.customer_id = %s;
+    """
+    cursor.execute(sql, (customer_id,))
+    return cursor.fetchall()
