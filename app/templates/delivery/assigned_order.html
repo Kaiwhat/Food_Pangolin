@@ -37,10 +37,16 @@
             <td>{{ item.total_price }}</td>
             <td>{{ item.status }}</td>
             <td>
-                <form method="POST" action="{{ url_for('delivery_person.mark_order_delivered') }}">
-                    <input type="hidden" name="order_id" value="{{ item.id }}">
-                    <button type="submit">送達</button>
-                </form>
+                <div style="display: inline-block;">
+                    <form method="POST" action="{{ url_for('delivery_person.mark_order_pick') }}" style="display: inline-block;">
+                        <input type="hidden" name="order_id" value="{{ item.id }}">
+                        <button type="submit">取貨</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('delivery_person.mark_order_delivered') }}" style="display: inline-block;">
+                        <input type="hidden" name="order_id" value="{{ item.id }}">
+                        <button type="submit">送達</button>
+                    </form>
+                </div>                
             </td>
         </tr>
         {% endfor %}

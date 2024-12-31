@@ -106,4 +106,13 @@ def view_pending_orders():
     pending_orders = Order.All_pending_orders()
     return render_template('delivery/select_All_null_take.html', pending_orders=pending_orders)
 
-
+#確認取貨
+@delivery_person_bp.route('/mark_order_pick', methods=['POST'])
+def mark_order_pick():
+    if 'id' not in session:
+        flash('請先登入！')
+        return redirect('/')
+    order_id = request.form.get('order_id')
+    if order_id:
+        Order.update_order_status_pick(order_id)
+    return redirect('assigned_orders')

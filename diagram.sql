@@ -198,27 +198,34 @@ CREATE TABLE `orde` (
 -- 傾印資料表的資料 `orde`
 --
 
-INSERT INTO `orde` (`id`, `customer_id`, `merchant_id`, `delivery_person_id`, `status`, `delivery_address`, `total_price`, `created_at`) VALUES
-(1, 1, 1, 1, '已送達', 'Taipei City, 123 Main St', 500, '2024-12-26'),
-(2, 2, 2, 2, '正在配送', 'Kaohsiung City, 456 Central Ave', 600, '2024-12-26'),
-(3, 3, 3, 3, '已送達', 'Taichung City, 789 Park Rd', 700, '2024-12-26'),
-(4, 4, 4, 4, '取消', 'Taipei City, 1011 East Blvd', 450, '2024-12-26'),
-(5, 5, 5, 5, '已送達', 'Taichung City, 1213 North St', 550, '2024-12-26'),
-(6, 6, 1, 1, '正在配送', 'Taipei City, 1415 South Ave', 520, '2024-12-26'),
-(7, 7, 2, 2, '已送達', 'Kaohsiung City, 1617 West Rd', 650, '2024-12-26'),
-(8, 8, 3, 3, '正在配送', 'Taichung City, 1819 East Rd', 480, '2024-12-26'),
-(9, 9, 4, 4, '已送達', 'Taipei City, 2021 Central St', 540, '2024-12-26'),
-(10, 10, 5, 5, '取消', 'Taichung City, 2223 North Ave', 590, '2024-12-26'),
-(11, 11, 1, 1, '已送達', 'Taipei City, 2425 West Blvd', 600, '2024-12-26'),
-(12, 12, 2, 2, '正在配送', 'Kaohsiung City, 2627 South Rd', 470, '2024-12-26'),
-(13, 13, 3, 3, '已送達', 'Taichung City, 2829 Central St', 710, '2024-12-26'),
-(14, 14, 4, 4, '取消', 'Taipei City, 3031 North Blvd', 500, '2024-12-27'),
-(15, 15, 5, 5, '已送達', 'Taichung City, 3233 West Ave', 520, '2024-12-27'),
-(16, 16, 1, 1, '正在配送', 'Taipei City, 3435 East Rd', 530, '2024-12-27'),
-(17, 17, 2, 2, '已送達', 'Kaohsiung City, 3637 South St', 640, '2024-12-27'),
-(18, 18, 3, 3, '正在配送', 'Taichung City, 3839 North Rd', 560, '2024-12-27'),
-(19, 19, 4, 4, '已送達', 'Taipei City, 4041 West Blvd', 450, '2024-12-27'),
-(20, 20, 5, 5, '取消', 'Taichung City, 4243 East St', 590, '2024-12-27');
+INSERT INTO `orde` (`id`, `customer_id`, `merchant_id`, `delivery_person_id`, `status`, `delivery_address`, `total_price`, `created_at`,`pay`) VALUES
+(1, 1, 1, 1, '已送達', 'Taipei City, 123 Main St', 500, '2024-12-26',0),
+(2, 2, 2, 2, '正在配送', 'Kaohsiung City, 456 Central Ave', 600, '2024-12-26',0),
+(3, 3, 3, 3, '已送達', 'Taichung City, 789 Park Rd', 700, '2024-12-26',0),
+(4, 4, 4, 4, '取消', 'Taipei City, 1011 East Blvd', 450, '2024-12-26',0),
+(5, 5, 5, 5, '已送達', 'Taichung City, 1213 North St', 550, '2024-12-26',0),
+(6, 6, 1, 1, '正在配送', 'Taipei City, 1415 South Ave', 520, '2024-12-26',0),
+(7, 7, 2, 2, '已送達', 'Kaohsiung City, 1617 West Rd', 650, '2024-12-26',0),
+(8, 8, 3, 3, '正在配送', 'Taichung City, 1819 East Rd', 480, '2024-12-26',0),
+(9, 9, 4, 4, '已送達', 'Taipei City, 2021 Central St', 540, '2024-12-26',0),
+(10, 10, 5, 5, '取消', 'Taichung City, 2223 North Ave', 590, '2024-12-26',0),
+(11, 11, 1, 1, '已送達', 'Taipei City, 2425 West Blvd', 600, '2024-12-26',0),
+(12, 12, 2, 2, '正在配送', 'Kaohsiung City, 2627 South Rd', 470, '2024-12-26',0),
+(13, 13, 3, 3, '已送達', 'Taichung City, 2829 Central St', 710, '2024-12-26',0),
+(14, 14, 4, 4, '取消', 'Taipei City, 3031 North Blvd', 500, '2024-12-27',0),
+(15, 15, 5, 5, '已送達', 'Taichung City, 3233 West Ave', 520, '2024-12-27',0),
+(16, 16, 1, 1, '正在配送', 'Taipei City, 3435 East Rd', 530, '2024-12-27',0),
+(17, 17, 2, 2, '已送達', 'Kaohsiung City, 3637 South St', 640, '2024-12-27',0),
+(18, 18, 3, 3, '正在配送', 'Taichung City, 3839 North Rd', 560, '2024-12-27',0),
+(19, 19, 4, 4, '已送達', 'Taipei City, 4041 West Blvd', 450, '2024-12-27',0),
+(20, 20, 5, 5, '取消', 'Taichung City, 4243 East St', 590, '2024-12-27',0),
+(21, 1, 1, 999, '等待配送', '123 Main Street', 50.00, '2024-12-01',10),
+(22, 2, 2, 999, '等待配送', '456 Elm Street', 75.50, '2024-12-02',10),
+(23, 3, 3, 999, '等待配送', '789 Oak Street', 60.25, '2024-12-03',10),
+(24, 4, 1, 999, '等待配送', '321 Pine Street', 40.00, '2024-12-04',10),
+(25, 5, 2, 999, '等待配送', '654 Maple Avenue', 80.75, '2024-12-05',10),
+(26, 6, 3, 999, '等待配送', '987 Birch Lane', 35.00, '2024-12-06',10),
+(27, 7, 1, 999, '等待配送', '741 Cedar Road', 90.00, '2024-12-07',10);
 
 -- --------------------------------------------------------
 
