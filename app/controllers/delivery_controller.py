@@ -8,10 +8,6 @@ delivery_person_bp = Blueprint('delivery_person', __name__, url_prefix='/deliver
 def index():
     return render_template('delivery/delivery_login.html')
 
-@delivery_person_bp.route('/new')
-def new():
-    return render_template('delivery/delivery_register.html')
-
 # 配送員註冊
 @delivery_person_bp.route('/register', methods=['POST'])
 def register():
