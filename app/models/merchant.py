@@ -35,13 +35,6 @@ def add_merchant( name, location, contact_info,password):
     conn.commit()
     return
 
-#商家為其菜單新增項目
-def add_menu_item(name, price, description, availability_status, merchant_id):
-    sql = "INSERT INTO menuitem (name, price, description, availability_status, merchant_id) VALUES (%s, %s, %s, %s, %s)"
-    cursor.execute(sql,(name, price, description, availability_status, merchant_id))
-    conn.commit()
-    return
-
 #商家接收到新訂單
 def add_order(id, customer_id, merchant_id, delivery_person_id, status, delivery_address, total_price, created_at):
     sql = "INSERT INTO orde (id, customer_id, merchant_id, delivery_person_id, status, delivery_address, total_price, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
@@ -56,24 +49,10 @@ def delete_merchant(merchant_id):
     conn.commit()
     return
 
-#刪除某商家的菜單項目
-def delete_menu_item(menu_item_id):
-    sql = "DELETE FROM menuitem WHERE id = %s"
-    cursor.execute(sql, (menu_item_id,))
-    conn.commit()
-    return
-
 #修改商家的基本資料
 def update_merchant(name,location,contact_info,id):
     sql = "UPDATE merchant SET name = %s, location = %s, contact_info = %s WHERE id = %s"
     cursor.execute(sql,(name,location,contact_info,id))
-    conn.commit()
-    return
-
-#更新某商家的菜單項目
-def update_menu_item(name, price, description, availability_status, id):
-    sql = "UPDATE menuitem SET name = %s, price = %s, description = %s, availability_status = %s WHERE id = %s"
-    cursor.execute(sql, (name, price, description, availability_status, id))
     conn.commit()
     return
 

@@ -69,7 +69,7 @@ def get_delivery_person(delivery_person_id):
 #獲取針對送貨員的評價訊息
 def get_feedback_for_delivery_person(delivery_person_id):
     sql = """
-    SELECT f.id, f.customer_id, f.feedback_text, f.rating, f.created_at 
+    SELECT f.id, f.customer_id, f.feedback_text, f.rating_d, f.created_at 
     FROM feedback f
     WHERE f.target_id = %s
     """

@@ -18,17 +18,17 @@ except mysql.connector.Error as e: # mariadb.Error as e:
 	print("Error connecting to DB")
 	exit(1)
 
-#將菜單項目添加到訂單
-def add_menu_item_to_order(order_id, menu_item_id, quantity, price):
-    sql = "INSERT INTO orderitem (order_id, menu_item_id, quantity, price) VALUES (%s, %s, %s, %s)"
-    cursor.execute(sql, (order_id, menu_item_id, quantity, price))
-    conn.commit()
-    return
-
-#刪除菜單項目
+#刪除某商家的菜單項目
 def delete_menu_item(menu_item_id):
     sql = "DELETE FROM menuitem WHERE id = %s"
     cursor.execute(sql, (menu_item_id,))
+    conn.commit()
+    return
+
+#商家為其菜單新增項目
+def add_menu_item(name, price, description, availability_status, merchant_id):
+    sql = "INSERT INTO menuitem (name, price, description, availability_status, merchant_id) VALUES (%s, %s, %s, %s, %s)"
+    cursor.execute(sql,(name, price, description, availability_status, merchant_id))
     conn.commit()
     return
 

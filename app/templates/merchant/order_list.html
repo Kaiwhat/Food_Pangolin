@@ -16,28 +16,36 @@
 <table>
     <thead>
         <tr>
-            <th>ID:</th>
-            <th>品項</th>
-            <th>總金額</th>
-			<th>顧客</th>
-			<th>操作</th>
+            <th>訂單編號</th>
+            <th>品項名稱</th>
+            <th>單品數量</th>
+            <th>單品總價</th>
+            <th>顧客編號</th>
         </tr>
     </thead>
 	
     <tbody>
         {% for item in data %}
         <tr>
-            
-            <td>{{item.order_id}}</td>
+            {% if item.rowspan %}
+                <td rowspan="{{ item.rowspan }}">{{ item.order_id }}</td>
+            {% endif %}
 			<td>{{item.menu_item_name}}</td>
+            <td>{{item.quantity}}</td>
 			<td style="width: 100px;">{{item.item_total_price}}</td>
-			<td style="width: 100px;">{{item.customer_id}}</td>
+            {% if item.rowspan %}
+			    <td style="width: 100px;">{{item.customer_id}}</td>
+            {% endif %}
+            {% if item.rowspan %}
+			    <td style="width: 100px;">{{item.status}}</td>
+            {% endif %}            
 			<td>
-			    <form method="POST" action="/merchant/orders/complete">
-                    <input type="" name="order_id" value="{{item.order_id}}">
-                    <input type="" name="item_id" value="{{item.menu_item_id}}">
-                    <button type="submit" class="complete-btn">完成</button>
-                </form>
+                {% if item.rowspan %}
+                    <form method="POST" action="/merchants/orders/accept">
+                        <input type="" name="order_id" value="{{item.order_id}}">
+                        <button type="submit" class="complete-btn">接單</button>
+                    </form>
+                {% endif %}
 			</td>
         </tr>
         {% endfor %}

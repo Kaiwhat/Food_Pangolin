@@ -60,9 +60,9 @@ def delete_order(order_id):
     return
 
 #更新訂單狀態
-def update_order_status(id):
-    sql = "UPDATE orde SET status = '已送達' WHERE id = %s"
-    cursor.execute(sql, (id,))
+def update_order_status(status, id):
+    sql = "UPDATE orde SET status = %s WHERE id = %s"
+    cursor.execute(sql, (status, id,))
     conn.commit()
     return
 
@@ -107,11 +107,12 @@ SELECT
     o.customer_id,
     o.delivery_address,
     o.total_price,
+    o.status,
     oi.menu_item_id,
     mi.name AS menu_item_name,
     oi.quantity,
-    oi.price AS item_price,
-    (oi.quantity * oi.price) AS item_total_price
+    mi.price AS item_price,
+    (oi.quantity * mi.price) AS item_total_price
 FROM 
     orde o
 JOIN 
@@ -119,12 +120,31 @@ JOIN
 JOIN 
     menuitem mi ON oi.menu_item_id = mi.id
 WHERE 
-    mi.merchant_id = %s 
+    mi.merchant_id = %s AND status='等待商家收單' 
 ORDER BY 
     o.id;
     """
     cursor.execute(sql, (merchant_id,))
-    return cursor.fetchall()
+    raw_data = cursor.fetchall()
+
+    # 計算每個訂單的 rowspan
+    orders = []
+    order_id_count = {}
+    for item in raw_data:
+        order_id = item['order_id']
+        if order_id not in order_id_count:
+            order_id_count[order_id] = 0
+        order_id_count[order_id] += 1
+
+    # 構造返回數據，添加 rowspan 信息
+    for item in raw_data:
+        order_id = item['order_id']
+        item['rowspan'] = order_id_count[order_id] if order_id_count[order_id] > 0 else None
+        if order_id_count[order_id] > 0:
+            order_id_count[order_id] = 0  # 確保 rowspan 只設定一次
+        orders.append(item)
+
+    return orders
 
 # 查詢送貨員負責的歷史訂單
 def get_orders_by_delivery_person(delivery_person_id):
