@@ -80,13 +80,6 @@ def delete(id):
 	conn.commit()
 	return
 
-#更新 Order 資料（例如顧客修改訂單的送貨地址）
-def update(customer_id, delivery_address, status, order_id):
-	sql="update orde set delivery_address = %s, status = %s where id = %s and customer_id = %s;"
-	cursor.execute(sql,(delivery_address, status, order_id, customer_id))
-	conn.commit()
-	return
-
 #查詢顧客對商家或送貨員的評價：
 def getList(customer_id):
 	sql="select f.id, f.feedback_text, f.rating, f.created_at, m.name as merchant_name, d.name as delivery_person_name from feedback f left join merchant m on f.target_id = m.id left join deliveryperson d on f.target_id = d.id where f.customer_id = %s;"
@@ -102,3 +95,31 @@ def add(customer_id, target_id, feedback_text, rating, created_at):
 
 
 
+#查詢顧客的所有訂單
+def get_orders_by_customer(customer_id):
+    sql = """
+SELECT 
+    o.id AS order_id,
+    o.merchant_id,
+    o.delivery_person_id,
+    o.status,
+    o.delivery_address,
+    o.total_price,
+    o.created_at,
+    f.rating_m AS merchant_rating,
+    f.rating_d AS delivery_rating
+FROM 
+    orde o
+LEFT JOIN 
+    feedback f ON o.id = f.order_id
+WHERE 
+    o.customer_id = %s;
+    """
+    cursor.execute(sql, (customer_id,))
+    return cursor.fetchall()
+
+def update_order_status(status, id):
+    sql = "UPDATE orde SET status = %s WHERE id = %s"
+    cursor.execute(sql, (status, id,))
+    conn.commit()
+    return

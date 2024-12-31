@@ -62,7 +62,7 @@ ORDER BY
     """
     cursor.execute(sql, (order_id,))
     result = cursor.fetchall()  # 獲取查詢結果
-    return result
+    return result, order_id
 
 #查詢某商家的所有評價
 def getList(target_id):

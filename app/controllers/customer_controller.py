@@ -71,24 +71,6 @@ def browse_menu():
     menu_items = Merchant.get_menu_items(merchant_id=merchant_id)
     return render_template('customer/browse_menu.html', items=menu_items, merchant_id=merchant_id)
 
-@customer_bp.route('/feedback/<int:order_id>', methods=['GET', 'POST'])
-def grade_order(order_id):
-    if 'id' not in session:
-        flash('請先登入！')
-        return redirect('/')
-    
-    if request.method == 'POST':
-        data = request.form
-        feedback = Feedback(
-            order_id=order_id,
-            rating=data.get('rating'),
-            comments=data.get('comments')
-        )
-        # FIXME
-        db.session.commit()
-        return redirect(url_for('customer.browse_merchants'))
-    return render_template('customer/grade_order.html', order_id=order_id)
-
 # 查看配送歷史
 @customer_bp.route('/history', methods=['GET'])
 def view_customer_history():
@@ -193,10 +175,10 @@ def view_order(order_id):
     """
     try:
         # 調用 viewFeedback 函數
-        items = Feedback.viewFeedback(order_id)
+        items, o_id = Feedback.viewFeedback(order_id)
 
         # 渲染結果到模板
-        return render_template('customer/grade_order.html', items=items)
+        return render_template('customer/grade_order.html', items=items, order_id=o_id)
     except Exception as e:
         # 錯誤處理
         return f"Error retrieving order details: {str(e)}", 500
@@ -206,10 +188,21 @@ def review_order(order_id):
     customer_id=session['id']
     merchant_rating = request.form.get('merchant_rating')
     delivery_rating = request.form.get('delivery_rating')
-    merchant_id = request.form.get('merchant_id')
-    delivery_id = request.form.get('delivery_person_id')
-    order_id = request.form.get('')
+    order_details = Order.get_order(order_id)
+
+    if not order_details:
+        flash('找不到對應的訂單資訊')
+        return redirect(url_for('/customers/history'))
+
+    merchant_id = order_details['merchant_id']
+    delivery_id = order_details['delivery_person_id']
     Feedback.addFeedback(order_id, customer_id, feedback_text='', rating_m=merchant_rating, rating_d=delivery_rating, deliveryperson_id=delivery_id, merchant_id=merchant_id)
 
     flash('評價已提交！')
-    return redirect(url_for('/customers/history'))
+    return redirect('/customers/history')
+
+@customer_bp.route('/order/<int:order_id>/recive', methods=['GET', 'POST'])
+def recive_order(order_id):
+    Customer.update_order_status(status='已取餐', id=order_id)
+    flash('評價已提交！')
+    return redirect('/customers/history')

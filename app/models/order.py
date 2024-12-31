@@ -69,9 +69,7 @@ def update_order_status(status, id):
 # 查詢訂單詳細資料
 def get_order(order_id):
     sql = """
-    SELECT id, customer_id, merchant_id, delivery_person_id, status, delivery_address, total_price, created_at
-    FROM orde
-    WHERE id = %s
+    SELECT * FROM orde WHERE id = %s
     """
     cursor.execute(sql, (order_id,))
     return cursor.fetchone()

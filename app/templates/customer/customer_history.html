@@ -17,7 +17,7 @@
 	    <tr>
             <th>日期</th>
 	    	<th>商家</th>
-	    	<th>內容</th>
+	    	<th>狀態</th>
 		    <th>總金額</th>
 	    	<th>商家評分</th>
 	    	<th>外送員評分</th>
@@ -33,11 +33,15 @@
 		    <td>{{ order['total_price'] }}</td>
 	    	<td>{{ order['merchant_rating'] if order and order['merchant_rating'] is not none else '尚未評價' }}</td>
 	    	<td>{{ order['delivery_rating'] if order and order['delivery_rating'] is not none else '尚未評價' }}</td>
-			<td>{{ order['order_id'] }}</td>
+			<td style="display: none;">{{ order['order_id'] }}</td>
 			<td>
 				{% if (order['merchant_rating'] is none) or (order['delivery_rating'] is none) %}
 				<form method="GET" action="/customers/order/{{ order['order_id'] }}/view">
 					<button type="submit">評價</button>
+				</form>
+				{% elif order['status']=='已送達' %}
+				<form method="GET" action="/customers/order/{{ order['order_id'] }}/recive">
+					<button type="submit">收貨</button>
 				</form>
 				{% endif %}
 			</td>

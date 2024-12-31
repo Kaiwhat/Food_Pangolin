@@ -33,10 +33,8 @@
 </table>
 <br>
 
-<form method="POST" action="customers/    ">
-    <input type="text" name="order_id" value="{{items.order_id}}">
-    <input type="text" name="merchant_id" value="{{items.merchant_id}}">
-    <input type="text" name="delivery_person_id" value="{{items.delivery_person_id}}">
+<form method="POST" action="/customers/order/{{ order_id }}/review">
+    <input type="text" name="order_id" value="{{order_id}}">
     <div class="rating">
         <label for="merchant-rating">商家評分(1-5):</label>
         <select id="merchant-rating" name="merchant_rating" required>
@@ -58,12 +56,12 @@
             <option value="5">5</option>
         </select>
     </div>
+    <button type="submit" class="common-button">送出評分</button>
+</form>
 <br>
+
 <div class="buttons">
     <a href="/customers/history" class="common-button">Back</a>
-</div>
-<div class="buttons">
-    <a href="/customers/browse_merchant" class="common-button">送出評分</a>
 </div>
 </body>
 </html>
