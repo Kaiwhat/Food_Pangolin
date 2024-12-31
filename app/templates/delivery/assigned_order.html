@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assigned Order</title>
 	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <script>
+        // 狀態跟蹤器
+        let pickedOrders;
+    
+        window.onload = function () {
+            // 初始化已取貨的訂單集合
+            pickedOrders = new Set();
+        };
+    
+        // 標記訂單為已取貨
+        function markAsPicked(button) {
+            const orderId = button.parentElement.querySelector('input[name="order_id"]').value;
+            pickedOrders.add(orderId); // 添加到已取貨集合
+            alert("訂單已標記為取貨！");
+        }
+    
+        
+    </script>
+    
 </head>
 
 <body>
@@ -38,15 +57,22 @@
             <td>{{ item.status }}</td>
             <td>
                 <div style="display: inline-block;">
+                    <!-- 取貨按鈕 -->
                     <form method="POST" action="{{ url_for('delivery_person.mark_order_pick') }}" style="display: inline-block;">
                         <input type="hidden" name="order_id" value="{{ item.id }}">
-                        <button type="submit">取貨</button>
+                        <button type="submit" onclick="markAsPicked(this)">取貨</button>
                     </form>
+                    
+                    <!-- 送達按鈕 -->
                     <form method="POST" action="{{ url_for('delivery_person.mark_order_delivered') }}" style="display: inline-block;">
                         <input type="hidden" name="order_id" value="{{ item.id }}">
-                        <button type="submit">送達</button>
+                        <button type="submit" 
+                            onclick="checkPickupStatus(event, this)" 
+                            {% if item.status != '正在配送' %}disabled{% endif %}>
+                        送達
                     </form>
-                </div>                
+                </div>
+                                
             </td>
         </tr>
         {% endfor %}
